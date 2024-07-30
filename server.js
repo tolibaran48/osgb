@@ -31,6 +31,8 @@ mongoose
 
 
 const app = express();
+const webhookApp = express();
+webhookApp.use('/webhook', require("./routes/waba"));
 //app.use(express.json({limit: '50mb'}));
 /*
 app.use(async (req, res, next) => {
@@ -63,10 +65,13 @@ async function startServer() {
 
     await server.start();
 
+
+
+
     app.use(graphqlUploadExpress());
 
     app.use('/graphql', express.json({ limit: '50mb' }),
-        cors({ origin: ['http://localhost', 'http://localhost', 'localhost'] }),
+        cors({ origin: ['https://newosgb-d1ffc736beaa.herokuapp.com', 'http://localhost', 'http://localhost', 'localhost'] }),
         expressMiddleware(server, {
             context: async ({ req }) => ({
                 Kullanici,
@@ -87,4 +92,7 @@ startServer();
 
 app.listen(process.env.PORT || 4000, () => {
     console.log('Server 4000 portunda dinlemede...')
+})
+webhookApp.listen(process.env.PORT || 5000, () => {
+    console.log('Webhook 4000 portunda dinlemede...')
 })
