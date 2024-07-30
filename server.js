@@ -93,6 +93,6 @@ startServer();
 app.listen(process.env.PORT || 4000, () => {
     console.log('Server 4000 portunda dinlemede...')
 })
-webhookApp.listen(process.env.PORT || 5000, () => {
-    console.log('Webhook 4000 portunda dinlemede...')
+webhookApp.listen(process.env.PORT || 3000, () => {
+    console.log('Webhook 3000 portunda dinlemede...')
 })
