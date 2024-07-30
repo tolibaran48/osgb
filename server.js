@@ -31,8 +31,8 @@ mongoose
 
 
 const app = express();
-//const webhookApp = express();
-//webhookApp.use('/webhook', require("./routes/waba"));
+const webhookApp = express();
+webhookApp.use('/webhook', require("./routes/waba"));
 //app.use(express.json({limit: '50mb'}));
 /*
 app.use(async (req, res, next) => {
@@ -93,6 +93,6 @@ startServer();
 app.listen(process.env.PORT || 4000, () => {
     console.log('Server 4000 portunda dinlemede...')
 })
-/*webhookApp.listen(process.env.PORT || 3000, () => {
+webhookApp.listen(process.env.PORT2 || 3000, () => {
     console.log('Webhook 3000 portunda dinlemede...')
-})*/
+})
