@@ -1,0 +1,66 @@
+type newCompany{
+    name:String
+    adress:String
+    workingStatus:String
+    vergi:CompanyVergi
+}
+
+type CompanyVergi{
+    vergiDairesi:String!
+    vergiNumarasi:String!
+}
+
+type CompanyUpdate{
+    updatedBy:Kullanici
+    date:String
+    company:newCompany
+}
+
+type CompanyRegister{
+    registeredBy:Kullanici
+    date:String
+    company:newCompany
+}
+
+type Firma{
+    _id:ID!
+    name:String!
+    adress:String!
+    workingStatus:String!
+    vergi:CompanyVergi!
+    register:CompanyRegister
+    updates:[CompanyUpdate]
+    auth:[Kullanici]
+    insurances:[Sicil]
+    contacts:[Kullanici]
+}
+
+type Query{
+    company(vergiNumarasi:String!):Firma!
+    companyById(_id:ID!):Firma
+    companies:[Firma!]
+}
+
+type Mutation{
+    createCompany(data:createCompanyInput!):Firma
+    updateCompany(data:updateCompanyInput!):Firma
+}
+
+input createCompanyInput{
+    name:String!
+    adress:String!
+    vergi:companyVergiInput!
+}
+
+input updateCompanyInput{
+    _id:ID!
+    name:String!
+    adress:String!
+    vergi:companyVergiInput!
+    workingStatus:String
+}
+
+input companyVergiInput{
+    vergiDairesi:String!
+    vergiNumarasi:String!
+}

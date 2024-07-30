@@ -1,0 +1,123 @@
+type Il_Ilce{
+    id:Int
+    name:String
+}
+
+type Adress{
+    detail:String
+    il:Il_Ilce
+    ilce:Il_Ilce
+}
+
+type ApprovalAssignments{
+    approvalStatus:String!
+    assignmentId:Int
+    identityId:String!
+    nameSurname:String!
+    category:String!
+    assignmentTime:Int!
+    startDate:String
+    endDate:String
+    certificateNumber:String
+}
+
+type Asignment{
+    assignmentTotal:Int
+    approvalAssignments:[ApprovalAssignments]
+}
+
+type Assignments{
+    uzmanStatus:Asignment!
+    hekimStatus:Asignment!
+    dspStatus:Asignment!
+}
+
+type Sicil{
+    _id:ID!
+    companyObj:Firma
+    companyObjName:String
+    company:ID!
+    companyName:String
+    descriptiveName:String!
+    isgKatipName:String
+    insuranceNumber:String!
+    insuranceControlNumber:String!
+    adress:Adress
+    tehlikeSinifi:String
+    employeeCount:Int
+    workingStatus:String!
+    assignmentStatus:Assignments!
+    employees:[Employee]
+}
+
+type Query{
+    insurance(_id:ID!):Sicil!
+    insurances:[Sicil!]
+} 
+
+type Mutation{
+    createInsurance(data:createInsuranceInput!):Sicil
+    updateInsurance(data:updateInsuranceInput!):Sicil
+    updateManyInsurance(data:updateManyInsuranceInput!):[Sicil]
+}
+
+
+input createInsuranceInput{
+    company:ID!
+    descriptiveName:String!
+    insuranceNumber:String!
+    insuranceControlNumber:String!
+    adress:adress!
+}
+
+
+input updateInsuranceInput{
+    _id:ID!
+    company:ID!
+    descriptiveName:String!
+    insuranceNumber:String!
+    insuranceControlNumber:String
+    adress:adress!
+    workingStatus:String!
+}
+
+input il_ilce{
+    id:Int!
+    name:String!
+}
+
+input adress{
+    detail:String!
+    il:il_ilce!
+    ilce:il_ilce!
+}
+
+input updateManyInsuranceInput{
+    
+    insuranceAss:[inputAssignmentsKey]
+}
+
+input inputAssignmentsKey{
+    insuranceControlNumber:String!
+    assignments:[inputAssignmentsValues]
+}
+
+input inputAssignmentsValues{
+    assignmentId:String
+    startDate:String
+    identificationDate:String
+    endDate:String
+    profApprovalStatus:String
+    companyApprovalStatus:String
+    identityId:String
+    nameSurname:String
+    category:String
+    workingStatus:String
+    workingApproveStatus:String
+    assignmentTime:Int
+    certificateNumber:String
+    employeeCount:Int!
+    isgKatipName:String!
+    tehlikeSinifi:String
+    insuranceControlNumber:String!
+}

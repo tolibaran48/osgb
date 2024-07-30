@@ -1,0 +1,31 @@
+
+type AssignmentsValues{
+    assignmentId:String
+    startDate:String
+    identificationDate:String
+    endDate:String
+    profApprovalStatus:String
+    companyApprovalStatus:String
+    identityId:String
+    nameSurname:String
+    category:String
+    workingStatus:String
+    workingApproveStatus:String
+    assignmentTime:Int
+    certificateNumber:String
+    employeeCount:Int!
+    isgKatipName:String!
+    tehlikeSinifi:String
+    insuranceControlNumber:String!
+}
+
+type Assignment{
+    _id:ID!
+    insuranceControlNumber:String!
+    assignments:[AssignmentsValues]
+}
+
+type Query{
+    assignment(insuranceControlNumber:String!):Assignment!
+    assignments:[Assignment!]
+} 

@@ -1,0 +1,92 @@
+
+type ActiveUser{
+    user:Kullanici
+    token:String  
+}
+
+type UserAuthCompany{
+    company:Firma
+    roles:String
+}
+type UserAuthInsurance{
+    insurance:Sicil
+    roles:String
+}
+type UserAuths{
+    insuranceAuths:[UserAuthInsurance]
+    companyAuths:[UserAuthCompany]
+}
+
+type UserAuth{
+    type:String!
+    status:[String]
+    auths:UserAuths
+}
+
+type Updates{
+    degistiren:String
+    date:String
+    doc:String
+}
+
+type Kullanici{
+    _id:ID!
+    name:String!
+    surname:String!
+    email:String!    
+    phoneNumber:String
+    auth:UserAuth!  
+    updates:Updates
+    registerDate:String 
+}
+
+type Query{
+    user(email:String!):Kullanici!
+    users:[Kullanici!]
+
+    activeUser:ActiveUser
+}
+
+type Mutation{
+    createUser(data:createUserInput!):Kullanici
+    deleteUser(data:deleteUserInput!):Kullanici
+    signIn(data:signInUserInput!):ActiveUser
+}
+
+input createUserInput{
+    name:String!
+    surname:String!
+    email:String!
+    phoneNumber:String!
+    employment:String!
+    auth:UserAuthInput
+}
+
+input signInUserInput{
+    email:String!
+    password:String!
+}
+
+input deleteUserInput{
+    email:String!
+}
+
+input UserAuthInput{
+    type:String!
+    status:[String]
+    auths:UserAuthsInput
+}
+
+input UserAuthsInput{
+    insuranceAuths:[UserAuthInsuranceInput]
+    companyAuths:[UserAuthCompanyInput]
+}
+
+input UserAuthCompanyInput{
+    company:ID
+    roles:String
+}
+input UserAuthInsuranceInput{
+    insurance:ID
+    roles:String
+}

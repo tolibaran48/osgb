@@ -1,0 +1,58 @@
+scalar DateTime
+scalar Upload
+
+type CompanyName{
+    name:String!
+    isgKatipName:String
+}
+
+type Process{
+    processDate:DateTime!
+    receive:Float
+    debt:Float
+}
+
+type Dokum{
+    _id:ID
+    companyName:CompanyName
+    vergiDairesi:String
+    vergiNumarasi:String
+    toplam:Float
+    sonFatura:Process
+    sonOdeme:Process
+    workingStatus:String
+    cariler:[Cari]
+}
+
+type Cari{
+    _id:ID
+    company:Firma
+    process:String!
+    processDate:DateTime
+    processNumber:String
+    collectType:String
+    debt:Float
+    receive:Float
+    chequeDue:DateTime
+    approvalStatus:Boolean
+}
+
+type Query{   
+    companyConcubines:[Dokum!]
+    invoiceLink:String!
+}
+
+type Mutation{
+    createCollect(data:createCollectInput!):Cari
+    invoiceUpload(files:Upload!):String!
+}
+
+input createCollectInput{
+    company:ID!
+    process:String!
+    processDate:DateTime
+    collectType:String
+    receive:Float
+    processNumber:String
+    chequeDue:DateTime
+}

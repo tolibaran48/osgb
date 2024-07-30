@@ -1,0 +1,40 @@
+type Person{
+    _id:ID!
+    name:String
+    surname:String!
+    identityId:String
+    gender:String
+    maritalStatus:String
+    birthPlace:String
+    birthDate:String
+    momName:String
+    fatherName:String
+    blood:String
+    childNumber:Int
+    avatar:String
+    employees:[Employee]
+}
+
+type Query{
+    person(identityId:String!):Person!
+    personById(_id:ID!):Person
+} 
+
+type Mutation{
+    createPerson(data:createPersonInput!):Person
+}
+
+input createPersonInput{
+    name:String!
+    surname:String!
+    identityId:String!
+    gender:String
+    maritalStatus:String
+    birthPlace:String
+    birthDate:String
+    momName:String
+    fatherName:String
+    blood:String
+    childNumber:Int
+    avatar:String
+}
