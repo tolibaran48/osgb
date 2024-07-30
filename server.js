@@ -45,9 +45,9 @@ app.use(async (req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-app.use(express.static("public"))
+app.use(express.static("build"))
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
 
@@ -66,7 +66,7 @@ async function startServer() {
     app.use(graphqlUploadExpress());
 
     app.use('/graphql', express.json({ limit: '50mb' }),
-        cors({ origin: ['http://localhost:5173'] }),
+        cors({ origin: ['http://localhost', 'http://localhost', 'localhost'] }),
         expressMiddleware(server, {
             context: async ({ req }) => ({
                 Kullanici,
