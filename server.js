@@ -20,7 +20,6 @@ const Cari = require("./models/Concubine");
 const db = process.env.mongoURI;
 const { typeDefs } = require("graphql-scalars");
 const { graphqlUploadExpress } = require("graphql-upload-minimal");
-;
 
 mongoose.set("strictQuery", false);
 mongoose
@@ -94,4 +93,4 @@ startServer();
 
 app.listen(process.env.PORT || 4000, () => {
     console.log('Server 4000 portunda dinlemede...')
-});
+})
