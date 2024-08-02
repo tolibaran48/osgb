@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const axios=require('axios');
 require("dotenv").config()
+const auth = require("../helpers/auth");
 
 router.get("/", (req, res) => {
     const mode = req.query["hub.mode"];
@@ -18,6 +18,23 @@ router.get("/", (req, res) => {
     }
 });
 
+router.get("/media/:type/:name/:token", async(req, res) => {
+  const {type,name,token}=req.params
+  try {
+    await auth(token);  
+    res.sendFile(process.cwd()+`/${type}/${name}.pdf`);
+  }
+  catch(error)
+  {
+      throw new GraphQLError('Biletiniz geçersiz', {
+          extensions: {                
+              code: 'Unauthorized',
+              status: 401,
+          },
+      })
+  }
+});
+
 router.post("/", async (req, res) => {
     // log incoming messages
     console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
@@ -25,8 +42,8 @@ router.post("/", async (req, res) => {
     // check if the webhook request contains a message
     // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
     const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
-    console.log({ "message_type": message?.type })
-    console.log(message)
+    //console.log({ "message_type": message?.type })
+    console.log({message})
 
     // check if the incoming message contains text
     /*if (message?.type === "text") {*/
@@ -35,7 +52,7 @@ router.post("/", async (req, res) => {
     const name = req.body.entry?.[0].changes?.[0].value?.contacts?.[0].profile?.name;
     const messageType = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0].interactive?.type;
 
-    await axios({
+   /* await axios({
         "method": "POST",
         "url": `https://graph.facebook.com/v18.0/${business_phone_number_id}/messages`,
         "headers": {
@@ -51,7 +68,10 @@ router.post("/", async (req, res) => {
             }
 
         },
-    });
+    });*/
+
+
+
     res.sendStatus(200);
 });
 module.exports = router;

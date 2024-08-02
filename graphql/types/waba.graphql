@@ -1,0 +1,18 @@
+type Mutation{
+    sendInvoice(data:sendInvoiceInput!):sendMessageStatus
+
+}
+
+type sendMessageStatus{
+    status:Int
+}
+
+input sendInvoiceInput{
+    to:String!
+    company:String!
+    invoiceDate:String!
+    invoiceAmount:Float!
+    fileName:String
+    type:String
+}
+

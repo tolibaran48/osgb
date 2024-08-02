@@ -23,7 +23,7 @@ const { graphqlUploadExpress } = require("graphql-upload-minimal");
 
 mongoose.set("strictQuery", false);
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(db, {})
     .then(() => { console.log("MongoDB ye bağlanıldı...") })
     .catch(err => { console.log(err) });
 
@@ -48,10 +48,10 @@ app.use(async (req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-app.use(express.static("build"))
+/*app.use(express.static("build"))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
+});*/
 
 
 async function startServer() {
@@ -65,9 +65,6 @@ async function startServer() {
     });
 
     await server.start();
-
-
-
 
     app.use(graphqlUploadExpress());
 
