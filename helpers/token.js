@@ -1,9 +1,10 @@
-const jwt=require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+require("dotenv").config()
 
- const createToken = {
+const createToken = {
     generate: ({ email }, expiresIn) => {
-        return jwt.sign({email}, process.env.jwtSecret, {expiresIn});
+        return jwt.sign({ email }, process.env.jwtSecret, { expiresIn });
     }
 }
 
-module.exports=createToken;
+module.exports = createToken;

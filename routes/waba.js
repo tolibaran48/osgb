@@ -1,6 +1,6 @@
 const router = require('express').Router();
 require("dotenv").config()
-const auth = require("../helpers/auth");
+const mediaAuth = require("../helpers/mediaAuth");
 
 router.get("/", (req, res) => {
     const mode = req.query["hub.mode"];
@@ -18,11 +18,11 @@ router.get("/", (req, res) => {
     }
 });
 
-router.get("/media/:type/:name/:token", async(req, res) => {
-  const {type,name,token}=req.params
+router.get("/media/:media_id", async(req, res) => {
+  const {media_id}=req.params
   try {
-    await auth(token);  
-    res.sendFile(process.cwd()+`/${type}/${name}.pdf`);
+    const values=await mediaAuth(media_id);  
+    res.sendFile(process.cwd()+`/${values.type}/${values.fileName}.pdf`);
   }
   catch(error)
   {

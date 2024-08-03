@@ -7,6 +7,15 @@ module.exports = {
     sendInvoice: async (parent, args, { token }) => {
 
         await auth(token);
+        const values = jwt.verify(token, process.env.mediaJwtSecret)
+        const privateClaim = {
+            "iss": values.email,
+            "aud": process.env.MEDIA_SITE,
+            "sub": "waba",
+            "args": args.data
+        }
+
+        const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 
 
         try {
@@ -38,7 +47,7 @@ module.exports = {
                                         "type": "document",
                                         "document": {
                                             "filename": "AS1 Cari.pdf",
-                                            "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${type}/${fileName}/${token}`
+                                            "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
                                         }
                                     }
                                 ]
@@ -68,7 +77,7 @@ module.exports = {
                     }
                 },
             });
-
+            console.log(`/media/${mediaToken}`)
             return { "status": 200 }
 
         } catch (error) {

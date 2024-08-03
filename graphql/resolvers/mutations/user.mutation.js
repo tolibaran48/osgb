@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 const createToken = require('../../../helpers/token');
-const { GraphQLError }=require("graphql");
+const { GraphQLError } = require("graphql");
 const auth = require("../../../helpers/auth");
 
 module.exports = {
-    createUser: async (parent, args, { token,Kullanici }) => {
+    createUser: async (parent, args, { token, Kullanici }) => {
         await auth(token);
-        
+
         try {
             const { email, name, surname, phoneNumber, employment, auth } = args.data;
             const user = await Kullanici.findOne({ email })
@@ -14,10 +14,10 @@ module.exports = {
             if (user) {
                 throw new GraphQLError('Bu kulanıcı adına sahip başka bir kullanıcı mevcut.', {
                     extensions: {
-                      code: 'Bad Request',
-                      status: 400 ,
+                        code: 'Bad Request',
+                        status: 400,
                     },
-                  });
+                });
             }
 
             return await new Kullanici({
@@ -36,9 +36,9 @@ module.exports = {
         }
     },
 
-    deleteUser: async (parent, args, { token,Kullanici }) => {
+    deleteUser: async (parent, args, { token, Kullanici }) => {
         await auth(token);
-        
+
         try {
             const { email } = args.data;
             const user = await Kullanici.findOne({ email })
@@ -46,10 +46,10 @@ module.exports = {
             if (!user) {
                 throw new GraphQLError('Kayıtlı kullanıcı bulunamadı.', {
                     extensions: {
-                      code: 'Bad Request',
-                      status: 400,
+                        code: 'Bad Request',
+                        status: 400,
                     },
-                  });
+                });
             }
 
             return await Kullanici.findOneAndDelete({ email })
@@ -67,7 +67,7 @@ module.exports = {
             throw new GraphQLError('Kullanıcı adı veya parola yanlıştır.', {
                 extensions: {
                     code: 'Unauthorized',
-                    status: 401 ,
+                    status: 401,
                 },
             })
         }
@@ -83,8 +83,8 @@ module.exports = {
             })
         }
 
-        const token = await createToken.generate({ email }, '2h');
+        const token = await createToken.generate({ email }, '1h');
 
         return { user: user, token }
-    }    
+    }
 };
