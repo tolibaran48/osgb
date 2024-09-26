@@ -6,6 +6,7 @@ const employee = require('./employee.mutation');
 const concubine = require('./concubine.mutation');
 const file = require('./file.mutation');
 const waba = require('./waba.mutation');
+const sms = require('./sms.mutation');
 
 const Mutation = {
     ...user,
@@ -15,7 +16,8 @@ const Mutation = {
     ...employee,
     ...concubine,
     ...file,
-    ...waba
+    ...waba,
+    ...sms
 };
 
 module.exports = Mutation;

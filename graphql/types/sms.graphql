@@ -1,0 +1,12 @@
+type Mutation{
+    sendSMS(data:sendSmsInput!):sendMessageStatus
+}
+
+type sendMessageStatus{
+    status:Int
+}
+
+input sendSmsInput{
+    phoneNumber:String!
+    text:String!
+}

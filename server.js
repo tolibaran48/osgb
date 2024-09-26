@@ -17,9 +17,24 @@ const Person = require("./models/Person");
 const Employee = require("./models/Employee");
 const Assignment = require("./models/Assignment");
 const Cari = require("./models/Concubine");
+const WabaConversation = require("./models/WabaConversation");
 const db = process.env.mongoURI;
 const { typeDefs } = require("graphql-scalars");
 const { graphqlUploadExpress } = require("graphql-upload-minimal");
+const dayjs = require('dayjs');
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+require('dayjs/locale/tr');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
+const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(customParseFormat)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(isSameOrBefore)
+dayjs.locale('tr')
 
 mongoose.set("strictQuery", false);
 mongoose
@@ -34,6 +49,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 
 app.use('/webhook', require("./routes/waba"));
+app.use('/flows/appointment', require("./routes/flows/appointment"));
 
 /*
 app.use(async (req, res, next) => {
@@ -79,6 +95,7 @@ async function startServer() {
                 Employee,
                 Assignment,
                 Cari,
+                WabaConversation,
                 token: req.headers['authorization']
             }),
         }),

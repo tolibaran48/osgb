@@ -19,6 +19,8 @@
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
@@ -27,6 +29,8 @@
     "graphql-upload-minimal": "^1.6.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
-    "type-graphql": "^2.0.0-rc.2"
+    "type-graphql": "^2.0.0-rc.2",
+    "xmlbuilder": "^15.1.1",
+    "xmlhttprequest": "^1.8.0"
   }
 }
