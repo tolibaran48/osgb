@@ -21,8 +21,9 @@ router.get("/", (req, res) => {
 router.get("/media/:media_id", async(req, res) => {
   const {media_id}=req.params
   try {
-    const values=await mediaAuth(media_id);  
-    res.sendFile(process.cwd()+`/${values.type}/${values.fileName}.pdf`);
+    const values=await mediaAuth(media_id); 
+    const {type,fileName}=values.args;
+    res.sendFile(process.cwd()+`/${type}/${fileName}.pdf`);
   }
   catch(error)
   {

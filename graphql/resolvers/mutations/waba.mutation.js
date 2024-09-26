@@ -1,4 +1,5 @@
 const auth = require("../../../helpers/auth");
+const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 require('dotenv').config();
 const axios = require('axios');
@@ -17,9 +18,8 @@ module.exports = {
 
         const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 
-
         try {
-            const { type, fileName, to, company, invoiceDate, invoiceAmount } = args.data
+            const { to, company, invoiceDate, invoiceAmount, fileName } = args.data
 
             await axios({
                 "method": "POST",
@@ -46,7 +46,7 @@ module.exports = {
                                     {
                                         "type": "document",
                                         "document": {
-                                            "filename": "AS1 Cari.pdf",
+                                            "filename": `${fileName}.pdf`,
                                             "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
                                         }
                                     }
@@ -77,7 +77,6 @@ module.exports = {
                     }
                 },
             });
-            console.log(`/media/${mediaToken}`)
             return { "status": 200 }
 
         } catch (error) {
