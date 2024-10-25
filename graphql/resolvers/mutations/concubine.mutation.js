@@ -8,7 +8,7 @@ const dayjs = require('dayjs');
 
 module.exports = {
     createCollect: async (parent, args, { token, Firma, Cari }) => {
-        //let user=await auth(token);
+        await auth(token);
 
         try {
             const { company, process, processDate, processNumber, collectType, chequeDue, receive } = args.data;
@@ -29,7 +29,7 @@ module.exports = {
         }
     },
     invoiceUpload: async (parent, args, { token }) => {
-        //await auth(token);
+        await auth(token);
         let { filename, createReadStream } = await args.data
         let stream = createReadStream()
 
@@ -45,7 +45,7 @@ module.exports = {
         return invoiceFiles
     },
     changeInvoice: async (parent, args, { token, Firma, Cari }) => {
-        //let user=await auth(token);
+        await auth(token);
 
         try {
             const { aliciAdi, faturaNumarasi, faturaTarihi, tutar } = args.data;

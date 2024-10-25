@@ -5,7 +5,6 @@ const createToken = require("../../helpers/token");
 
 const START_muhasebe_fatura = async (phoneNumber) => {
 
-    const number = "5357258166";
     const yetki = await WabaYetkili.find({ phoneNumber })
 
     if (!yetki) {
@@ -17,7 +16,7 @@ const START_muhasebe_fatura = async (phoneNumber) => {
         })
     }
 
-    const token = await createToken.generate({ number }, '5m');
+    const token = await createToken.generate({ phoneNumber }, '5m');
 
     const invoices = await axios({
         url: 'http://localhost:4000/graphql',
@@ -76,7 +75,7 @@ const START_muhasebe_fatura = async (phoneNumber) => {
                         "flow_cta": "Fatura indir",
                         "flow_action_payload": {
                             "screen": "COMPANY",
-                            "data": { companies }
+                            "data": { companies, phoneNumber }
                         }
                     }
                 }

@@ -2,6 +2,16 @@ const auth = require("../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 
 const Concubine = {
+    concubine: async (parent, args, { token, Cari }) => {
+        await auth(token);
+
+        try {
+            return await Cari.findOne({ "processNumber": args.pocessNumber });
+
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
+    },
     companyConcubines: async (parent, args, { token, Cari }) => {
         await auth(token);
 
@@ -46,15 +56,6 @@ const Concubine = {
                 { $sort: { toplam: -1 } },
 
             ])
-        } catch (error) {
-            throw new GraphQLError(error)
-        }
-    },
-    invoiceLink: async (parent, args, { token }) => {
-        await auth(token);
-
-        try {
-            return 'Fatura info çalıştı!';
         } catch (error) {
             throw new GraphQLError(error)
         }

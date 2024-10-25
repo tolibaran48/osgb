@@ -39,7 +39,7 @@ type Cari{
 
 type Query{   
     companyConcubines:[Dokum!]
-    invoiceLink:String!
+    concubine(processNumber:String!):Cari!
 }
 
 type Mutation{

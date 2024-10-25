@@ -6,7 +6,7 @@ require("dotenv").config()
 
 module.exports = {
     sendSMS: async (parent, args, { token }) => {
-        //await auth(token);
+        await auth(token);
 
         try {
             const { phoneNumber, text } = args.data;

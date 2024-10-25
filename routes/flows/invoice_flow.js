@@ -27,6 +27,7 @@ const getNext = async (decryptedBody) => {
     const { screen, data, version, action } = decryptedBody;
     // Return the next screen & data to the client  
     console.log(decryptedBody)
+    const token = await createToken.generate({ email: process.env.wabaTokenMail }, '5m');
 
     if (action === "ping") {
         return {
@@ -44,8 +45,6 @@ const getNext = async (decryptedBody) => {
             },
         };
     }
-
-    const token = await createToken.generate({ email: process.env.wabaTokenMail }, '5m');
 
     if (action === "data_exchange") {
         switch (screen) {
@@ -79,8 +78,54 @@ const getNext = async (decryptedBody) => {
                 };
 
             case "INVOICE":
-                const phoneNumber = data.phoneNumber
-                const invoice = data.invoice
+                data.invoice.forEach(async element => {
+                    const invoice = await axios({
+                        url: 'http://localhost:4000/graphql',
+                        method: 'post',
+                        headers: {
+                            "authorization": token
+                        },
+                        data: {
+                            query: `query{
+                              concubine(processNumber: "${element}") {
+                                company {
+                                    name
+                                }
+                                processDate
+                                debt
+                                processNumber
+                              }
+                            }`
+                        }
+                    })
+
+                    const variables = {
+                        data: {
+                            "to": `90${data.phoneNumber}`,
+                            "company": invoice.company.name,
+                            "invoiceDate": invoice.processDate,
+                            "invoiceAmount": invoice.debt,
+                            "type": "upload",
+                            "fileName": invoice.processNumber
+                        }
+                    }
+
+                    const __es = await axios({
+                        url: 'http://localhost:4000/graphql',
+                        method: 'post',
+                        headers: {
+                            "authorization": token
+                        },
+                        data: {
+                            query: `mutation{
+                                    sendInvoice(data: "${variables}") {
+                                    status
+                                    }
+                                }`
+                        }
+                    })
+                });
+
 
                 return {
                     ...SCREEN_RESPONSES.SUCCESS,
