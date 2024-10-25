@@ -11,17 +11,17 @@ const Concubine = {
                 {
                     $group: {
                         _id: '$company',
-                        alacak: { "$sum": {$toDouble:"$debt"} },
-                        borc: { "$sum": {$toDouble:"$receive"} },
+                        alacak: { "$sum": { $toDouble: "$debt" } },
+                        borc: { "$sum": { $toDouble: "$receive" } },
                         tahsilatlar: {
                             $push:
-                                { $cond: [{ $eq: ["$process", "Tahsilat"] }, { process: "$process", processDate: "$processDate",receive:{ $convert: { input: "$receive", to: 'double' }}  }, "$$REMOVE"] }
+                                { $cond: [{ $eq: ["$process", "Tahsilat"] }, { process: "$process", processDate: "$processDate", receive: { $convert: { input: "$receive", to: 'double' } } }, "$$REMOVE"] }
                         },
                         faturalar: {
                             $push:
-                                { $cond: [{ $eq: ["$process", "Fatura"] }, { process: "$process", processDate: "$processDate",debt:{ $convert: { input: "$debt", to: 'double' } }  }, "$$REMOVE"] }
+                                { $cond: [{ $eq: ["$process", "Fatura"] }, { process: "$process", processDate: "$processDate", debt: { $convert: { input: "$debt", to: 'double' } } }, "$$REMOVE"] }
                         },
-                        
+
                         // mergedSales: { $mergeObjects:{$eq:["$cari.process","Tahsilat"]}}
                     }
                 },
@@ -30,24 +30,23 @@ const Concubine = {
                 { $addFields: { sonOdeme: { $first: "$tahsilatlar" } } },
                 //{ $addFields: { sonFatura: { $max: "$faturalar.processDate" } } },
                 { $addFields: { sonFatura: { $first: "$faturalar" } } },
-                { $addFields: { cariler: { $concatArrays: ["$faturalar","$tahsilatlar"]}}},
-                { $unset: ["faturalar","tahsilatlar","workingStatus"] },
+                { $addFields: { cariler: { $concatArrays: ["$faturalar", "$tahsilatlar"] } } },
+                { $unset: ["faturalar", "tahsilatlar", "workingStatus"] },
                 {
                     $lookup: {
                         from: 'firmas', localField: '_id', foreignField: '_id', as: 'firma'
                     }
                 },
-                 { $unwind: "$firma" },
-                 { $addFields: { companyName: { name:"$firma.name",isgKatipName:"$firma.isgKatipName" } } },
-                 { $addFields: { vergiNumarasi: "$firma.vergi.vergiNumarasi"  } },
-                 { $addFields: { workingStatus: "$firma.workingStatus"  } },
-                 { $addFields: { vergiDairesi:"$firma.vergi.vergiDairesi" } },
-                 { $unset: ["firma"] },
-                 { $sort: { toplam: -1 } },
+                { $unwind: "$firma" },
+                { $addFields: { companyName: { name: "$firma.name", isgKatipName: "$firma.isgKatipName" } } },
+                { $addFields: { vergiNumarasi: "$firma.vergi.vergiNumarasi" } },
+                { $addFields: { workingStatus: "$firma.workingStatus" } },
+                { $addFields: { vergiDairesi: "$firma.vergi.vergiDairesi" } },
+                { $unset: ["firma"] },
+                { $sort: { toplam: -1 } },
 
             ])
         } catch (error) {
-            console.log(error)
             throw new GraphQLError(error)
         }
     },

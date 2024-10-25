@@ -34,7 +34,7 @@ const Kullanici = {
             if (user) {
                 return { user: user, token: token }
             }
-            else{
+            else {
                 throw new GraphQLError('Kullanıcı bulunamadı', {
                     extensions: {
                         code: 'Bad Request',
@@ -42,7 +42,7 @@ const Kullanici = {
                     },
                 })
             }
-        } 
+        }
         catch (error) {
             throw new GraphQLError(error.message, {
                 extensions: {

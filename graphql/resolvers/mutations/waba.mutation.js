@@ -6,7 +6,6 @@ const axios = require('axios');
 
 module.exports = {
     sendInvoice: async (parent, args, { token }) => {
-
         await auth(token);
         const values = jwt.verify(token, process.env.mediaJwtSecret)
         const privateClaim = {
@@ -23,7 +22,7 @@ module.exports = {
 
             await axios({
                 "method": "POST",
-                "url": `https://graph.facebook.com/v18.0/${process.env.BUSINESS_PHONE_NUMBER_ID}/messages`,
+                "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
                 "headers": {
                     Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
                 },

@@ -2,12 +2,11 @@ const { createWriteStream, unlinkSync } = require('fs');
 const path = require('path');
 
 module.exports = {
-    uploadFile: async (parent,  {file} ) => {
+    uploadFile: async (parent, { file }) => {
         // args.file üzerinden gelen dosya bilgilerini konsola yazdırma
-        console.log(file.file);
         // Dosya bilgilerini değişkenlere atama
         const { createReadStream, filename, mimetype, encoding } = await file.file;
-        
+
         //console.log(token);
         //Güvenlik kontrolleri
         const allowedMimeTypes = ['image/jpeg', 'image/png', 'application/pdf'];
@@ -23,7 +22,7 @@ module.exports = {
 
 
         //const totalSize = file.file.size;
-       
+
         let progress = 0;
 
 

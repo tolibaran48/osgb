@@ -23,7 +23,6 @@ const decryptRequest = async (body, privatePem) => {
         );
 
     } catch (error) {
-        console.log(error)
         throw new Error(error.message)
     }
 

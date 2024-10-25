@@ -1,8 +1,8 @@
 const auth = require("../../../helpers/auth");
-const {GraphQLError } = require('graphql');
+const { GraphQLError } = require('graphql');
 
 const Firma = {
-    company: async (parent, args, { token,Firma }) => {
+    company: async (parent, args, { token, Firma }) => {
         await auth(token);
 
         try {
@@ -11,7 +11,7 @@ const Firma = {
             throw new GraphQLError(error)
         }
     },
-    companyById: async (parent, args, { token,Firma }) => {
+    companyById: async (parent, args, { token, Firma }) => {
         await auth(token);
 
         try {
@@ -20,11 +20,11 @@ const Firma = {
             throw new GraphQLError(error)
         }
     },
-    companies: async (parent, args, { token,Firma }) => {
+    companies: async (parent, args, { token, Firma }) => {
         await auth(token);
-        
+
         try {
-            return await Firma.find().sort({"workingStatus":1,"name":1});
+            return await Firma.find().sort({ "workingStatus": 1, "name": 1 });
         } catch (error) {
             throw new GraphQLError(error)
         }

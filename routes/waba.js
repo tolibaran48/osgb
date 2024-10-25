@@ -4,17 +4,15 @@ const mediaAuth = require("../helpers/mediaAuth");
 const axios = require('axios');
 const send_START = require("../functions/waba/send_START");
 const send_PersonelEvrak = require("../functions/waba/send_PersonelEvrak");
-const dayjs = require('dayjs');
-const fs = require('fs');
-const path = require('path')
 
 const WabaConversation = require("../models/WabaConversation");
+const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
-
+  START_muhasebe_fatura("5494191961")
   // check the mode and token sent are correct
   if (mode === "subscribe" && token === process.env.WEBHOOK_VERIFY_TOKEN) {
     // respond with 200 OK and challenge token from the request
@@ -177,14 +175,27 @@ const getMessageType = async (req) => {
 
 router.post("/", async (req, res) => {
   //send_PersonelEvrak()
-  const message = await getMessageType(req)
-
   if (message.messageFrom === "external") {
     console.log(message);
-    console.log(req.body.entry?.[0]?.changes[0]?.value?.messages?.[0])
+    if (message.messageType !== "received") {
+      send_START()
+    }
+    else {
+      switch (message.mainMessageType) {
+        case "list_reply":
+          switch (message.message.interactive.list_reply.id) {
+            case "START_muhasebe_fatura":
+              console.log({ "from": message.message.from })
+              break;
+          }
 
+          break;
+        case "nfm_reply":
+          console.log({ "from": message.message.interactive.nfm_reply })
+          break;
+      }
+    }
   }
-
   /*const message = {
     messageFrom: "external",
     messageType: "directly",
@@ -270,70 +281,7 @@ router.post("/", async (req, res) => {
     conversation.save()
   }*/
 
-
-
   res.sendStatus(200);
 });
 
 module.exports = router;
-
-router.get("/appointment", async ({ body }, res) => {
-  let bbody = {
-    encrypted_flow_data: 'b2DBdN/qcHQL+fcnSlvAs1eYRw/EPLfiynyIwtiP/9YPkYjiRm2KfoHyVWbQT34y+w==',
-    encrypted_aes_key: 'hYDjjIsYE0a6FYmQexfOzwRiGM5abQ4XofZCoz1h/ujK+aJzLwFa+ynOPbBfZpHQbi+0RxASM7nDnbUxeNCH/VgrPYTK2RyFbEX9CYyiFcVOEFld0pl+Cq9I4dv4Cr7K+RJ39K/EwKfpk3uEm2wEAuPdak5TtmSTYdV7uPANdn2GsH3DxIboqQOoxOF8Ku9Dde68EOgSAN7Cvh0pmLXUnfK4TZ4LeuiEewZkUw5rMiMz3eC4PB2D/Vtmp5dOA1MMhkAZlfKhAvlyD1MBhFaa3hbK0arxWY3/He6yIT6QWM+rIE47K8jN4FMcZN5Wicuo7VQWGKz3+lEtCCHuzlIGqA==',
-    initial_vector: 'ZpeACg41Gp0WufakTV8nPQ=='
-  }
-  let privateFile = path.resolve('./functions/waba/files/private.pem')
-  let PRIVATE_KEY = fs.readFileSync(privateFile, 'utf8');
-  const { decryptedBody, aesKeyBuffer, initialVectorBuffer } = decryptRequest(
-    body,
-    PRIVATE_KEY,
-  );
-
-  const { screen, data, version, action } = decryptedBody;
-  // Return the next screen & data to the client
-
-  console.log({ screen, data, version, action })
-
-  const screenData = {
-    screen: "SCREEN_NAME",
-    data: {
-      some_key: "some_value",
-    },
-  };
-
-  // Return the response as plaintext
-  res.send(encryptResponse(screenData, aesKeyBuffer, initialVectorBuffer));
-});
-
-
-
-// check if the webhook request contains a message
-// details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-//const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
-//console.log({ "message_type": message?.type })
-//console.log({message})
-
-// check if the incoming message contains text
-/*if (message?.type === "text") {*/
-// extract the business number to send the reply from it
-//const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-//const name = req.body.entry?.[0].changes?.[0].value?.contacts?.[0].profile?.name;
-//const messageType = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0].interactive?.type;
-
-/* await axios({
-   "method": "POST",
-   "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
-   "headers": {
-     Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
-   },
-   "data": {
-     "messaging_product": "whatsapp",
-     "recipient_type": "individual",
-     "to": "5494191961",
-     "text": {
-       "body": `_Sayın Müşterimiz,_\n
-        *Ödenmeyen borcunuzdan dolayı dosyanız yasal takip sürecine alınmıştır.*\nGüncel borcunuz *105.010,01 TL* olup, gün içerisinde ödenmediği takdirde borcunuz için *yasal yollara* başvurulacağını bilgilerinize sunarız.\n\n_Saygılarımızla,_`,
-     }
-   },
- });*/

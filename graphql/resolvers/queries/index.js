@@ -5,6 +5,7 @@ const person = require('./personQuery');
 const employee = require('./employeeQuery');
 const assignment = require('./assignmentQuery');
 const concubine = require('./concubineQuery');
+const wabaUser = require('./wabaUserQuery');
 
 const Query = {
     ...user,
@@ -13,7 +14,8 @@ const Query = {
     ...person,
     ...employee,
     ...assignment,
-    ...concubine
+    ...concubine,
+    ...wabaUser
 };
 
 module.exports = Query;

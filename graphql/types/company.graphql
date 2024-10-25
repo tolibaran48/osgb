@@ -33,6 +33,8 @@ type Firma{
     auth:[Kullanici]
     insurances:[Sicil]
     contacts:[Kullanici]
+    concubines:[Cari]
+    invoices:[Cari]
 }
 
 type Query{

@@ -11,9 +11,9 @@ const Sicil = {
             throw new GraphQLError(error)
         }
     },
-    insurances: async (parent, args, { token, Sicil}) => {
+    insurances: async (parent, args, { token, Sicil }) => {
         await auth(token);
-
+        console.log(token)
         return Sicil.aggregate([
             { $lookup: { from: 'firmas', localField: 'company', foreignField: '_id', as: 'firmalar' } },
             { $addFields: { companyName: { $first: "$firmalar.name" } } },
@@ -22,7 +22,7 @@ const Sicil = {
             { $unset: ["firmalar", "updates", "register"] },
             { $sort: { "workingStatus": 1, "companyName": 1 } }
         ]);
-    },   
+    },
 };
 
 module.exports = Sicil;

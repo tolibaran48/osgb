@@ -7,6 +7,7 @@ const concubine = require('./concubine.mutation');
 const file = require('./file.mutation');
 const waba = require('./waba.mutation');
 const sms = require('./sms.mutation');
+const wabaUser = require('./wabaUser.mutation');
 
 const Mutation = {
     ...user,
@@ -17,6 +18,7 @@ const Mutation = {
     ...concubine,
     ...file,
     ...waba,
+    ...wabaUser,
     ...sms
 };
 

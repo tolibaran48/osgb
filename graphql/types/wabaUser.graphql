@@ -1,0 +1,22 @@
+type WabaYetkili{
+    _id:ID!
+    phoneNumber:String!
+    companies:[Firma]
+}
+
+type Query{
+    wabaUser(phoneNumber:String!):WabaYetkili!
+}
+
+type Mutation{
+    createWabaUser(data:createWabaUserInput!):sendMessageStatus
+}
+
+type sendMessageStatus{
+    status:Int
+}
+
+input createWabaUserInput{
+    phoneNumber:String!
+    companyAuths:String!
+}

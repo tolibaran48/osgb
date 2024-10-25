@@ -18,6 +18,7 @@ const Employee = require("./models/Employee");
 const Assignment = require("./models/Assignment");
 const Cari = require("./models/Concubine");
 const WabaConversation = require("./models/WabaConversation");
+const WabaYetkili = require("./models/WabaUser");
 const db = process.env.mongoURI;
 const { typeDefs } = require("graphql-scalars");
 const { graphqlUploadExpress } = require("graphql-upload-minimal");
@@ -49,7 +50,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 
 app.use('/webhook', require("./routes/waba"));
-app.use('/flows/appointment', require("./routes/flows/appointment"));
+app.use('/flows/invoice_flow', require("./routes/flows/invoice_flow"));
 
 /*
 app.use(async (req, res, next) => {
@@ -96,6 +97,7 @@ async function startServer() {
                 Assignment,
                 Cari,
                 WabaConversation,
+                WabaYetkili,
                 token: req.headers['authorization']
             }),
         }),
