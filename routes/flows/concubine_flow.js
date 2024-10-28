@@ -222,11 +222,7 @@ const getNext = async (decryptedBody) => {
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
-                   pdfDocGenerator.getBuffer((buffer) => {
-                        fs.writeFileSync(uploadPath, buffer)
-                            })
-
-                                    return {
+                   return {
                                         screen: "SUCCESS",
                                         data: {
                                             extension_message_response: {
@@ -236,6 +232,8 @@ const getNext = async (decryptedBody) => {
                                             },
                                         },
                                     };
+
+                                   
                     
                 }
                 const createFile = () => {
