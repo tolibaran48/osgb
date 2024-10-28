@@ -67,8 +67,9 @@ const getNext = async (decryptedBody) => {
                 let startDate_maxValue = dayjs(now.subtract(1, 'month')).format("YYYY-MM-DD");
                 let startDate_minValue = dayjs(now.subtract(3, 'year')).format("YYYY-MM-DD");
 
-                const _data={
-                            "startDate": {
+                return {
+                    screen: 'CONCUBINE',
+                    data: {"startDate": {
                             "initValue": startDate_initValue,
                             "minDate": startDate_minValue,
                             "maxDate": startDate_maxValue
@@ -76,13 +77,7 @@ const getNext = async (decryptedBody) => {
                             "initValue": endDate_initValue,
                             "minDate": endDate_minValue,
                             "maxDate": endDate_maxValue
-                        }
-                }
-                console.log(_data)
-
-                return {
-                    screen: 'CONCUBINE',
-                    data: {_data},
+                        }},
                 };
 
             case "CONCUBINE":
