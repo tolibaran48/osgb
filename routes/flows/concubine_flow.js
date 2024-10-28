@@ -222,9 +222,9 @@ const getNext = async (decryptedBody) => {
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
-                    pdfDocGenerator.getBuffer(async (buffer) => { 
+                   pdfDocGenerator.getBuffer((buffer) => {
                         fs.writeFileSync(uploadPath, buffer)
-                            .then(async () => {
+                            }).then(async () => {
                                 const privateClaim = {
                                     "iss": decryptedBody.flow_token,
                                     "aud": process.env.MEDIA_SITE,
@@ -273,7 +273,7 @@ const getNext = async (decryptedBody) => {
                                     throw new GraphQLError(error)
                                 }
                             })
-                    });
+                    
                 }
                 const createFile = () => {
                     try {
