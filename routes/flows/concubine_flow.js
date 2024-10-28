@@ -110,7 +110,7 @@ const getNext = async (decryptedBody) => {
                 })
 
                 const _cariler = [];
-                console.log(JSON.stringify(concubines)
+                console.log(JSON.stringify(concubines))
                 let _concubines = concubines.company.concubines.map((cari, index, arr) => {
                     let subTotal = 0;
                     index === 0 ?
