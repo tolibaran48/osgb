@@ -222,8 +222,8 @@ const getNext = async (decryptedBody) => {
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-                    pdfDocGenerator.getBuffer(async (buffer) => {
-                        console.log(buffer)
+                    console.log(pdfDocGenerator)
+                    pdfDocGenerator.getBuffer(async (buffer) => {                        
                         fs.writeFile(uploadPath, buffer)
                             .then(async () => {
                                 const privateClaim = {
