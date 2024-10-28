@@ -132,7 +132,7 @@ const getNext = async (decryptedBody) => {
                         return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));
                     }
                 )
-console.log(cariler)
+                
                 const createPDF = async (values) => {
 
                     const docDefinition = {
@@ -283,6 +283,7 @@ console.log(cariler)
                     try {
                         const _rows = [];
                         const Ekle = (concubine) => {
+                            console.log(concubine)
                             _rows.push({
                                 'companyName': concubine.companyName,
                                 'vergiDairesi': concubine.vergiDairesi,
