@@ -129,7 +129,7 @@ const getNext = async (decryptedBody) => {
 
                 let cariler = _.filter(
                     _cariler, function (element) {
-                    return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(elementprocessDate).isSameOrAfter(data.startDate));
+                        return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));
                     }
                 )
 
