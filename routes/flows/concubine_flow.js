@@ -221,9 +221,9 @@ const getNext = async (decryptedBody) => {
                     let filename = decryptedBody.flow_token;
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
-                    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-                    console.log(pdfDocGenerator)
-                    pdfDocGenerator.getBuffer(async (buffer) => {                        
+                    const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
+                    pdfDocGenerator.getBuffer(async (buffer) => { 
+                        console.log({buffer})
                         fs.writeFile(uploadPath, buffer)
                             .then(async () => {
                                 const privateClaim = {
@@ -238,7 +238,7 @@ const getNext = async (decryptedBody) => {
 
 
                                 const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-
+                                    console.log({mediaToken})
                                 try {
 
                                     await axios({
