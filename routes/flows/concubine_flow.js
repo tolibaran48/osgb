@@ -78,6 +78,7 @@ const getNext = async (decryptedBody) => {
                             maxDate: endDate_maxValue
                         }
                 }
+                console.log(_data)
 
                 return {
                     screen: 'CONCUBINE',
