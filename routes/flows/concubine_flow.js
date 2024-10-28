@@ -288,10 +288,10 @@ const getNext = async (decryptedBody) => {
                                 'companyName': concubine.companyName,
                                 'vergiDairesi': concubine.vergiDairesi,
                                 'vergiNumarasi': concubine.vergiNumarasi,
-                                'process': concubine.cari.process,
-                                'processDate': concubine.cari.processDate,
-                                'receive': concubine.cari.receive,
-                                'debt': concubine.cari.debt,
+                                'process': concubine.process,
+                                'processDate': concubine.processDate,
+                                'receive': concubine.receive,
+                                'debt': concubine.debt,
                                 'subTotal': concubine.subTotal,
                             })
                         }
