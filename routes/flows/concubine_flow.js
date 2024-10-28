@@ -220,7 +220,7 @@ const getNext = async (decryptedBody) => {
 
                     let filename = decryptedBody.flow_token;
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
-
+                    console.log(uploadPath)
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
                     pdfDocGenerator.getBuffer(async (buffer) => {
@@ -283,7 +283,6 @@ const getNext = async (decryptedBody) => {
                     try {
                         const _rows = [];
                         const Ekle = (concubine) => {
-                            console.log(concubine)
                             _rows.push({
                                 'companyName': concubine.companyName,
                                 'vergiDairesi': concubine.vergiDairesi,
