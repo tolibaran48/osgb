@@ -223,8 +223,7 @@ const getNext = async (decryptedBody) => {
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
                     pdfDocGenerator.getBuffer(async (buffer) => { 
-                        console.log({buffer})
-                        fs.writeFile(uploadPath, buffer)
+                        fs.writeFileSync(uploadPath, buffer)
                             .then(async () => {
                                 const privateClaim = {
                                     "iss": decryptedBody.flow_token,
@@ -238,7 +237,7 @@ const getNext = async (decryptedBody) => {
 
 
                                 const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-                                    console.log({mediaToken})
+                                
                                 try {
 
                                     await axios({
@@ -274,9 +273,6 @@ const getNext = async (decryptedBody) => {
                                     throw new GraphQLError(error)
                                 }
                             })
-                            .catch((err) => {
-                                console.error(err);
-                            });
                     });
                 }
                 const createFile = () => {
