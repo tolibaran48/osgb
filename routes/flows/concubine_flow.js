@@ -110,7 +110,7 @@ const getNext = async (decryptedBody) => {
                 })
 
                 const _cariler = [];
-                console.log(JSON.stringify(concubines))
+                
                 let _concubines = concubines.company.concubines.map((cari, index, arr) => {
                     let subTotal = 0;
                     index === 0 ?
@@ -120,9 +120,9 @@ const getNext = async (decryptedBody) => {
 
                     _cariler.push({
                         ...cari,
-                        companyName: _concubines.company.name,
-                        vergiDairesi: _concubines.company.vergi.vergiDairesi,
-                        vergiNumarasi: _concubines.company.vergi.vergiNumarasi,
+                        companyName: concubines.company.name,
+                        vergiDairesi: concubines.company.vergi.vergiDairesi,
+                        vergiNumarasi: concubines.company.vergi.vergiNumarasi,
                         subTotal: subTotal
                     })
                 })
