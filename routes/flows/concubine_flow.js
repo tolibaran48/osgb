@@ -110,8 +110,8 @@ const getNext = async (decryptedBody) => {
                 })
 
                 const _cariler = [];
-                console.log(concubines.data.company)
-                let _concubines = concubines.data.company.concubines.map((cari, index, arr) => {
+                console.log(concubines.company)
+                let _concubines = concubines.company.concubines.map((cari, index, arr) => {
                     let subTotal = 0;
                     index === 0 ?
                         subTotal = cari.process === 'Fatura' ? cari.debt : -cari.receive
