@@ -6,6 +6,7 @@ const axios = require('axios');
 
 module.exports = {
     sendInvoice: async (parent, args, { token }) => {
+        console.log(args)
         await auth(token);
         const values = jwt.verify(token, process.env.mediaJwtSecret)
         const privateClaim = {
@@ -14,6 +15,7 @@ module.exports = {
             "sub": "waba",
             "args": args.data
         }
+
 
         const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 

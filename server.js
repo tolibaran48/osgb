@@ -51,6 +51,7 @@ app.use(express.json({ limit: '50mb' }));
 
 app.use('/webhook', require("./routes/waba"));
 app.use('/flows/invoice_flow', require("./routes/flows/invoice_flow"));
+app.use('/flows/concubine_flow', require("./routes/flows/concubine_flow"));
 
 /*
 app.use(async (req, res, next) => {

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const decryptRequest = require('../../functions/waba/decryptRequest');
@@ -50,7 +51,7 @@ const getNext = async (decryptedBody) => {
         switch (screen) {
             case "COMPANY":
                 const _invoices = await axios({
-                    url: 'http://localhost:4000/graphql',
+                    url: `${process.env.LOCALHOST}/graphql`,
                     method: 'post',
                     headers: {
                         "authorization": token
@@ -74,13 +75,13 @@ const getNext = async (decryptedBody) => {
 
                 return {
                     screen: 'INVOICE',
-                    data: invoices,
+                    data: { invoices },
                 };
 
             case "INVOICE":
-                data.invoice.forEach(async element => {
+                data.invoice.forEach(async (element) => {
                     const invoice = await axios({
-                        url: 'http://localhost:4000/graphql',
+                        url: `${process.env.LOCALHOST}/graphql`,
                         method: 'post',
                         headers: {
                             "authorization": token
@@ -99,36 +100,24 @@ const getNext = async (decryptedBody) => {
                         }
                     })
 
-                    const variables = {
-                        data: {
-                            "to": `90${data.phoneNumber}`,
-                            "company": invoice.company.name,
-                            "invoiceDate": invoice.processDate,
-                            "invoiceAmount": invoice.debt,
-                            "type": "upload",
-                            "fileName": invoice.processNumber
-                        }
-                    }
-
-                    const __es = await axios({
-                        url: 'http://localhost:4000/graphql',
+                    const es = await axios({
+                        url: `${process.env.LOCALHOST}/graphql`,
                         method: 'post',
                         headers: {
                             "authorization": token
                         },
                         data: {
                             query: `mutation{
-                                    sendInvoice(data: "${variables}") {
-                                    status
-                                    }
-                                }`
+                       sendInvoice(data:{to: "90${data.phoneNumber}", invoiceDate: "${dayjs(invoice.data.data.concubine.processDate).format("DD/MM/YYYY")}",company: "${invoice.data.data.concubine.company.name}",invoiceAmount: ${invoice.data.data.concubine.debt},type: "upload",fileName: "${invoice.data.data.concubine.processNumber}"}){
+                        status
+                       }
+                      }`
                         }
                     })
-                });
-
+                })
 
                 return {
-                    ...SCREEN_RESPONSES.SUCCESS,
+                    screen: "SUCCESS",
                     data: {
                         extension_message_response: {
                             params: {

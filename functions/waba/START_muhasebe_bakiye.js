@@ -3,7 +3,7 @@ const axios = require('axios');
 const WabaYetkili = require("../../models/WabaUser");
 const createToken = require("../../helpers/token");
 
-const START_muhasebe_fatura = async (phoneNumber) => {
+const START_muhasebe_bakiye = async (phoneNumber) => {
     if (phoneNumber.length == 12) {
         phoneNumber = phoneNumber.substring(2)
     }
@@ -20,7 +20,7 @@ const START_muhasebe_fatura = async (phoneNumber) => {
 
     const token = await createToken.generate({ phoneNumber }, '5m');
 
-    const invoices = await axios({
+    const _companies = await axios({
         url: `${process.env.LOCALHOST}/graphql`,
         method: 'post',
         headers: {
@@ -41,10 +41,12 @@ const START_muhasebe_fatura = async (phoneNumber) => {
         }
     })
 
-    if (invoices.data.data.wabaUser) {
-        const companies = invoices.data.data.wabaUser.companies.map((company) => {
+    if (_companies.data.data.wabaUser) {
+        const companies = _companies.data.data.wabaUser.companies.map((company) => {
             return { "id": company.vergi.vergiNumarasi, "title": company.name, "description": "" }
         })
+
+
 
         axios({
             "method": "POST",
@@ -74,8 +76,8 @@ const START_muhasebe_fatura = async (phoneNumber) => {
                         "parameters": {
                             "flow_message_version": "3",
                             "flow_token": "1088448959650327",
-                            "flow_name": "invoice_flow_v1",
-                            "flow_cta": "Fatura indir",
+                            "flow_name": "concubine_flow_v0",
+                            "flow_cta": "Cari indir",
                             "flow_action_payload": {
                                 "screen": "COMPANY",
                                 "data": { companies, phoneNumber }
@@ -106,4 +108,4 @@ const START_muhasebe_fatura = async (phoneNumber) => {
     }
 }
 
-module.exports = START_muhasebe_fatura;
+module.exports = START_muhasebe_bakiye;

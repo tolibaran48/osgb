@@ -7,12 +7,12 @@ const send_PersonelEvrak = require("../functions/waba/send_PersonelEvrak");
 
 const WabaConversation = require("../models/WabaConversation");
 const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');
+const createToken = require('../helpers/token');
 
 router.get("/", async (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
-  START_muhasebe_fatura("5494191961")
   // check the mode and token sent are correct
   if (mode === "subscribe" && token === process.env.WEBHOOK_VERIFY_TOKEN) {
     // respond with 200 OK and challenge token from the request
@@ -174,7 +174,7 @@ const getMessageType = async (req) => {
 }
 
 router.post("/", async (req, res) => {
-  //send_PersonelEvrak()
+  const message = await getMessageType(req)
   if (message.messageFrom === "external") {
     console.log(message);
     if (message.messageType !== "received") {
@@ -185,13 +185,10 @@ router.post("/", async (req, res) => {
         case "list_reply":
           switch (message.message.interactive.list_reply.id) {
             case "START_muhasebe_fatura":
-              console.log({ "from": message.message.from })
+              START_muhasebe_fatura(`${message.message.from}`)
               break;
           }
 
-          break;
-        case "nfm_reply":
-          console.log({ "from": message.message.interactive.nfm_reply })
           break;
       }
     }

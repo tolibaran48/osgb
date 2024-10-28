@@ -12,8 +12,9 @@ const Sicil = {
         }
     },
     insurances: async (parent, args, { token, Sicil }) => {
-        await auth(token);
         console.log(token)
+        await auth(token);
+
         return Sicil.aggregate([
             { $lookup: { from: 'firmas', localField: 'company', foreignField: '_id', as: 'firmalar' } },
             { $addFields: { companyName: { $first: "$firmalar.name" } } },

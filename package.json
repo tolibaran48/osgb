@@ -28,7 +28,9 @@
     "graphql-scalars": "^1.23.0",
     "graphql-upload-minimal": "^1.6.1",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "mongoose": "^8.5.1",
+    "pdfmake": "^0.2.14",
     "type-graphql": "^2.0.0-rc.2",
     "xmlbuilder": "^15.1.1",
     "xmlhttprequest": "^1.8.0"

@@ -5,7 +5,7 @@ type WabaYetkili{
 }
 
 type Query{
-    wabaUser(phoneNumber:String!):WabaYetkili!
+    wabaUser(phoneNumber:String!):WabaYetkili
 }
 
 type Mutation{
