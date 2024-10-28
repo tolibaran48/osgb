@@ -68,14 +68,14 @@ const getNext = async (decryptedBody) => {
                 let startDate_minValue = dayjs(now.subtract(3, 'year')).format("YYYY-MM-DD");
 
                 const _data={
-                            startDate: {
-                            initValue: startDate_initValue,
-                            minDate: startDate_minValue,
-                            maxDate: startDate_maxValue
-                        },endDate: {
-                            initValue: endDate_initValue,
-                            minDate: endDate_minValue,
-                            maxDate: endDate_maxValue
+                            "startDate": {
+                            "initValue": startDate_initValue,
+                            "minDate": startDate_minValue,
+                            "maxDate": startDate_maxValue
+                        },"endDate": {
+                            "initValue": endDate_initValue,
+                            "minDate": endDate_minValue,
+                            "maxDate": endDate_maxValue
                         }
                 }
                 console.log(_data)
