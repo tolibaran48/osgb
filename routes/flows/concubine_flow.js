@@ -128,7 +128,7 @@ const getNext = async (decryptedBody) => {
                 })
 
                 let cariler = _.filter(
-                    _cariler, (dayjs(cari.processDate).isSameOrBefore(data.endDate) && dayjs(cari.ErrorprocessDate).isSameOrAfter(data.startDate))
+                    _cariler, (dayjs(processDate).isSameOrBefore(data.endDate) && dayjs(processDate).isSameOrAfter(data.startDate))
                 )
 
                 const createPDF = async (values) => {
