@@ -111,7 +111,7 @@ const getNext = async (decryptedBody) => {
 
                 const _cariler = [];
                 
-                let _concubines = concubines.company.concubines.map((cari, index, arr) => {
+                let _concubines = concubines.data.data.company.concubines.map((cari, index, arr) => {
                     let subTotal = 0;
                     index === 0 ?
                         subTotal = cari.process === 'Fatura' ? cari.debt : -cari.receive
@@ -120,9 +120,9 @@ const getNext = async (decryptedBody) => {
 
                     _cariler.push({
                         ...cari,
-                        companyName: concubines.company.name,
-                        vergiDairesi: concubines.company.vergi.vergiDairesi,
-                        vergiNumarasi: concubines.company.vergi.vergiNumarasi,
+                        companyName: concubines.data.data.company.name,
+                        vergiDairesi: concubines.data.data.company.vergi.vergiDairesi,
+                        vergiNumarasi: concubines.data.data.company.vergi.vergiNumarasi,
                         subTotal: subTotal
                     })
                 })
