@@ -224,39 +224,7 @@ const getNext = async (decryptedBody) => {
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
                    pdfDocGenerator.getBuffer((buffer) => {
                         fs.writeFileSync(uploadPath, buffer)
-                            }).then(async () => {
-                                const privateClaim = {
-                                    "iss": decryptedBody.flow_token,
-                                    "aud": process.env.MEDIA_SITE,
-                                    "sub": "waba",
-                                    "args": {
-                                        fileName: filename,
-                                        type: "upload"
-                                    }
-                                }
-
-
-                                const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-                                
-                                try {
-
-                                    await axios({
-                                        "method": "POST",
-                                        "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
-                                        "headers": {
-                                            Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
-                                        },
-                                        "data": {
-                                            "messaging_product": "whatsapp",
-                                            "to": `${data.phoneNumber}`,
-                                            "recipient_type": "individual",
-                                            "type": "document",
-                                            "document": {
-                                                "filename": `${filename}.pdf`,
-                                                "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
-                                            }
-                                        },
-                                    });
+                            })
 
                                     return {
                                         screen: "SUCCESS",
@@ -268,11 +236,6 @@ const getNext = async (decryptedBody) => {
                                             },
                                         },
                                     };
-
-                                } catch (error) {
-                                    throw new GraphQLError(error)
-                                }
-                            })
                     
                 }
                 const createFile = () => {
