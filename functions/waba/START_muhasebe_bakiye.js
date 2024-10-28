@@ -76,7 +76,7 @@ const START_muhasebe_bakiye = async (phoneNumber) => {
                         "parameters": {
                             "flow_message_version": "3",
                             "flow_token": "1256643358804153",
-                            "flow_name": "concubine_flow_v0",
+                            "flow_name": "concubine_flow_v1",
                             "flow_cta": "Cari indir",
                             "flow_action_payload": {
                                 "screen": "COMPANY",
