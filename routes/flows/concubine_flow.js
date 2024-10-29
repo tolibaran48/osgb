@@ -82,15 +82,14 @@ const getNext = async (decryptedBody) => {
                 };
 
             case "CONCUBINE":
-
-                const concubines = await axios({
-                    url: `${process.env.LOCALHOST}/graphql`,
-                    method: 'post',
-                    headers: {
-                        "authorization": token
-                    },
-                    data: {
-                        query: `query{
+                 const concubines = await axios({
+        url: `${process.env.LOCALHOST}/graphql`,
+        method: 'post',
+        headers: {
+            "authorization": token
+        },
+        data: {
+            query: `query{
                               company(vergiNumarasi: "510848610") {
                                 name
                                 vergi {
@@ -107,188 +106,190 @@ const getNext = async (decryptedBody) => {
                                 }
                               }
                             }`
-                    }
-                })
+        }
+    })
 
-                const _cariler = [];
-                
-                let _concubines = concubines.data.data.company.concubines.map((cari, index, arr) => {
-                    let subTotal = 0;
-                    index === 0 ?
-                        subTotal = cari.process === 'Fatura' ? cari.debt : -cari.receive
-                        :
-                        subTotal = cari.process === 'Fatura' ? _cariler[index - 1].subTotal + cari.debt : _cariler[index - 1].subTotal - cari.receive
+    const _cariler = [];
 
-                    _cariler.push({
-                        ...cari,
-                        companyName: concubines.data.data.company.name,
-                        vergiDairesi: concubines.data.data.company.vergi.vergiDairesi,
-                        vergiNumarasi: concubines.data.data.company.vergi.vergiNumarasi,
-                        subTotal: subTotal
-                    })
-                })
+    let _concubines = concubines.data.data.company.concubines.map((cari, index, arr) => {
+        let subTotal = 0;
+        index === 0 ?
+            subTotal = cari.process === 'Fatura' ? cari.debt : -cari.receive
+            :
+            subTotal = cari.process === 'Fatura' ? _cariler[index - 1].subTotal + cari.debt : _cariler[index - 1].subTotal - cari.receive
 
-                let cariler = _.filter(
-                    _cariler, function (element) {
-                        return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));
-                    }
-                )
-                
-                const createPDF = async (values) => {
+        _cariler.push({
+            ...cari,
+            companyName: concubines.data.data.company.name,
+            vergiDairesi: concubines.data.data.company.vergi.vergiDairesi,
+            vergiNumarasi: concubines.data.data.company.vergi.vergiNumarasi,
+            subTotal: subTotal
+        })
+    })
 
-                    const docDefinition = {
-                        defaultStyle: {
-                            fontSize: 9.75
-                        },
-                        pageMargins: [40, 65, 40, 30],
-                        header: {
-                            margin: [40, 20, 40, 20],
-                            stack: [
-                                {
-                                    columns: [
-                                        {
-                                            width: 'auto',
-                                            text: [
-                                                { text: 'bodrum', fontSize: 22, color: 'coral', bold: true, lineHeight: 0.9 },
-                                                {
-                                                    text: [{ text: 'İSG\n', fontSize: 22, color: '#232530', bold: true, lineHeight: 0.9 },
-                                                    { text: 'İş Sağlığı ve Güvenliği Hizmetleri', fontSize: 7, color: 'black', characterSpacing: 0.34 }]
-                                                },
-                                            ]
-                                        },
-                                        { text: `${dayjs().format("DD/MM/YYYY HH:mm")}`, alignment: 'right', fontSize: 11, width: '*' }
-                                    ]
-                                },
-                            ],
-                        },
+    let cariler = _.filter(
+        _cariler, function (element) {
+            return (dayjs(element.processDate).isSameOrBefore("2024-10-24") && dayjs(element.processDate).isSameOrAfter("2023-10-24"));
+        }
+    )
 
-                        content: [
-                            //{
-                            //    canvas: [
-                            //        { type: 'line', x1: 0, y1: 8, x2: 515, y2: 8, lineWidth: 0.5, lineColor: 'coral' },
-                            //        { type: 'line', x1: 0, y1: 11, x2: 515, y2: 11, lineWidth: 1.5, lineColor: 'coral' },
-                            //    ]
-                            //},
-                            //{ text: 'Tablo İçeriği', margin: [0, 20, 0, 0]},
+    const createPDF = async (values) => {
+
+        const docDefinition = {
+            defaultStyle: {
+                fontSize: 9.75
+            },
+            pageMargins: [40, 65, 40, 30],
+            header: {
+                margin: [40, 20, 40, 20],
+                stack: [
+                    {
+                        columns: [
                             {
-                                columns: [
+                                width: 'auto',
+                                text: [
+                                    { text: 'bodrum', fontSize: 22, color: 'coral', bold: true, lineHeight: 0.9 },
                                     {
-                                        width: 'auto',
-                                        text: [
-                                            { text: `${values[0].companyName}\n`, fontSize: 9.75 },
-                                            { text: `${values[0].vergiDairesi}\n`, fontSize: 9.75 },
-                                            { text: `${values[0].vergiNumarasi}`, fontSize: 9.75 },
-                                        ]
-                                    }
+                                        text: [{ text: 'İSG\n', fontSize: 22, color: '#232530', bold: true, lineHeight: 0.9 },
+                                        { text: 'İş Sağlığı ve Güvenliği Hizmetleri', fontSize: 7, color: 'black', characterSpacing: 0.34 }]
+                                    },
                                 ]
                             },
-                            {
-                                layout: 'lightHorizontalLines',
-                                margin: [0, 20],
-                                table: {
-                                    fontSize: 9.75,
-                                    headerRows: 1,
-                                    widths: ['*', '*', '*', '*', '*'],
-                                    body:
-                                        [['İşlem Türü', 'İşlem Tarihi', 'Tahsilat Tutarı', 'Fatura Tutarı', 'Bakiye']].concat(values.map(value =>
-                                            [
-                                                { text: `${value.process}`, borderColor: ['coral', 'coral', 'coral', 'coral'] },
-                                                { text: `${dayjs(value.processDate).format("DD/MM/YYYY")}`, borderColor: ['coral', 'coral', 'coral', 'coral'] },
-                                                {
-                                                    text: `${value.receive ? new Intl.NumberFormat('tr-TR', {
-                                                        style: 'currency',
-                                                        currency: 'TRY',
-                                                    }).format(value.receive) : ''}`, borderColor: ['coral', 'coral', 'coral', 'coral'], color: 'green'
-                                                },
-                                                {
-                                                    text: `${value.debt ? new Intl.NumberFormat('tr-TR', {
-                                                        style: 'currency',
-                                                        currency: 'TRY',
-                                                    }).format(value.debt) : ''}`, borderColor: ['coral', 'coral', 'coral', 'coral'], color: 'red'
-                                                },
-                                                {
-                                                    text: `${new Intl.NumberFormat('tr-TR', {
-                                                        style: 'currency',
-                                                        currency: 'TRY',
-                                                    }).format(value.subTotal)}`, borderColor: ['coral', 'coral', 'coral', 'coral']
-                                                },
-                                            ]
-                                        ))
-                                }
-                            }
+                            { text: `${dayjs().format("DD/MM/YYYY HH:mm")}`, alignment: 'right', fontSize: 11, width: '*' }
                         ]
-                    };
+                    },
+                ],
+            },
 
-                    let filename = decryptedBody.flow_token;
-                    const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
-
-                    const pdfDocGenerator = pdfMake.createPdf(docDefinition); 
-                     pdfDocGenerator.getBuffer(async (buffer) => {
-                         fs.writeFileSync(uploadPath, buffer)
-                     })
-                                const privateClaim = {
-                                    "iss": decryptedBody.flow_token,
-                                    "aud": process.env.MEDIA_SITE,
-                                    "sub": "waba",
-                                    "args": {
-                                        fileName: filename,
-                                        type: "upload"
-                                    }
-                                }
-
-
-                                const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });       
-
-                                    await axios({
-                                        "method": "POST",
-                                        "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
-                                        "headers": {
-                                            Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
-                                        },
-                                        "data": {
-                                            "messaging_product": "whatsapp",
-                                            "to":9054941919661,
-                                            "recipient_type": "individual",
-                                            "type": "document",
-                                            "document": {
-                                                "filename": `${filename}.pdf`,
-                                                "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
-                                            }
-                                        },
-                                    });
-                              
+            content: [
+                //{
+                //    canvas: [
+                //        { type: 'line', x1: 0, y1: 8, x2: 515, y2: 8, lineWidth: 0.5, lineColor: 'coral' },
+                //        { type: 'line', x1: 0, y1: 11, x2: 515, y2: 11, lineWidth: 1.5, lineColor: 'coral' },
+                //    ]
+                //},
+                //{ text: 'Tablo İçeriği', margin: [0, 20, 0, 0]},
+                {
+                    columns: [
+                        {
+                            width: 'auto',
+                            text: [
+                                { text: `${values[0].companyName}\n`, fontSize: 9.75 },
+                                { text: `${values[0].vergiDairesi}\n`, fontSize: 9.75 },
+                                { text: `${values[0].vergiNumarasi}`, fontSize: 9.75 },
+                            ]
                         }
-                
-                const createFile = async() => {
-                    try {
-                        const _rows = [];
-                        const Ekle = (concubine) => {
-                            _rows.push({
-                                'companyName': concubine.companyName,
-                                'vergiDairesi': concubine.vergiDairesi,
-                                'vergiNumarasi': concubine.vergiNumarasi,
-                                'process': concubine.process,
-                                'processDate': concubine.processDate,
-                                'receive': concubine.receive,
-                                'debt': concubine.debt,
-                                'subTotal': concubine.subTotal,
-                            })
-                        }
-
-                        cariler.map((concubine) => {
-                            Ekle(concubine)
-                        })
-
-                        await createPDF(_rows);
-                    }
-                    catch (error) {
-                        console.log(error)
+                    ]
+                },
+                {
+                    layout: 'lightHorizontalLines',
+                    margin: [0, 20],
+                    table: {
+                        fontSize: 9.75,
+                        headerRows: 1,
+                        widths: ['*', '*', '*', '*', '*'],
+                        body:
+                            [['İşlem Türü', 'İşlem Tarihi', 'Tahsilat Tutarı', 'Fatura Tutarı', 'Bakiye']].concat(values.map(value =>
+                                [
+                                    { text: `${value.process}`, borderColor: ['coral', 'coral', 'coral', 'coral'] },
+                                    { text: `${dayjs(value.processDate).format("DD/MM/YYYY")}`, borderColor: ['coral', 'coral', 'coral', 'coral'] },
+                                    {
+                                        text: `${value.receive ? new Intl.NumberFormat('tr-TR', {
+                                            style: 'currency',
+                                            currency: 'TRY',
+                                        }).format(value.receive) : ''}`, borderColor: ['coral', 'coral', 'coral', 'coral'], color: 'green'
+                                    },
+                                    {
+                                        text: `${value.debt ? new Intl.NumberFormat('tr-TR', {
+                                            style: 'currency',
+                                            currency: 'TRY',
+                                        }).format(value.debt) : ''}`, borderColor: ['coral', 'coral', 'coral', 'coral'], color: 'red'
+                                    },
+                                    {
+                                        text: `${new Intl.NumberFormat('tr-TR', {
+                                            style: 'currency',
+                                            currency: 'TRY',
+                                        }).format(value.subTotal)}`, borderColor: ['coral', 'coral', 'coral', 'coral']
+                                    },
+                                ]
+                            ))
                     }
                 }
+            ]
+        };
 
-                await createFile();
+        let filename = "deneme123";
+        const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
-                                     
+        const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+        await pdfDocGenerator.getBuffer(async (buffer) => {
+            fs.writeFileSync(uploadPath, buffer)
+        })
+        const privateClaim = {
+            "iss": "deneme123",
+            "aud": process.env.MEDIA_SITE,
+            "sub": "waba",
+            "args": {
+                fileName: filename,
+                type: "upload"
+            }
+        }
+
+
+        const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+        console.log({ mediaToken })
+        await axios({
+            "method": "POST",
+            "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
+            "headers": {
+                Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
+            },
+            "data": {
+                "messaging_product": "whatsapp",
+                "to": 5494191961,
+                "recipient_type": "individual",
+                "type": "document",
+                "document": {
+                    "filename": `${filename}.pdf`,
+                    "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
+                }
+            },
+        });
+
+
+
+        return true
+    }
+
+    const createFile = () => {
+        try {
+            const _rows = [];
+            const Ekle = (concubine) => {
+                _rows.push({
+                    'companyName': concubine.companyName,
+                    'vergiDairesi': concubine.vergiDairesi,
+                    'vergiNumarasi': concubine.vergiNumarasi,
+                    'process': concubine.process,
+                    'processDate': concubine.processDate,
+                    'receive': concubine.receive,
+                    'debt': concubine.debt,
+                    'subTotal': concubine.subTotal,
+                })
+            }
+
+            cariler.map((concubine) => {
+                Ekle(concubine)
+            })
+
+            createPDF(_rows);
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    createFile();
+
 
                  return {
                                         screen: "SUCCESS",
