@@ -224,8 +224,7 @@ const getNext = async (decryptedBody) => {
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition); 
                      pdfDocGenerator.getBuffer(async (buffer) => {
-                         console.log({buffer})
-                        await fs.writeFile(uploadPath, buffer)
+                         fs.writeFileSync(uploadPath, buffer)
                      })
                                 const privateClaim = {
                                     "iss": decryptedBody.flow_token,
