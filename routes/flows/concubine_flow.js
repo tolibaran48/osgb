@@ -241,7 +241,7 @@ const getNext = async (decryptedBody) => {
                               
                         }
                 
-                const createFile = () => {
+                const createFile = async() => {
                     try {
                         const _rows = [];
                         const Ekle = (concubine) => {
@@ -261,14 +261,14 @@ const getNext = async (decryptedBody) => {
                             Ekle(concubine)
                         })
 
-                        createPDF(_rows);
+                        await createPDF(_rows);
                     }
                     catch (error) {
                         console.log(error)
                     }
                 }
 
-                createFile();
+                await createFile();
 
                  return {
                                         screen: "SUCCESS",
