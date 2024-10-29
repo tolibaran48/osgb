@@ -247,7 +247,7 @@ const getNext = async (decryptedBody) => {
                                         },
                                         "data": {
                                             "messaging_product": "whatsapp",
-                                            "to": `${data.phoneNumber}`,
+                                            "to":9054941919661,
                                             "recipient_type": "individual",
                                             "type": "document",
                                             "document": {
