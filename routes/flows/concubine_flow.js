@@ -225,7 +225,7 @@ const getNext = async (decryptedBody) => {
                      pdfDocGenerator.getBuffer(async (buffer) => {
                          console.log({buffer})
                         await fs.writeFile(uploadPath, buffer)
-                     }).then(async () => {
+                     })
                                 const privateClaim = {
                                     "iss": decryptedBody.flow_token,
                                     "aud": process.env.MEDIA_SITE,
@@ -269,9 +269,6 @@ const getNext = async (decryptedBody) => {
                                             },
                                         },
                                     };
-
-                                   
-                            })
                         }
                 
                 const createFile = () => {
