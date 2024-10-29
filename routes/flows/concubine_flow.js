@@ -221,8 +221,44 @@ const getNext = async (decryptedBody) => {
                     let filename = decryptedBody.flow_token;
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
-                    const pdfDocGenerator = pdfMake.createPdf(docDefinition);                    
-                   return {
+                    const pdfDocGenerator = pdfMake.createPdf(docDefinition); 
+                     pdfDocGenerator.getBuffer(async (buffer) => {
+                        fs.writeFile(uploadPath, buffer)
+                            .then(async () => {
+                                const privateClaim = {
+                                    "iss": decryptedBody.flow_token,
+                                    "aud": process.env.MEDIA_SITE,
+                                    "sub": "waba",
+                                    "args": {
+                                        fileName: filename,
+                                        type: "upload"
+                                    }
+                                }
+
+
+                                const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+
+                                    await axios({
+                                        "method": "POST",
+                                        "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
+                                        "headers": {
+                                            Authorization: `Bearer ${process.env.WABA_API_TOKEN}`,
+                                        },
+                                        "data": {
+                                            "messaging_product": "whatsapp",
+                                            "to": 905494191961,
+                                            "recipient_type": "individual",
+                                            "type": "document",
+                                            "document": {
+                                                "filename": `${filename}.pdf`,
+                                                "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
+                                            }
+                                        },
+                                    });
+
+
+                    
+                               return {
                                         screen: "SUCCESS",
                                         data: {
                                             extension_message_response: {
@@ -235,7 +271,7 @@ const getNext = async (decryptedBody) => {
 
                                    
                     
-                }
+                
                 const createFile = () => {
                     try {
                         const _rows = [];
