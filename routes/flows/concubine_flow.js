@@ -237,7 +237,7 @@ const getNext = async (decryptedBody) => {
 
 
                                 const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-
+                                        console.log({mediaToken})
                                     await axios({
                                         "method": "POST",
                                         "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
