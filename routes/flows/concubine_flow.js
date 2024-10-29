@@ -2,6 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 const decryptRequest = require('../../functions/waba/decryptRequest');
 const encryptResponse = require('../../functions/waba/encryptResponse');
 const dayjs = require('dayjs');
