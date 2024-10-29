@@ -1,7 +1,7 @@
 require("dotenv").config()
 const axios = require('axios');
 
-const send_START = async () => {
+const send_START = async (phoneNumber) => {
     const response = await axios({
         method: "POST",
         url: `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
@@ -11,7 +11,7 @@ const send_START = async () => {
         data: {
             messaging_product: "whatsapp",
             recipient_type: "individual",
-            to: '5494191961',
+            to: phoneNumber,
             type: "interactive",
             interactive: {
                 type: "list",
