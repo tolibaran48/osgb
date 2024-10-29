@@ -90,7 +90,7 @@ const getNext = async (decryptedBody) => {
                     },
                     data: {
                         query: `query{
-                              company(vergiNumarasi: "${data.company}") {
+                              company(vergiNumarasi: "510848610") {
                                 name
                                 vergi {
                                     vergiDairesi
