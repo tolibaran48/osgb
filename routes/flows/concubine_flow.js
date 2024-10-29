@@ -129,7 +129,7 @@ const getNext = async (decryptedBody) => {
 
     let cariler = _.filter(
         _cariler, function (element) {
-            return (dayjs(element.processDate).isSameOrBefore("2024-10-24") && dayjs(element.processDate).isSameOrAfter("2023-10-24"));
+            return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));
         }
     )
 
@@ -218,7 +218,7 @@ const getNext = async (decryptedBody) => {
             ]
         };
 
-        let filename = "deneme123";
+        let filename = data.flow_token;
         const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
@@ -226,7 +226,7 @@ const getNext = async (decryptedBody) => {
             fs.writeFileSync(uploadPath, buffer)
         })
         const privateClaim = {
-            "iss": "deneme123",
+            "iss": filename,
             "aud": process.env.MEDIA_SITE,
             "sub": "waba",
             "args": {
@@ -237,7 +237,7 @@ const getNext = async (decryptedBody) => {
 
 
         const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-        console.log({ mediaToken })
+        
         await axios({
             "method": "POST",
             "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
