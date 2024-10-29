@@ -218,7 +218,7 @@ const getNext = async (decryptedBody) => {
             ]
         };
 
-        let filename = data.flow_token;
+        let filename = decryptedBody.flow_token;
         const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
