@@ -238,20 +238,8 @@ const getNext = async (decryptedBody) => {
                                 }
 
 
-                                const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-
-
-                    
-                               return {
-                                        screen: "SUCCESS",
-                                        data: {
-                                            extension_message_response: {
-                                                params: {
-                                                    "flow_token": decryptedBody.flow_token,
-                                                },
-                                            },
-                                        },
-                                    };
+                                const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });                   
+                              
                         }
                 
                 const createFile = () => {
@@ -282,6 +270,17 @@ const getNext = async (decryptedBody) => {
                 }
 
                 createFile();
+
+                 return {
+                                        screen: "SUCCESS",
+                                        data: {
+                                            extension_message_response: {
+                                                params: {
+                                                    "flow_token": decryptedBody.flow_token,
+                                                },
+                                            },
+                                        },
+                                    };
 
             default:
                 break;
