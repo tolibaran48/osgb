@@ -218,7 +218,7 @@ const getNext = async (decryptedBody) => {
             ]
         };
 
-        let filename = decryptedBody.flow_token;
+        let filename = `${concubines.data.data.company.name}-${decryptedBody.flow_token.split("-")[2]}`;
         const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
