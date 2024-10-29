@@ -223,6 +223,7 @@ const getNext = async (decryptedBody) => {
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition); 
                      pdfDocGenerator.getBuffer(async (buffer) => {
+                         console.log({buffer})
                         fs.writeFile(uploadPath, buffer)
                      }).then(async () => {
                                 const privateClaim = {
