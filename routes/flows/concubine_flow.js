@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const fs = require('fs');
+const { writeFile, readFileSync, existsSync, mkdirSync } = require('fs');
 const path = require('path');
 const decryptRequest = require('../../functions/waba/decryptRequest');
 const encryptResponse = require('../../functions/waba/encryptResponse');
@@ -14,7 +14,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 router.post("/", async ({ body }, res) => {
     let privateFile = path.resolve('./functions/waba/files/private.pem')
-    let PRIVATE_KEY = fs.readFileSync(privateFile, 'utf8');
+    let PRIVATE_KEY = readFileSync(privateFile, 'utf8');
     const { decryptedBody, aesKeyBuffer, initialVectorBuffer } = await decryptRequest(
         body,
         PRIVATE_KEY,
@@ -220,12 +220,16 @@ const getNext = async (decryptedBody) => {
                     };
 
                     let filename = decryptedBody.flow_token;
+                    const Path = path.join(__dirname, '../../upload');
                     const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
 
+                    if (!existsSync(Path)) {
+                        mkdirSync(Path, { recursive: true });
+                    }
 
                     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
                     pdfDocGenerator.getBuffer(async (buffer) => {
-                        fs.writeFile(uploadPath, buffer)
+                        writeFile(uploadPath, buffer)
                             .then(async () => {
                                 const privateClaim = {
                                     "iss": decryptedBody.flow_token,

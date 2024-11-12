@@ -1,43 +1,42 @@
-const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const personSchema=new Schema({
-    name:{
-        type:String,
-        required:true
+const personSchema = new Schema({
+    name: {
+        type: String,
+        required: true
     },
-    surname:{
-        type:String,
-        required:true
+    surname: {
+        type: String,
+        required: true
     },
-    identityId:{
-        type:String,
-        required:true,
-        unique:true
+    identityId: {
+        type: String,
+        required: true,
+        unique: true
     },
-    gender:{
-        type:String,
+    gender: {
+        type: String,
         enum: ["Erkek", "Kadın"]
     },
-    maritalStatus:{
-        type:String,
+    maritalStatus: {
+        type: String,
         enum: ["Evli", "Bekar"]
-    }, 
-    birthPlace:{
-        type:String
     },
-    birthDate:{
-        type:Boolean,
-        default:true
+    birthPlace: {
+        type: String
     },
-    momName:{
-        type:String,
+    birthDate: {
+        type: Boolean
     },
-    fatherName:{
-        type:String,
+    momName: {
+        type: String,
     },
-    blood:{
-        type:String,
+    fatherName: {
+        type: String,
+    },
+    blood: {
+        type: String,
         enum: [
             "A Rh(+)",
             "A Rh(-)",
@@ -49,14 +48,14 @@ const personSchema=new Schema({
             "0 Rh(+)",
         ]
     },
-    childNumber:{
-        type:Number,
+    childNumber: {
+        type: Number,
     },
-    avatar:{ 
-        type:Buffer
-    },    
+    avatar: {
+        type: Buffer
+    },
 });
 
-const Person=mongoose.model('Person',personSchema);
+const Person = mongoose.model('Person', personSchema);
 
-module.exports=Person;
+module.exports = Person;

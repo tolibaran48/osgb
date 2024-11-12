@@ -1,29 +1,33 @@
-const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const employeeSchema=new Schema({
-    person:{
+const employeeSchema = new Schema({
+    person: {
         type: Schema.Types.ObjectId,
         ref: 'Person',
         required: true
     },
-    insurance:{
+    company: {
         type: Schema.Types.ObjectId,
-        ref: 'Insurance',
+        ref: 'Firma',
         required: true
     },
-    workingStatus:{
-        type:String,
-        enum: ["Aktif","Ayrıldı"]
+    insurance: {
+        type: Schema.Types.ObjectId,
+        ref: 'Sicil'
     },
-    entryDate:{
-        type:Date,
+    workingStatus: {
+        type: String,
+        enum: ["Aktif", "Ayrıldı"]
     },
-    relaseDate:{
-        type:Date,
-    },   
+    entryDate: {
+        type: Date,
+    },
+    relaseDate: {
+        type: Date,
+    },
 });
 
-const Employee=mongoose.model('Employee',employeeSchema);
+const Employee = mongoose.model('Employee', employeeSchema);
 
-module.exports=Employee;
+module.exports = Employee;
