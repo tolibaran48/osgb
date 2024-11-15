@@ -2,10 +2,9 @@ scalar Upload
 
 type Employee{
     _id:ID!
-    personObj:Person
-    person:ID
-    insurance:ID!
-    insuranceObj:Sicil!
+    person:Person
+    company:ID!
+    insurance:Sicil!
     workingStatus:String
     entryDate:String
     relaseDate:String    

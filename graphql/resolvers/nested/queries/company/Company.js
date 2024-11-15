@@ -55,6 +55,16 @@ const Company = {
         }
     },
 
+    employees: async (parent, args, { token, Employee }) => {
+        await auth(token);
+
+        try {
+            return await Employee.find({ "company": parent._id }).sort({ "name": 1 });
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
+    },
+
 };
 
 module.exports = Company;

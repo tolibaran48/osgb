@@ -73,9 +73,9 @@ const START_isg_personelEvrak = async (phoneNumber) => {
                         "name": "flow",
                         "parameters": {
                             "flow_message_version": "3",
-                            "flow_token": "1088448959650327",
-                            "flow_name": "invoice_flow_v1",
-                            "flow_cta": "Fatura indir",
+                            "flow_token": "2272556226462117",
+                            "flow_name": "employee_flow_v0 kopyası",
+                            "flow_cta": "Personel Evraklarım",
                             "flow_action_payload": {
                                 "screen": "COMPANY",
                                 "data": { companies, phoneNumber }

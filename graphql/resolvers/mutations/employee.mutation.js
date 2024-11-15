@@ -40,7 +40,8 @@ module.exports = {
         const stream = createReadStream();
         const filetype = mimetype.split("/")[1]
         const Path = path.join(__dirname, '../../../employeeFiles');
-        const uploadPath = path.join(__dirname, '../../../employeeFiles', `${identityId}-${name} ${surname}.${filetype}`);
+        const underPath = path.join(__dirname, `../../../employeeFiles/${company}`);
+        const uploadPath = path.join(__dirname, underPath, `${identityId}-${name} ${surname}.${filetype}`);
 
         const session = await mongoose.startSession();
         session.startTransaction();
@@ -60,6 +61,12 @@ module.exports = {
 
             if (!existsSync(Path)) {
                 mkdirSync(Path, { recursive: true });
+                mkdirSync(underPath, { recursive: true });
+            }
+            else {
+                if (!existsSync(underPath)) {
+                    mkdirSync(underPath, { recursive: true });
+                }
             }
 
             await new Promise((resolve, reject) => {

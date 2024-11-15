@@ -31,6 +31,7 @@ type Firma{
     register:CompanyRegister
     updates:[CompanyUpdate]
     auth:[Kullanici]
+    employees:[Employee]
     insurances:[Sicil]
     contacts:[Kullanici]
     concubines:[Cari]

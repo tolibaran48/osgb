@@ -52,6 +52,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use('/webhook', require("./routes/waba"));
 app.use('/flows/invoice_flow', require("./routes/flows/invoice_flow"));
 app.use('/flows/concubine_flow', require("./routes/flows/concubine_flow"));
+app.use('/flows/employee_flow', require("./routes/flows/employee_flow"));
 
 /*
 app.use(async (req, res, next) => {
@@ -66,10 +67,10 @@ app.use(async (req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-app.use(express.static("build"))
+/*app.use(express.static("build"))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
+});*/
 
 
 async function startServer() {

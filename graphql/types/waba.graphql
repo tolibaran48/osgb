@@ -1,6 +1,6 @@
 type Mutation{
     sendInvoice(data:sendInvoiceInput!):sendMessageStatus
-
+    sendEmployeeDocument(data:sendEmployeeDocumentInput!):sendMessageStatusInput
 }
 
 type sendMessageStatus{
@@ -12,6 +12,14 @@ input sendInvoiceInput{
     company:String!
     invoiceDate:String!
     invoiceAmount:Float!
+    fileName:String
+    type:String
+}
+
+input sendEmployeeDocumentInput{
+    to:String!
+    namesurname:String!
+    identityId:String!
     fileName:String
     type:String
 }
