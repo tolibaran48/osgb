@@ -7,6 +7,8 @@ const send_PersonelEvrak = require("../functions/waba/send_PersonelEvrak");
 
 const WabaConversation = require("../models/WabaConversation");
 const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');
+const START_muhasebe_bakiye = require('../functions/waba/START_muhasebe_bakiye');
+const START_isg_personelEvrak = require('../functions/waba/START_isg_personelEvrak');
 const createToken = require('../helpers/token');
 
 router.get("/", async (req, res) => {
@@ -186,6 +188,12 @@ router.post("/", async (req, res) => {
           switch (message.message.interactive.list_reply.id) {
             case "START_muhasebe_fatura":
               START_muhasebe_fatura(`${message.message.from}`)
+              break;
+            case "START_muhasebe_bakiye":
+              START_muhasebe_bakiye(`${message.message.from}`)
+              break;
+            case "START_isg_personelEvrak":
+              START_isg_personelEvrak(`${message.message.from}`)
               break;
           }
 
