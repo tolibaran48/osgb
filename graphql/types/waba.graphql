@@ -1,6 +1,6 @@
 type Mutation{
     sendInvoice(data:sendInvoiceInput!):sendMessageStatus
-    sendEmployeeDocument(data:sendEmployeeDocumentInput!):sendMessageStatusInput
+    sendEmployeeDocument(data:sendEmployeeDocumentInput!):sendMessageStatus
 }
 
 type sendMessageStatus{
