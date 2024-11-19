@@ -67,10 +67,10 @@ app.use(async (req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-/*app.use(express.static("build"))
+app.use(express.static("build"))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});*/
+});
 
 
 async function startServer() {
