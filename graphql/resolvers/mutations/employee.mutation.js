@@ -25,7 +25,7 @@ module.exports = {
     uploadWhatsAppDocument: async (parent, args, { token, Employee, Person }) => {
         await auth(token);
 
-        const { file, name, surname, company, identityId } = await args.data;
+        const { file, name, surname, company, identityId, companyVergi } = await args.data;
         const { createReadStream, filename, mimetype, encoding } = await file.file;
 
 
@@ -39,8 +39,8 @@ module.exports = {
 
         const stream = createReadStream();
         const filetype = mimetype.split("/")[1]
-        const underPath = path.join(__dirname, `../../../employeeFiles/${company}`);
-        const uploadPath = path.join(__dirname, `../../../employeeFiles/${company}`, `${identityId}-${name} ${surname}.${filetype}`);
+        const underPath = path.join(__dirname, `../../../employeeFiles/${companyVergi}`);
+        const uploadPath = path.join(__dirname, `../../../employeeFiles/${companyVergi}`, `${identityId}-${name} ${surname}.${filetype}`);
 
         const session = await mongoose.startSession();
         session.startTransaction();

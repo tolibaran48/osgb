@@ -170,7 +170,7 @@ const getNext = async (decryptedBody) => {
                                 },
                                 data: {
                                     query: `mutation{
-                                       sendEmployeeDocument(data:{to: "90${data.phoneNumber}", identityId: "${_employee.id}",nameSurname: "${_employee.title}",type: "employeeFiles/${company}",fileName: "${_employee.id}-${_employee.title}"}){
+                                       sendEmployeeDocument(data:{to: "90${data.phoneNumber}", identityId: "${_employee.id}",namesurname: "${_employee.title}",type: "employeeFiles/${company}",fileName: "${_employee.id}-${_employee.title}"}){
                                         status
                                        }}`
                                 }
