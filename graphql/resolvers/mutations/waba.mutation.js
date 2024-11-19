@@ -113,7 +113,7 @@ module.exports = {
                     "recipient_type": "individual",
                     "type": "document",
                     "document": {
-                        "filename": `${filename}.pdf`,
+                        "filename": `${fileName}.pdf`,
                         "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
                     }
                 },
