@@ -109,6 +109,6 @@ async function startServer() {
 
 startServer();
 
-app.listen(process.env.PORT || 4000, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log('Server 4000 portunda dinlemede...')
 })
