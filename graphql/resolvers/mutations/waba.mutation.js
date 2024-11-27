@@ -47,7 +47,7 @@ module.exports = {
                                         "type": "document",
                                         "document": {
                                             "filename": `${fileName}.pdf`,
-                                            "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
+                                            "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
                                         }
                                     }
                                 ]
@@ -114,7 +114,7 @@ module.exports = {
                     "type": "document",
                     "document": {
                         "filename": `${fileName}.pdf`,
-                        "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
+                        "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
                     }
                 },
             });

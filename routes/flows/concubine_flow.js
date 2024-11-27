@@ -266,7 +266,7 @@ const getNext = async (decryptedBody) => {
                                 "type": "document",
                                 "document": {
                                     "filename": `${filename}.pdf`,
-                                    "link": `https://yalikavak-358f781f0743.herokuapp.com/webhook/media/${mediaToken}`
+                                    "link": `https://www.yalikavakosgb/webhook/media/${mediaToken}`
                                 }
                             },
                         });
