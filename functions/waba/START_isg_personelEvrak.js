@@ -2,6 +2,7 @@ require("dotenv").config()
 const axios = require('axios');
 const WabaYetkili = require("../../models/WabaUser");
 const createToken = require("../../helpers/token");
+const jwt = require('jsonwebtoken');
 
 const START_isg_personelEvrak = async (phoneNumber) => {
     if (phoneNumber.length == 12) {
@@ -41,7 +42,10 @@ const START_isg_personelEvrak = async (phoneNumber) => {
         }
     })
 
+
     if (invoices.data.data.wabaUser) {
+        const mediaToken = jwt.sign({ type: "wabaImages", fileName: "employeeDocument.png" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+
         const companies = invoices.data.data.wabaUser.companies.map((company) => {
             return { "id": company.vergi.vergiNumarasi, "title": company.name, "description": "" }
         })
@@ -60,8 +64,15 @@ const START_isg_personelEvrak = async (phoneNumber) => {
                 "interactive": {
                     "type": "flow",
                     "header": {
-                        "type": "text",
-                        "text": "Flow message header"
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
+                                }
+                            }
+                        ]
                     },
                     "body": {
                         "text": "Flow message body"

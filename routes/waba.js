@@ -4,7 +4,7 @@ const mediaAuth = require("../helpers/mediaAuth");
 const axios = require('axios');
 const send_START = require("../functions/waba/send_START");
 const send_PersonelEvrak = require("../functions/waba/send_PersonelEvrak");
-
+const path = require('path');
 const WabaConversation = require("../models/WabaConversation");
 const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');
 const START_muhasebe_bakiye = require('../functions/waba/START_muhasebe_bakiye');
@@ -31,7 +31,7 @@ router.get("/media/:media_id", async (req, res) => {
     const values = await mediaAuth(media_id);
 
     const { type, fileName } = values;
-    res.sendFile(path.join(process.cwd(), `/${type}/${fileName}.pdf`));
+    res.sendFile(path.join(process.cwd(), `/${type}/${fileName}`));
   }
   catch (error) {
     throw new Error(error)
