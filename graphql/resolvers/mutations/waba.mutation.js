@@ -2,21 +2,14 @@ const auth = require("../../../helpers/auth");
 const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 require('dotenv').config();
+const path = require('path');
 const axios = require('axios');
 
 module.exports = {
     sendInvoice: async (parent, args, { token }) => {
         await auth(token);
-        const values = jwt.verify(token, process.env.mediaJwtSecret)
-        const privateClaim = {
-            "iss": values.email,
-            "aud": process.env.MEDIA_SITE,
-            "sub": "waba",
-            "args": args.data
-        }
 
-
-        const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+        const mediaToken = jwt.sign({ type: args.data.type, fileName: args.data.fileName }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 
         try {
             const { to, company, invoiceDate, invoiceAmount, fileName } = args.data
@@ -86,21 +79,12 @@ module.exports = {
     },
     sendEmployeeDocument: async (parent, args, { token }) => {
         await auth(token);
-        const values = jwt.verify(token, process.env.mediaJwtSecret)
-        const privateClaim = {
-            "iss": values.email,
-            "aud": process.env.MEDIA_SITE,
-            "sub": "waba",
-            "args": args.data
-        }
 
-
-        const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+        const mediaToken = await jwt.sign({ type: args.data.type, fileName: args.data.fileName }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 
         try {
-            const { to, namesurname, identityId, fileName } = args.data
+            const { to, namesurname, identityId, fileName, type } = args.data
 
-            const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
             await axios({
                 "method": "POST",
                 "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
@@ -178,6 +162,7 @@ module.exports = {
             return { "status": 200 }
 
         } catch (error) {
+            console.log(error)
             throw new GraphQLError(error)
         }
 

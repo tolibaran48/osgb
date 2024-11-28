@@ -241,18 +241,8 @@ const getNext = async (decryptedBody) => {
                         await pdfDocGenerator.getBuffer(async (buffer) => {
                             fs.writeFileSync(uploadPath, buffer)
                         })
-                        const privateClaim = {
-                            "iss": "filename",
-                            "aud": process.env.MEDIA_SITE,
-                            "sub": "waba",
-                            "args": {
-                                fileName: filename,
-                                type: "upload"
-                            }
-                        }
 
-
-                        const mediaToken = jwt.sign(privateClaim, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+                        const mediaToken = jwt.sign({ fileName: filename, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
                         await axios({
                             "method": "POST",
                             "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,

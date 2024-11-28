@@ -3,7 +3,7 @@ require('dotenv').config();
 const { GraphQLError } = require('graphql');
 const { parse, join } = require("path");
 const { createWriteStream } = require("fs");
-const invoiceURL = process.env.invoiceURI;
+const invoiceURL = process.env.LOCALHOST;
 const dayjs = require('dayjs');
 
 module.exports = {

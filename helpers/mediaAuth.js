@@ -4,7 +4,7 @@ const { GraphQLError } = require("graphql");
 
 const mediaAuth = async (token) => {
     try {
-        return jwt.verify(token, process.env.mediaJwtSecret);
+        return jwt.verify(token, process.env.jwtSecret);
     }
     catch (error) {
         throw new GraphQLError('Biletiniz geçersiz', {

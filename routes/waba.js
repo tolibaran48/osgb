@@ -29,16 +29,12 @@ router.get("/media/:media_id", async (req, res) => {
   const { media_id } = req.params
   try {
     const values = await mediaAuth(media_id);
-    const { type, fileName } = values.args;
-    res.sendFile(process.cwd() + `/${type}/${fileName}.pdf`);
+
+    const { type, fileName } = values;
+    res.sendFile(path.join(process.cwd(), `/${type}/${fileName}.pdf`));
   }
   catch (error) {
-    throw new GraphQLError('Biletiniz geçersiz', {
-      extensions: {
-        code: 'Unauthorized',
-        status: 401,
-      },
-    })
+    throw new Error(error)
   }
 });
 
