@@ -66,17 +66,14 @@ const START_muhasebe_bakiye = async (phoneNumber) => {
                         "text": "Flow message header"
                     },
                     "body": {
-                        "text": "Flow message body"
-                    },
-                    "footer": {
-                        "text": "Flow message footer"
+                        "text": "Cari dökümünüze ulaşmak için  aşağıdaki *Cari İndir butonuna tıklayarak açılan formdan personel seçimi yapın."
                     },
                     "action": {
                         "name": "flow",
                         "parameters": {
                             "flow_message_version": "3",
-                            "flow_token": "767511832177488",
-                            "flow_name": "concubine_flow_v3",
+                            "flow_token": "1149163760100654",
+                            "flow_name": "concubine_flow_v3 kopyası",
                             "flow_cta": "Cari indir",
                             "flow_action_payload": {
                                 "screen": "COMPANY",
