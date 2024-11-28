@@ -242,7 +242,7 @@ const getNext = async (decryptedBody) => {
                             fs.writeFileSync(uploadPath, buffer)
                         })
 
-                        const mediaToken = jwt.sign({ fileName: filename, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+                        const mediaToken = jwt.sign({ fileName: `${filename}.pdf`, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
                         await axios({
                             "method": "POST",
                             "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,

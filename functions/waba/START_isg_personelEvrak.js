@@ -64,16 +64,11 @@ const START_isg_personelEvrak = async (phoneNumber) => {
                 "interactive": {
                     "type": "flow",
                     "header": {
-                        "type": "image",
-                        "image": {
-                            "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
-                        }
+                        "type": "text",
+                        "text": "Personel evrak formu"
                     },
                     "body": {
                         "text": "Flow message body"
-                    },
-                    "footer": {
-                        "text": "Flow message footer"
                     },
                     "action": {
                         "name": "flow",
