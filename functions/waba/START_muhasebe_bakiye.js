@@ -63,7 +63,7 @@ const START_muhasebe_bakiye = async (phoneNumber) => {
                     "type": "flow",
                     "header": {
                         "type": "text",
-                        "text": "Cari döküm formu"
+                        "text": "Cari Formu"
                     },
                     "body": {
                         "text": "Cari dökümünüze ulaşmak için  aşağıdaki *Cari İndir* butonuna tıklayarak açılan formdan tarih aralığı seçimi yapın."

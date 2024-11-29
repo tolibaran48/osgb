@@ -61,20 +61,17 @@ const START_muhasebe_fatura = async (phoneNumber) => {
                     "type": "flow",
                     "header": {
                         "type": "text",
-                        "text": "Flow message header"
+                        "text": "Fatura Formu"
                     },
                     "body": {
-                        "text": "Flow message body"
-                    },
-                    "footer": {
-                        "text": "Flow message footer"
+                        "text": "Faturalarınıza ulaşmak için  aşağıdaki *Fatura İndir* butonuna tıklayarak açılan formdan fatura seçimi yapın."
                     },
                     "action": {
                         "name": "flow",
                         "parameters": {
                             "flow_message_version": "3",
-                            "flow_token": "1088448959650327",
-                            "flow_name": "invoice_flow_v1",
+                            "flow_token": "2072737186496413",
+                            "flow_name": "invoice_flow_v2",
                             "flow_cta": "Fatura indir",
                             "flow_action_payload": {
                                 "screen": "COMPANY",

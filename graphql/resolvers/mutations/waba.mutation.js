@@ -3,12 +3,20 @@ const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 require('dotenv').config();
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     sendInvoice: async (parent, args, { token }) => {
         await auth(token);
 
         const mediaToken = jwt.sign({ type: args.data.type, fileName: `${args.data.fileName}.pdf` }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+
+        const Path = path.join(__dirname, '../../../faturalar');
+
+        if (!fs.existsSync(Path)) {
+            fs.mkdirSync(Path, { recursive: true });
+        }
 
         try {
             const { to, company, invoiceDate, invoiceAmount, fileName } = args.data

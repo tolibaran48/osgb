@@ -176,7 +176,7 @@ router.post("/", async (req, res) => {
   if (message.messageFrom === "external") {
     console.log(message);
     if (message.messageType !== "received") {
-      send_START()
+      send_START(message.message.from)
     }
     else {
       switch (message.mainMessageType) {

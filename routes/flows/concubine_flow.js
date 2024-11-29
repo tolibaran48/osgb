@@ -231,18 +231,17 @@ const getNext = async (decryptedBody) => {
 
                         let filename = `${data.company}_(${dayjs(data.startDate).format("DD.MM.YYYY")}|${dayjs(data.endDate).format("DD.MM.YYYY")})`;
                         const Path = path.join(__dirname, '../../upload');
-                        const uploadPath = path.join(__dirname, '../../upload/', `${filename}.pdf`);
+                        const uploadPath = path.join(__dirname, '../../upload/', `VN${data.company}.pdf`);
 
-                        if (!fs.existsSync(Path)) {
-                            fs.mkdirSync(Path, { recursive: true });
-                        }
-
-                        const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+                        const pdfDocGenerator = await pdfMake.createPdf(docDefinition);
                         await pdfDocGenerator.getBuffer(async (buffer) => {
+                            if (!fs.existsSync(Path)) {
+                                fs.mkdirSync(Path, { recursive: true });
+                            }
                             fs.writeFileSync(uploadPath, buffer)
                         })
 
-                        const mediaToken = jwt.sign({ fileName: `${filename}.pdf`, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+                        const mediaToken = jwt.sign({ fileName: `VN${data.company}.pdf`, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
                         await axios({
                             "method": "POST",
                             "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
@@ -256,7 +255,7 @@ const getNext = async (decryptedBody) => {
                                 "type": "document",
                                 "document": {
                                     "filename": `${filename}.pdf`,
-                                    "link": `https://www.yalikavakosgb/webhook/media/${mediaToken}`
+                                    "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
                                 }
                             },
                         });

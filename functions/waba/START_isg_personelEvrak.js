@@ -2,7 +2,6 @@ require("dotenv").config()
 const axios = require('axios');
 const WabaYetkili = require("../../models/WabaUser");
 const createToken = require("../../helpers/token");
-const jwt = require('jsonwebtoken');
 
 const START_isg_personelEvrak = async (phoneNumber) => {
     if (phoneNumber.length == 12) {
@@ -44,7 +43,6 @@ const START_isg_personelEvrak = async (phoneNumber) => {
 
 
     if (invoices.data.data.wabaUser) {
-        const mediaToken = jwt.sign({ type: "wabaImages", fileName: "employeeDocument.png" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
 
         const companies = invoices.data.data.wabaUser.companies.map((company) => {
             return { "id": company.vergi.vergiNumarasi, "title": company.name, "description": "" }
@@ -65,10 +63,10 @@ const START_isg_personelEvrak = async (phoneNumber) => {
                     "type": "flow",
                     "header": {
                         "type": "text",
-                        "text": "Personel evrak formu"
+                        "text": "Personel Formu"
                     },
                     "body": {
-                        "text": "Flow message body"
+                        "text": "Personel evraklarınıza ulaşmak için  aşağıdaki *Personel Evraklarım* butonuna tıklayarak açılan formdan personel seçimi yapın."
                     },
                     "action": {
                         "name": "flow",

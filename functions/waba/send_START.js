@@ -1,7 +1,7 @@
 require("dotenv").config()
 const axios = require('axios');
 
-const send_START = async () => {
+const send_START = async (to) => {
     const response = await axios({
         method: "POST",
         url: `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
