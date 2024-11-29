@@ -22,5 +22,6 @@ input sendEmployeeDocumentInput{
     identityId:String!
     fileName:String
     type:String
+    companyName:String
 }
 

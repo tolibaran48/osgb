@@ -34,6 +34,7 @@ const getEmployees = async (company, token) => {
         data: {
             query: `query{
                 company(vergiNumarasi: "${company}") {
+                    name
                     employees {
                         person {
                             identityId
@@ -51,13 +52,14 @@ const getEmployees = async (company, token) => {
         return { "id": employee.person.identityId, "title": `${employee.person.name} ${employee.person.surname}`, "description": employee.person.identityId, "alt-text": "personel resmi", "image": "" }
     })
 
-    return allEmployees;
+    return { allEmployees, companyName: _employees.data.data.company.name };
 };
 
 const getNext = async (decryptedBody) => {
     const token = await createToken.generate({ email: process.env.wabaTokenMail }, '5m');
     const { screen, data, version, action } = decryptedBody;
     // Return the next screen & data to the client  
+    let getResponse
     let allEmployees
     let employees
     console.log(decryptedBody)
@@ -84,7 +86,8 @@ const getNext = async (decryptedBody) => {
         switch (screen) {
             case "COMPANY":
 
-                allEmployees = await getEmployees(data.company, token)
+                getResponse = await getEmployees(data.company, token)
+                allEmployees = getResponse.allEmployees
 
                 employees = _.slice(allEmployees, 0, 10)
 
@@ -97,7 +100,9 @@ const getNext = async (decryptedBody) => {
                 let { pageNumber, employeeCount, formEmployees, general_init_value, phoneNumber, company } = data
                 switch (data.type) {
                     case "next":
-                        allEmployees = await getEmployees(company, token)
+                        getResponse = await getEmployees(data.company, token)
+                        allEmployees = getResponse.allEmployees
+
                         let newPageNumber = pageNumber + 1;
                         employees = _.slice(allEmployees, (newPageNumber * 10), ((newPageNumber + 1) * 10))
 
@@ -143,8 +148,10 @@ const getNext = async (decryptedBody) => {
                                 previous_general_init_value.push(value)
                             }
                         });
-                        console.log(previous_general_init_value, previous_init_value)
-                        allEmployees = await getEmployees(company, token)
+
+                        getResponse = await getEmployees(data.company, token)
+                        allEmployees = getResponse.allEmployees
+
                         employees = _.slice(allEmployees, ((pageNumber - 1) * 10), (pageNumber * 10))
 
                         return {
@@ -157,7 +164,8 @@ const getNext = async (decryptedBody) => {
                             formEmployees.push(value.split("/")[1])
                         });
 
-                        allEmployees = await getEmployees(data.company, token)
+                        getResponse = await getEmployees(data.company, token)
+                        allEmployees = getResponse.allEmployees
 
                         formEmployees.forEach(async (identity) => {
                             let _employee = allEmployees.find((element) => element.id === identity)
@@ -170,7 +178,7 @@ const getNext = async (decryptedBody) => {
                                 },
                                 data: {
                                     query: `mutation{
-                                       sendEmployeeDocument(data:{to: "90${data.phoneNumber}", identityId: "${_employee.id}",namesurname: "${_employee.title}",type: "employeeFiles/${company}",fileName: "${_employee.id}-${_employee.title}"}){
+                                       sendEmployeeDocument(data:{to: "90${data.phoneNumber}", identityId: "${_employee.id}",namesurname: "${_employee.title}",companyName:"${getResponse.companyName}",type: "employeeFiles/${company}",fileName: "${_employee.id}-${_employee.title}"}){
                                         status
                                        }}`
                                 }
