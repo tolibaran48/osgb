@@ -80,7 +80,7 @@ module.exports = {
             return { "status": 200 }
 
         } catch (error) {
-            throw new GraphQLError(error)
+            throw new GraphQError(error)
         }
 
     },

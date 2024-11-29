@@ -3,7 +3,6 @@ require("dotenv").config()
 const mediaAuth = require("../helpers/mediaAuth");
 const axios = require('axios');
 const send_START = require("../functions/waba/send_START");
-const send_PersonelEvrak = require("../functions/waba/send_PersonelEvrak");
 const path = require('path');
 const WabaConversation = require("../models/WabaConversation");
 const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');

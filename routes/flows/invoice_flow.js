@@ -109,7 +109,7 @@ const getNext = async (decryptedBody) => {
                         data: {
                             query: `mutation{
                        sendInvoice(data:{to: "90${data.phoneNumber}", invoiceDate: "${dayjs(invoice.data.data.concubine.processDate).format("DD/MM/YYYY")}",company: "${invoice.data.data.concubine.company.name}",invoiceAmount: ${invoice.data.data.concubine.debt},type: "faturalar",fileName: "${invoice.data.data.concubine.processNumber}"}){
-                        sendInvoice
+                        status
                        }
                       }`
                         }
