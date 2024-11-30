@@ -11,7 +11,7 @@ const send_START = async (to) => {
         data: {
             messaging_product: "whatsapp",
             recipient_type: "individual",
-            to: '5494191961',
+            to: `${to}`,
             type: "interactive",
             interactive: {
                 type: "list",
