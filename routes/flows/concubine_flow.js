@@ -82,6 +82,8 @@ const getNext = async (decryptedBody) => {
                 };
 
             case "CONCUBINE":
+                let companyName;
+                let bakiye;
                 const promise = new Promise(async (resolve, reject) => {
                     const concubines = await axios({
                         url: `${process.env.LOCALHOST}/graphql`,
@@ -111,6 +113,7 @@ const getNext = async (decryptedBody) => {
                     })
 
                     const carilers = [];
+                    companyName = concubines.data.data.company.name;
                     concubines.data.data.company.concubines.map((cari, index, arr) => {
                         let subTotal = 0;
                         index === 0 ?
@@ -130,6 +133,7 @@ const getNext = async (decryptedBody) => {
                 });
 
                 promise.then(async (sonuc) => {
+                    bakiye = returnLast(sonuc).subTotal
                     let cariler = await _.filter(
                         sonuc, function (element) {
                             return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));
@@ -242,6 +246,7 @@ const getNext = async (decryptedBody) => {
                         })
 
                         const mediaToken = jwt.sign({ fileName: `VN${data.company}.pdf`, type: "upload" }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
+
                         await axios({
                             "method": "POST",
                             "url": `https://graph.facebook.com/v18.0/${process.env.WABA_PHONE_ID}/messages`,
@@ -252,10 +257,49 @@ const getNext = async (decryptedBody) => {
                                 "messaging_product": "whatsapp",
                                 "to": `90${data.phoneNumber}`,
                                 "recipient_type": "individual",
-                                "type": "document",
-                                "document": {
-                                    "filename": `${filename}.pdf`,
-                                    "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
+                                "type": "template",
+                                "template": {
+                                    "namespace": "8ec9482f_8cc1_4966_b5cc_3b50713f54ca",
+                                    "name": "cari_detay",
+                                    "language": {
+                                        "code": "tr",
+                                        "policy": "deterministic"
+                                    },
+                                    "components": [
+                                        {
+                                            "type": "header",
+                                            "parameters": [
+                                                {
+                                                    "type": "document",
+                                                    "document": {
+                                                        "filename": `${filename}.pdf`,
+                                                        "link": `https://www.yalikavakosgb.com/webhook/media/${mediaToken}`
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "body",
+                                            "parameters": [
+                                                {
+                                                    "type": "text",
+                                                    "text": `${companyName}`
+                                                },
+                                                {
+                                                    "type": "currency",
+                                                    "currency": {
+                                                        "fallback_value": `${bakiye}`,
+                                                        "code": "TRY",
+                                                        "amount_1000": `${bakiye * 1000}`
+                                                    }
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": `${dayjs(data.startDate).format("DD.MM.YYYY")}-${dayjs(data.endDate).format("DD.MM.YYYY")}`
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             },
                         });
