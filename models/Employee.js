@@ -26,6 +26,9 @@ const employeeSchema = new Schema({
     relaseDate: {
         type: Date,
     },
+    processTime: {
+        type: Date,
+    }
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);

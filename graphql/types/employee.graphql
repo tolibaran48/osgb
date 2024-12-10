@@ -1,4 +1,5 @@
 scalar Upload
+scalar DateTime
 
 type Employee{
     _id:ID!
@@ -29,6 +30,7 @@ input uploadWhatsAppDocumentInput{
     surname:String!
     company:ID!
     companyVergi:String!
+    processTime:DateTime!
 }
 
 input createEmployeeInput{

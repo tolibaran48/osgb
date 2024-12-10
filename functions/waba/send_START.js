@@ -29,32 +29,32 @@ const send_START = async (to) => {
                     button: "İşlem Listesi",
                     sections: [
                         {
-                            title: "MUHASEBE İŞLEMLERİ",
-                            rows: [
-                                {
-                                    id: "START_muhasebe_fatura",
-                                    title: "Fatura İşlemleri",
-                                    description: "Kesilen faturalarınıza buradan ulaşabilirsiniz"
-                                },
-                                {
-                                    id: "START_muhasebe_bakiye",
-                                    title: "Güncel Bakiye",
-                                    description: "Güncel bakiyenizi buradan öğrenebilirsinz"
-                                },
-                                {
-                                    id: "START_muhasebe_hesapNO",
-                                    title: "Hesap Numaramız",
-                                    description: "Banka Hesap Numaramızı buradan öğrenebilirsiniz"
-                                }
-                            ]
-                        },
-                        {
                             title: "İSG_İŞLEMLERİ",
                             rows: [
                                 {
                                     id: "START_isg_personelEvrak",
                                     title: "Personel Evrakları",
-                                    description: "Personelinize düzenlenen İSG evraklarına buradan ulaşabilirsiniz"
+                                    description: "Personelinize düzenlenen İSG evraklarına buradan ulaşabilirsiniz."
+                                }
+                            ]
+                        },
+                        {
+                            title: "MUHASEBE İŞLEMLERİ",
+                            rows: [
+                                {
+                                    id: "START_muhasebe_fatura",
+                                    title: "Fatura İşlemleri",
+                                    description: "Kesilen faturalarınıza buradan ulaşabilirsiniz."
+                                },
+                                {
+                                    id: "START_muhasebe_bakiye",
+                                    title: "Güncel Bakiye",
+                                    description: "Güncel bakiyenizi buradan öğrenebilirsiniz."
+                                },
+                                {
+                                    id: "START_muhasebe_hesapNO",
+                                    title: "Hesap Numaramız",
+                                    description: "Banka Hesap Numaramızı buradan öğrenebilirsiniz."
                                 }
                             ]
                         },
@@ -65,6 +65,16 @@ const send_START = async (to) => {
                                     id: "START_halklaIliskiler_teklif",
                                     title: "Teklif",
                                     description: "Müşterimiz olmak istermisiniz ?"
+                                }
+                            ]
+                        },
+                        {
+                            title: "ŞİRKET BİLGİLERİ",
+                            rows: [
+                                {
+                                    id: "START_location",
+                                    title: "Lokasyon",
+                                    description: "Konum bilgilerimize buradan ulaşabilirsiniz."
                                 }
                             ]
                         }

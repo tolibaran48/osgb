@@ -8,7 +8,8 @@ const WabaConversation = require("../models/WabaConversation");
 const START_muhasebe_fatura = require('../functions/waba/START_muhasebe_fatura');
 const START_muhasebe_bakiye = require('../functions/waba/START_muhasebe_bakiye');
 const START_isg_personelEvrak = require('../functions/waba/START_isg_personelEvrak');
-const createToken = require('../helpers/token');
+const START_location = require('../functions/waba/START_location');
+const SEND_location = require('../functions/waba/SEND_location');
 
 router.get("/", async (req, res) => {
   const mode = req.query["hub.mode"];
@@ -189,6 +190,19 @@ router.post("/", async (req, res) => {
               break;
             case "START_isg_personelEvrak":
               START_isg_personelEvrak(`${message.message.from}`)
+              break;
+            case "START_location":
+              START_location(`${message.message.from}`)
+              break;
+          }
+          break;
+        case "button":
+          switch (message.message.button.text) {
+            case "Bodrum Şb.":
+              SEND_location({ phoneNumber: `${message.message.from}`, location: "Bodrum" })
+              break;
+            case "Marmaris Şb.":
+              SEND_location({ phoneNumber: `${message.message.from}`, location: "Marmaris" })
               break;
           }
 

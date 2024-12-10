@@ -133,7 +133,7 @@ const getNext = async (decryptedBody) => {
                 });
 
                 promise.then(async (sonuc) => {
-                    bakiye = returnLast(sonuc).subTotal
+                    bakiye = sonuc.at(-1).subTotal
                     let cariler = await _.filter(
                         sonuc, function (element) {
                             return (dayjs(element.processDate).isSameOrBefore(data.endDate) && dayjs(element.processDate).isSameOrAfter(data.startDate));

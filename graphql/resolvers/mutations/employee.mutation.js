@@ -25,7 +25,7 @@ module.exports = {
     uploadWhatsAppDocument: async (parent, args, { token, Employee, Person }) => {
         await auth(token);
 
-        const { file, name, surname, company, identityId, companyVergi } = await args.data;
+        const { file, name, surname, company, identityId, companyVergi, processTime } = await args.data;
         const { createReadStream, filename, mimetype, encoding } = await file.file;
 
 
@@ -53,6 +53,7 @@ module.exports = {
 
         await new Employee({
             person: person._id,
+            processTime: processTime,
             company
         }).save({ session })
 
