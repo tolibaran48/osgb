@@ -19,7 +19,7 @@ const START_location = async (phoneNumber) => {
             "type": "template",
             "template": {
                 "namespace": "8ec9482f_8cc1_4966_b5cc_3b50713f54ca",
-                "name": "location_select",
+                "name": "start_select_location",
                 "language": {
                     "code": "tr",
                     "policy": "deterministic"
