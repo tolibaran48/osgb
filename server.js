@@ -19,6 +19,7 @@ const Assignment = require("./models/Assignment");
 const Cari = require("./models/Concubine");
 const WabaConversation = require("./models/WabaConversation");
 const WabaYetkili = require("./models/WabaUser");
+const Contract = require("./models/CompanyContracts");
 const db = process.env.mongoURI;
 const { typeDefs } = require("graphql-scalars");
 const { graphqlUploadExpress } = require("graphql-upload-minimal");
@@ -100,6 +101,7 @@ async function startServer() {
                 Cari,
                 WabaConversation,
                 WabaYetkili,
+                Contract,
                 token: req.headers['authorization']
             }),
         }),

@@ -1,0 +1,60 @@
+scalar DateTime
+scalar Upload
+
+type OptionContractConditionsOut{
+    type:String
+    option:String
+    count1:Int
+    count2:Int
+    KDV:String
+    price:Float
+}
+
+type Contract{
+    company:ID
+    contractDate:DateTime
+    contractType:String
+    contractStatus:String
+    monthlyContractType:String
+    KDV:String
+    optionContractConditions:[OptionContractConditionsOut]
+    annuityPaymentDueDate:DateTime
+    annuityPaymentAmount:Float
+}
+
+type Mutation{
+    createContract(data:createCompanyContract!):Contract
+    updateContract(data:updateCompanyContract!):Contract
+}
+
+input createCompanyContract{
+    company:ID!
+    contractDate:DateTime!
+    contractType:String!
+    monthlyContractType:String
+    KDV:String
+    optionContractConditions:[OptionContractConditions]
+    annuityPaymentDueDate:DateTime
+    annuityPaymentAmount:Float
+}
+
+input updateCompanyContract{
+    _id:ID!
+    contractDate:DateTime!
+    contractType:String!
+    monthlyContractType:String
+    KDV:String
+    optionContractConditions:[OptionContractConditions]
+    annuityPaymentDueDate:DateTime
+    annuityPaymentAmount:Float
+    contractStatus:String
+}
+
+input OptionContractConditions{
+    type:String
+    option:String
+    count1:Int
+    count2:Int
+    KDV:String
+    price:Float
+}

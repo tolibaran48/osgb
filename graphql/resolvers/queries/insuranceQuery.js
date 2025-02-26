@@ -12,7 +12,7 @@ const Sicil = {
         }
     },
     insurances: async (parent, args, { token, Sicil }) => {
-        console.log(token)
+
         await auth(token);
 
         return Sicil.aggregate([

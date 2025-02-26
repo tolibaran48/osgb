@@ -43,30 +43,7 @@ module.exports = {
         invoiceFiles = `${invoiceURL}${invoiceFiles.split('invoices')[1]}`
 
         return invoiceFiles
-    },
-    changeInvoice: async (parent, args, { token, Firma, Cari }) => {
-        await auth(token);
-
-        try {
-            const { aliciAdi, faturaNumarasi, faturaTarihi, tutar } = args.data;
-            const number = parseFloat(faturaNumarasi.split("2024")[1]).toString()
-
-            const cari = await Cari.find({ "debt": tutar, "processDate": faturaTarihi, "process": "Fatura", "processNumber": number }).limit(10)
-
-            if (cari.length > 1 || cari.length < 1) {
-                console.log({ "length": cari.length, "fatura": number })
-            }
-            else {
-                await Cari.findOneAndUpdate({ _id: cari[0]._id }, { $set: { processNumber: faturaNumarasi } }, { new: true })
-            }
-
-            return { "status": 200 }
-
-        } catch (error) {
-            throw new GraphQLError(error)
-        }
-
-    },
+    }
 }
 
 

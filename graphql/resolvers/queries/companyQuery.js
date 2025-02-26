@@ -4,6 +4,7 @@ const { GraphQLError } = require('graphql');
 const Firma = {
     company: async (parent, args, { token, Firma }) => {
         await auth(token);
+        console.log(token)
 
         try {
             return await Firma.findOne({ "vergi.vergiNumarasi": args.vergiNumarasi });
@@ -13,7 +14,7 @@ const Firma = {
     },
     companyById: async (parent, args, { token, Firma }) => {
         await auth(token);
-
+        console.log(token)
         try {
             return await Firma.findById(args._id);
         } catch (error) {
@@ -22,7 +23,7 @@ const Firma = {
     },
     companies: async (parent, args, { token, Firma }) => {
         await auth(token);
-
+        console.log(token)
         try {
             return await Firma.find().sort({ "workingStatus": 1, "name": 1 });
         } catch (error) {

@@ -1,0 +1,33 @@
+
+scalar DateTime
+
+type Invoice{
+   vergiNumarasi:String!
+    process:String!
+    processDate:DateTime!
+    debt:String!
+    processNumber:String! 
+}
+
+type Mutation{
+    uploadInvoice(data:uploadInvoicesInput!):[Invoice]
+}
+
+type sendMessageStatus{
+    status:Int
+}
+
+input uploadInvoicesInput{
+    invoices:[uploadInvoiceInput]
+}
+
+input uploadInvoiceInput{
+    vergiNumarasi:String!
+    process:String!
+    processDate:DateTime!
+    debt:String!
+    processNumber:String!
+}
+
+
+

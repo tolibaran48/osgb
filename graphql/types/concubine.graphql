@@ -45,7 +45,6 @@ type Query{
 type Mutation{
     createCollect(data:createCollectInput!):Cari
     invoiceUpload(files:Upload!):String!
-    changeInvoice(data:changeInvoiceInput!):sendMessageStatus
 }
 
 type sendMessageStatus{
@@ -62,9 +61,3 @@ input createCollectInput{
     chequeDue:DateTime
 }
 
-input changeInvoiceInput{
-    aliciAdi:String!
-    faturaNumarasi:String!
-    faturaTarihi:DateTime
-    tutar:String
-}

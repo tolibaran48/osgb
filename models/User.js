@@ -1,61 +1,61 @@
-const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
-const bcrypt=require('bcrypt');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
-const kullaniciSchema=new Schema({
-    name:{
-        type:String,
-        required:true
+const kullaniciSchema = new Schema({
+    name: {
+        type: String,
+        required: true
     },
-    surname:{
-        type:String,
-        required:true
+    surname: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password:{
-        type:String
+    password: {
+        type: String
     },
-    phoneNumber:{
-        type:String,
-        unique:true,
-        length:15
+    phoneNumber: {
+        type: String,
+        unique: true,
+        length: 15
     },
-    isActive:{
-        type:Boolean,
-        default:true
+    isActive: {
+        type: Boolean,
+        default: true
     },
-    avatar: {type:Buffer}, 
-    gender:{type:String,enum: ["Erkek", "Kadın"]}, 
-    employment:{type:String},
-    auth:{
-        type:{type: String,enum: ["Own", "Customer"]},
-        status:[{type:String,enum: ["PublicRelations","Finance", "Adminisration"]}],
-        auths:{
-            companyAuths:[{company:{type: Schema.Types.ObjectId, ref: 'Firma'},roles:[{type: String,enum: ["Finance", "Adminisration"]}]}],
-            insuranceAuths:[{insurance:{type: Schema.Types.ObjectId, ref: 'Sicil'},roles:[{type: String,enum: ["Personal", "Adminisration"]}]}],
+    avatar: { type: Buffer },
+    gender: { type: String, enum: ["Erkek", "Kadın"] },
+    employment: { type: String },
+    auth: {
+        type: { type: String, enum: ["Own", "Customer"] },
+        status: [{ type: String, enum: ["PublicRelations", "Finance", "Admin", "Guest"] }],
+        auths: {
+            companyAuths: [{ company: { type: Schema.Types.ObjectId, ref: 'Firma' }, roles: [{ type: String, enum: ["Finance", "Personal", "Admin"] }] }],
+            insuranceAuths: [{ insurance: { type: Schema.Types.ObjectId, ref: 'Sicil' }, roles: [{ type: String, enum: ["Personal", "Admin"] }] }],
         }
     },
-    ui:{type:String,default:''},
-    register:{registerDate:{type:Date,default:Date.now},registerBy:{ type: Schema.Types.ObjectId, ref: 'Kullanici' }},
-    updates:[{ updatedBy:{ type: Schema.Types.ObjectId, ref: 'Kullanici' }, date: {type:Date,default:Date.now}}]
+    ui: { type: String, default: '' },
+    register: { registerDate: { type: Date, default: Date.now }, registerBy: { type: Schema.Types.ObjectId, ref: 'Kullanici' } },
+    updates: [{ updatedBy: { type: Schema.Types.ObjectId, ref: 'Kullanici' }, date: { type: Date, default: Date.now } }]
 });
 
-kullaniciSchema.pre('save',function(next){
-    if(!this.isModified('password')){
+kullaniciSchema.pre('save', function (next) {
+    if (!this.isModified('password')) {
         return next()
     }
 
-    bcrypt.hash(this.password,10)
-        .then(hash=>{
-            this.password=hash;
+    bcrypt.hash(this.password, 10)
+        .then(hash => {
+            this.password = hash;
             next();
         });
 })
 
-const Kullanici=mongoose.model('Kullanici',kullaniciSchema);
+const Kullanici = mongoose.model('Kullanici', kullaniciSchema);
 
-module.exports=Kullanici;
+module.exports = Kullanici;

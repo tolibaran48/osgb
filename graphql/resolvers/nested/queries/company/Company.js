@@ -7,7 +7,7 @@ const Company = {
         await auth(token);
 
         try {
-            return await Kullanici.find({ "auth.auths.companyAuths.company": parent._id });
+            return await Kullanici.find({ "auth.auths.company": parent._id });
         } catch (error) {
             throw new GraphQLError(error)
         }
@@ -27,7 +27,7 @@ const Company = {
         await auth(token);
 
         try {
-            return await Kullanici.find({ "auth.auths.companyAuths.company": parent._id });
+            return await Kullanici.find({ "auth.auths.company": parent._id });
         } catch (error) {
             throw new GraphQLError(error)
         }
@@ -60,6 +60,15 @@ const Company = {
 
         try {
             return await Employee.find({ "company": parent._id }).sort({ "name": 1 });
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
+    },
+    contracts: async (parent, args, { token, Contract }) => {
+        await auth(token);
+
+        try {
+            return await Contract.find({ "company": parent._id }).sort({ "contractStatus": 1 });
         } catch (error) {
             throw new GraphQLError(error)
         }

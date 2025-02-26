@@ -32,6 +32,7 @@
     "mongoose": "^8.5.1",
     "pdfmake": "^0.2.14",
     "type-graphql": "^2.0.0-rc.2",
+    "xml2js": "^0.6.2",
     "xmlbuilder": "^15.1.1",
     "xmlhttprequest": "^1.8.0"
   }

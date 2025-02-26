@@ -4,7 +4,7 @@ const auth = require("../../../helpers/auth");
 
 
 module.exports = {
-    createInsurance: async (parent, args, { token, Sicil, Assignment }) => {
+    createInsurance: async (parent, args, { token, Sicil, Firma, Assignment }) => {
         await auth(token);
 
         let _assignment = {
@@ -44,6 +44,7 @@ module.exports = {
             });
         }
 
+
         const _assignmentArray = await Assignment.find({ 'insuranceControlNumber': insuranceControlNumber })
         if (_assignmentArray.length > 0) {
             assignment = await assignmentControl(_assignmentArray)
@@ -54,7 +55,7 @@ module.exports = {
         }
 
         try {
-           return new Sicil({
+            return new Sicil({
                 company,
                 descriptiveName,
                 insuranceNumber,
@@ -187,7 +188,7 @@ module.exports = {
 
     updateManyInsurance: async (parent, args, { token, Sicil, Assignment, Firma }) => {
         await auth(token);
-        
+
         try {
             const assignments = args.data.insuranceAss;
 
@@ -273,5 +274,5 @@ module.exports = {
             });
         }
     },
-   
+
 };

@@ -2,7 +2,7 @@ const auth = require("../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 
 module.exports = {
-    createCompany: async (parent, args, { token,Firma }) => {
+    createCompany: async (parent, args, { token, Firma }) => {
         await auth(token);
 
         try {
@@ -13,7 +13,7 @@ module.exports = {
                 throw new GraphQLError(`Bu vergi numarası ${company.name} adına kayıtlıdır!`, {
                     extensions: {
                         code: 'Bad Request',
-                        status: 400 ,
+                        status: 400,
                     },
                 })
             }
@@ -31,7 +31,7 @@ module.exports = {
         }
 
     },
-    updateCompany: async (parent, args, { token,Firma }) => {
+    updateCompany: async (parent, args, { token, Firma, Sicil }) => {
         await auth(token);
 
         try {
@@ -43,9 +43,16 @@ module.exports = {
                 throw new GraphQLError(`Bu vergi numarası ${company.name} adına kayıtlıdır!`, {
                     extensions: {
                         code: 'Bad Request',
-                        status: 400 ,
+                        status: 400,
                     },
                 })
+            }
+
+            if (workingStatus === 'Fesih') {
+                const _company = await Firma.findOne({ '_id': _id })
+                if (_company.workingStatus === 'Aktif') {
+                    await Sicil.updateMany({ "company": _id }, { $set: { "workingStatus": 'Kapandı' } })
+                }
             }
 
             return await Firma.findOneAndUpdate({ _id: _id },

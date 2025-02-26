@@ -48,7 +48,8 @@ const getEmployees = async (company, token) => {
     })
 
 
-    const allEmployees = _employees.data.data.company.employees.map((employee) => {
+    let sortEmployees = _.sortBy(_employees.data.data.company.employees, ["person.name", "person.surname"])
+    const allEmployees = sortEmployees.map((employee) => {
         return { "id": employee.person.identityId, "title": `${employee.person.name} ${employee.person.surname}`, "description": employee.person.identityId, "alt-text": "personel resmi", "image": "" }
     })
 
@@ -126,7 +127,7 @@ const getNext = async (decryptedBody) => {
                         console.log(next_general_init_value, next_init_value)
                         return {
                             screen: 'EMPLOYEES',
-                            data: { employees, "pageNumber": newPageNumber, "employeeCount": allEmployees.length, "init_value": next_init_value, "general_init_value": next_general_init_value, "pageCount": newPageNumber + 1 * 10 },
+                            data: { employees, "pageNumber": newPageNumber, "employeeCount": allEmployees.length, "init_value": next_init_value, "general_init_value": next_general_init_value, "pageCount": (newPageNumber + 1) * 10 },
                         };
 
                     case "previous":

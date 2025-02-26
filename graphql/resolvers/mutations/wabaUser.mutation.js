@@ -19,6 +19,7 @@ module.exports = {
             if (user) {
                 await WabaYetkili.findOneAndUpdate({ phoneNumber },
                     {
+                        //$addToSet: { companyAuths: {$each: [ 2, 4 ] } } 
                         $addToSet: { companyAuths: company._id }
                     }, { upsert: true })
             }
