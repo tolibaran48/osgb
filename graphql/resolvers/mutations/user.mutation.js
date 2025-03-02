@@ -8,28 +8,54 @@ module.exports = {
         await auth(token);
 
         try {
-            const { email, name, surname, phoneNumber, employment, auth } = args.data;
-            const user = await Kullanici.findOne({ email })
+            const { email, name, surname, phoneNumber, employment, auth, password } = args.data;
 
-            if (user) {
-                throw new GraphQLError('Bu kulanıcı adına sahip başka bir kullanıcı mevcut.', {
-                    extensions: {
-                        code: 'Bad Request',
-                        status: 400,
-                    },
-                });
+            let user;
+
+            if (email) {
+                if (email === null || email === '') {
+                    user = await Kullanici.findOne({ phoneNumber })
+                }
+                else {
+                    user = await Kullanici.findOne({ $or: [{ phoneNumber }, { email }] })
+                }
+            }
+            else {
+                user = await Kullanici.findOne({ phoneNumber })
             }
 
-            return await new Kullanici({
-                name,
-                surname,
-                email,
-                phoneNumber,
-                employment,
-                auth
-                //    type:"Own",
-                //    status:["PublicRelations"]
-            }).save();
+            if (user) {
+                if (user.auth.auths.companyAuths.some(aut => aut.company === auth.auths.companyAuths[0].company)) {
+                    throw new GraphQLError('Bu kulanıcı bilgilerine sahip bir kullanıcı mevcut.', {
+                        extensions: {
+                            code: 'Bad Request',
+                            status: 400,
+                        },
+                    });
+                }
+                else {
+                    return await Kullanici.findOneAndUpdate({ phoneNumber },
+                        {
+                            $set: { 'auth.auths.companyAuths': auth.auths.companyAuths }
+                        }, { new: true })
+                }
+            }
+            else {
+                try {
+                    return await new Kullanici({
+                        name,
+                        surname,
+                        phoneNumber,
+                        employment,
+                        email,
+                        auth,
+                        password
+                    }).save();
+                } catch (error) {
+                    console.log(error)
+                }
+
+            }
 
         } catch (error) {
             throw new GraphQLError(error)
@@ -61,7 +87,12 @@ module.exports = {
     },
 
     signIn: async (parent, { data: { email, password } }, { Kullanici }) => {
-        const user = await Kullanici.findOne({ email: email });
+        let phoneNumber = email
+        let newPhoneNumber = '(' + phoneNumber.substr(0, 3) + ') ' +
+            phoneNumber.substr(3, 3) + ' ' +
+            phoneNumber.substr(6, 2) + ' ' + phoneNumber.substr(8, 2);
+
+        const user = await Kullanici.findOne({ $or: [{ phoneNumber: newPhoneNumber }, { email }] });
 
         if (!user) {
             throw new GraphQLError('Kullanıcı adı veya parola yanlıştır.', {
@@ -73,6 +104,7 @@ module.exports = {
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
+
 
         if (!isMatch) {
             throw new GraphQLError('Kullanıcı adı veya parola yanlıştır.', {

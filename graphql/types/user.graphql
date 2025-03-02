@@ -6,11 +6,11 @@ type ActiveUser{
 
 type UserAuthCompany{
     company:Firma
-    roles:String
+    roles:[String]
 }
 type UserAuthInsurance{
     insurance:Sicil
-    roles:String
+    roles:[String]
 }
 type UserAuths{
     insuranceAuths:[UserAuthInsurance]
@@ -33,7 +33,8 @@ type Kullanici{
     _id:ID!
     name:String!
     surname:String!
-    email:String!    
+    email:String 
+    employment:String   
     phoneNumber:String
     auth:UserAuth!  
     updates:Updates
@@ -41,7 +42,7 @@ type Kullanici{
 }
 
 type Query{
-    user(email:String!):Kullanici!
+    user(phoneNumber:String!):Kullanici
     users:[Kullanici!]
 
     activeUser:ActiveUser
@@ -56,23 +57,24 @@ type Mutation{
 input createUserInput{
     name:String!
     surname:String!
-    email:String!
+    email:String
     phoneNumber:String!
     employment:String!
     auth:UserAuthInput
+    password:String
 }
 
 input signInUserInput{
-    email:String!
-    password:String!
+    email:String
+    password:String
 }
 
 input deleteUserInput{
-    email:String!
+    email:String
 }
 
 input UserAuthInput{
-    type:String!
+    type:String
     status:[String]
     auths:UserAuthsInput
 }
@@ -84,9 +86,9 @@ input UserAuthsInput{
 
 input UserAuthCompanyInput{
     company:ID
-    roles:String
+    roles:[String]
 }
 input UserAuthInsuranceInput{
     insurance:ID
-    roles:String
+    roles:[String]
 }

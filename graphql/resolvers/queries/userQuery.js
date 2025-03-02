@@ -7,7 +7,7 @@ const Kullanici = {
         await auth(token);
 
         try {
-            return await Kullanici.findOne({ email: args.email });
+            return await Kullanici.findOne({ phoneNumber: args.phoneNumber });
         } catch (error) {
             throw new GraphQLError(error)
         }
@@ -27,9 +27,15 @@ const Kullanici = {
         }
 
         const values = await auth(token);
+        let phoneNumber = ''
+        if (values.email.length === 10) {
+            phoneNumber = '(' + values.email.substr(0, 3) + ') ' +
+                values.epostal.substr(3, 3) + ' ' +
+                values.email.substr(6, 2) + ' ' + values.email.substr(8, 2);
+        }
 
         try {
-            const user = await Kullanici.findOne({ email: values.email });
+            const user = await Kullanici.findOne({ $or: [{ phoneNumber }, { email: values.email }] });
 
             if (user) {
                 return { user: user, token: token }

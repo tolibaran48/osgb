@@ -7,18 +7,17 @@ const auth = async (token) => {
         throw new GraphQLError('Biletiniz yok, yetkilendirme reddedildi', {
             extensions: {
                 code: 'Unauthorized',
-                status: 401 ,
+                status: 401,
             },
         })
 
     try {
-        
+
         return jwt.verify(token, process.env.jwtSecret);
     }
-    catch(error)
-    {
+    catch (error) {
         throw new GraphQLError('Biletiniz geçersiz', {
-            extensions: {                
+            extensions: {
                 code: 'Unauthorized',
                 status: 401,
             },

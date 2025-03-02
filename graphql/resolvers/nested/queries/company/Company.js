@@ -3,16 +3,6 @@ const { GraphQLError } = require('graphql');
 const dayjs = require('dayjs');
 
 const Company = {
-    auth: async (parent, args, { token, Kullanici }) => {
-        await auth(token);
-
-        try {
-            return await Kullanici.find({ "auth.auths.company": parent._id });
-        } catch (error) {
-            throw new GraphQLError(error)
-        }
-    },
-
     insurances: async (parent, args, { token, Sicil }) => {
         await auth(token);
 
@@ -27,7 +17,7 @@ const Company = {
         await auth(token);
 
         try {
-            return await Kullanici.find({ "auth.auths.company": parent._id });
+            return await Kullanici.find({ "auth.auths.companyAuths.company": parent._id });
         } catch (error) {
             throw new GraphQLError(error)
         }

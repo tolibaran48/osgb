@@ -30,7 +30,6 @@ type Firma{
     vergi:CompanyVergi!
     register:CompanyRegister
     updates:[CompanyUpdate]
-    auth:[Kullanici]
     contracts:[Contract]
     employees:[Employee]
     insurances:[Sicil]
