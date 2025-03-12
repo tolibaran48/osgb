@@ -34,7 +34,7 @@ const kullaniciSchema = new Schema({
         type: { type: String, enum: ["Own", "Customer"] },
         status: [{ type: String, enum: ["PublicRelations", "Finance", "Admin"] }],
         auths: {
-            companyAuths: [{ company: { type: Schema.Types.ObjectId, ref: 'Firma' }, roles: [{ type: String, enum: ["Finance", "Personal", "Admin"] }] }],
+            companyAuths: [{ company: { type: Schema.Types.ObjectId, ref: 'Firma' }, roles: [{ type: String, enum: ["Finance", "Personal", "Admin"] }], employment: { type: String } }],
             insuranceAuths: [{ insurance: { type: Schema.Types.ObjectId, ref: 'Sicil' }, roles: [{ type: String, enum: ["Personal", "Admin"] }] }],
         }
     },

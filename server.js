@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require('cors');
 require('dotenv').config();
 const http = require('http');
+const auth = require("./helpers/auth");
+const createToken = require('./helpers/token');
 const path = require('path');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('@apollo/server');
@@ -81,7 +83,28 @@ async function startServer() {
     const server = new ApolloServer({
         typeDefs: [schema, ...typeDefs],
         resolvers,
-        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
+        plugins: [
+            ApolloServerPluginDrainHttpServer({ httpServer }),
+            {
+                async requestDidStart() {
+                    return {
+                        async willSendResponse(requestContext) {
+                            const { response, request } = requestContext;
+                            const errors = response.body.singleResult.errors
+                            if (!errors) {
+                                oldToken = request.http.headers.get('authorization')
+                                if (oldToken) {
+                                    const user = await auth(oldToken);
+                                    const token = await createToken.generate({ email: user.email }, '1h');
+                                    response.http.headers.set('authorization', token);
+                                }
+
+                            }
+                        },
+                    };
+                },
+            },
+        ]
     });
 
     await server.start();
