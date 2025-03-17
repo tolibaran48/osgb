@@ -28,8 +28,8 @@ module.exports = {
                 if (user.auth.auths.companyAuths.some(aut => aut.company === auth.auths.companyAuths[0].company)) {
                     throw new GraphQLError('Bu kulanıcı bilgilerine sahip bir kullanıcı mevcut.', {
                         extensions: {
-                            code: 'Bad Request',
-                            status: 400,
+                            code: 'Kötü İstek',
+                            status: 409,
                         },
                     });
                 }
@@ -72,8 +72,8 @@ module.exports = {
             if (!user) {
                 throw new GraphQLError('Kayıtlı kullanıcı bulunamadı.', {
                     extensions: {
-                        code: 'Bad Request',
-                        status: 400,
+                        code: 'Kötü istek',
+                        status: 404,
                     },
                 });
             }
@@ -95,10 +95,10 @@ module.exports = {
         const user = await Kullanici.findOne({ $or: [{ phoneNumber: newPhoneNumber }, { email }] });
 
         if (!user) {
-            throw new GraphQLError('Kullanıcı adı veya parola yanlıştır.', {
+            throw new GraphQLError('Kullanıcı adı veya parola yanlış.', {
                 extensions: {
-                    code: 'Unauthorized',
-                    status: 401,
+                    code: 'Hatalı İstek',
+                    status: 400,
                 },
             })
         }
@@ -107,10 +107,10 @@ module.exports = {
 
 
         if (!isMatch) {
-            throw new GraphQLError('Kullanıcı adı veya parola yanlıştır.', {
+            throw new GraphQLError('Kullanıcı adı veya parola yanlış.', {
                 extensions: {
-                    code: 'Unauthorized',
-                    status: 401,
+                    code: 'Hatalı İstek',
+                    status: 400,
                 },
             })
         }

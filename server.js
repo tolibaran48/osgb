@@ -92,13 +92,16 @@ async function startServer() {
                         async willSendResponse(requestContext) {
                             const { response, request } = requestContext;
                             const errors = response.body.singleResult.errors
-                            if (!errors) {
-                                oldToken = request.http.headers.get('authorization')
-                                if (oldToken) {
-                                    const user = await auth(oldToken);
-                                    const token = await createToken.generate({ email: user.email }, '1h');
-                                    response.http.headers.set('authorization', token);
+                            try {
+                                if (!errors) {
+                                    oldToken = request.http.headers.get('authorization')
+                                    if (oldToken) {
+                                        const user = await auth(oldToken);
+                                        const token = await createToken.generate({ email: user.email }, '1h');
+                                        response.http.headers.set('authorization', token);
+                                    }
                                 }
+                            } catch (error) {
 
                             }
 

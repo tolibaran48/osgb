@@ -45,19 +45,20 @@ module.exports = {
         const session = await mongoose.startSession();
         session.startTransaction();
 
-        const person = await new Person({
-            name,
-            surname,
-            identityId
-        }).save({ session })
-
-        await new Employee({
-            person: person._id,
-            processTime: processTime,
-            company
-        }).save({ session })
-
         try {
+            const person = await new Person({
+                name,
+                surname,
+                identityId
+            }).save({ session })
+
+            await new Employee({
+                person: person._id,
+                processTime: processTime,
+                company
+            }).save({ session })
+
+
 
             if (!existsSync(underPath)) {
                 mkdirSync(underPath, { recursive: true });

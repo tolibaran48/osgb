@@ -12,8 +12,8 @@ module.exports = {
             if (company) {
                 throw new GraphQLError(`Bu vergi numarası ${company.name} adına kayıtlıdır!`, {
                     extensions: {
-                        code: 'Bad Request',
-                        status: 400,
+                        code: 'Kötü İstek',
+                        status: 409,
                     },
                 })
             }
@@ -27,7 +27,7 @@ module.exports = {
             }).save();
 
         } catch (error) {
-            throw new GraphQLError(error)
+            res.status(error.status).json({ msg: error.message })
         }
 
     },
@@ -42,8 +42,8 @@ module.exports = {
             if (company) {
                 throw new GraphQLError(`Bu vergi numarası ${company.name} adına kayıtlıdır!`, {
                     extensions: {
-                        code: 'Bad Request',
-                        status: 400,
+                        code: 'Kötü İstek',
+                        status: 409,
                     },
                 })
             }
