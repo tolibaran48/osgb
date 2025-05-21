@@ -139,6 +139,6 @@ async function startServer() {
 
 startServer();
 
-app.listen(4000, () => {
+app.listen(3000, () => {
     console.log('Server 4000 portunda dinlemede...')
 })
