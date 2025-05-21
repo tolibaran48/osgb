@@ -1,0 +1,284 @@
+.insuranceTable.list-alt {
+    background: #e9ecef;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .search {
+        padding: 10px 5px 0px 5px;
+        border-bottom: 1px solid #ced4da; 
+        display: flex;
+        flex-flow: wrap;
+
+        fieldset {
+            margin-bottom: 10px;
+            width: 330px;
+            div{
+                input{
+                    width:200px;
+                }
+                button{
+                    width:150px;
+                }
+                .downs{
+                    width:150px; 
+                }
+            }
+           
+
+            .form-control {
+                font-size: 0.9rem;
+                height: 25px;
+                padding: 0.27rem
+            }
+        }
+    }
+
+    .pagination {
+        padding: 5px;
+        justify-content: space-between;
+
+        .pageNumber {
+            align-self: center;
+        }
+
+        nav {
+            button {
+                background-color: #f9fbfa;
+                border: 1px solid #bfcacd;
+                box-shadow: rgb(6 22 33 / 30%) 1px 1px 2px;
+                border-radius: 4px;
+                align-content: center;
+                font-size: 15px;
+
+                &:hover {
+                    background: white;
+                    color:#1a73e8;
+                }
+
+                &:active {
+                    box-shadow: rgb(6 22 33 / 30%) 0px .5px 1px;
+                    transform: translateY(1px);
+                    color:#1a73e8;
+                }
+
+                svg{
+                    height:1.1rem;
+                }
+
+                &:disabled{
+                    background-color: #f9fbfa !important;
+                    color:#b3b4b4 !important;
+                }
+            }
+        }
+    }
+
+    table {
+        border: none;
+        padding-bottom: 0px;
+        
+
+        thead {
+            background: rgb(249, 251, 250);
+            border-radius: 0;
+            width:100%;
+
+            tr {
+                border-bottom: 2px solid #ff7f5085;
+
+                th {
+                    color: #212529;
+                    font-weight: normal;
+                    font-size: 13px;
+
+                    &.companyName{
+                        width:30%;
+                        
+                    }
+                    &.adress{
+                        width:10%;
+                        
+                    }
+                    &.insurance{
+                        width:25%
+                    }
+                    &.dangerClass{
+                        width:5%;
+                        
+                    }
+                    &.prs{
+                        width:5%;
+                        
+                    }
+                    &.assignmentStatus{
+                        width:15%;
+                        
+                    }
+                    &.workingStatus{
+                        width:10%;
+                        
+                    }
+                }
+            }
+        }
+
+        tbody {
+            height:10px;
+            tr {
+                border-bottom: .5px solid #ff7f5085;
+
+                td {
+                    padding: 0.5rem 0.3rem;
+
+                    &.workingStatus{
+                        width:130px;
+                        text-align:center;
+
+                        .yellow{
+                            background:#13aa5287;
+                            border: none;                       
+                        }
+                        .red{
+                            background:#f7232357;
+                            border: none;                         
+                        }
+                    }
+                    .ust{
+                        display:flex;
+                    }
+
+                    &.companyName{
+                        width:30%;
+                        
+                    }
+                    &.adress{
+                        width:10%;
+                        
+                    }
+                    &.insurance{
+                        width:25%;
+                    }
+                    &.dangerClass{
+                        width:5%;
+                        
+                    }
+                    &.prs{
+                        width:5%;
+                        
+                    }
+                    &.assignmentStatus{
+                        width:15%;
+                        fieldset{
+                            margin-bottom: 0;
+                            .label{
+                                text-align: start;
+                            }
+                        }                        
+                    }
+                    &.workingStatus{
+                        width:10%;
+                        
+                    }
+                    .double{
+                        p{
+                            margin-bottom: .3rem;
+                        }
+                    }
+                    p{
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+               
+                &.hover{
+                    background-color: #f9fbfac9 !important;
+                    td{
+                        .yellow{
+                            background:none !important;
+                            border: 1px solid #13aa5287 !important;
+                        }
+                        .red{
+                            background:none !important;
+                            border: 1px solid #dc3545 !important;
+                                                     
+                        }
+                    }
+                }
+
+                &.active{
+                    background-color: #b6b9bbcf !important;
+                    td{
+                        &.workingStatus{
+                        .yellow{
+                            background:none !important;
+                            border: 1px solid #13aa5287 !important;
+                        }
+                        .red{
+                            background:none !important;
+                            border: 1px solid #dc3545 !important;
+                        }
+                    }
+                    }
+                }
+            }
+        }
+
+
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+
+    .label {
+        text-align: end !important;
+        padding-top: 4px !important;
+        min-width: 122px !important;
+
+        label {
+            white-space: nowrap;
+            color: #495057;
+            font-weight: unset;
+        }
+    }
+
+    .input {
+        padding-left: 5px;
+        flex-grow: 1;
+
+        input {
+            font-family: Roboto, sans-serif;
+            font-size: 13px;
+            color: #212529;
+            line-height: 1.4 !important;
+            // height: calc(1.5em + 0.5rem);
+
+            &:disabled {
+                background: rgb(249, 251, 250);
+            }
+
+        }
+
+        textarea {
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            color: #212529;
+            line-height: 1.4 !important;
+
+            &:disabled {
+                background: rgb(249, 251, 250);
+            }
+
+        }
+
+
+
+    }
+
+    &:nth-last-child(1) {
+        // margin-bottom: 0px;
+    }
+
+}

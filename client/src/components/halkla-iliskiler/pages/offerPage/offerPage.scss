@@ -1,0 +1,15 @@
+.offerPage{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    overflow-x: auto;
+
+    .page {
+        width: 231.6958333333mm;
+        height: 297mm;
+        padding-left: 12mm;
+        padding-right: 12mm;
+        background-color: azure;
+    }
+}

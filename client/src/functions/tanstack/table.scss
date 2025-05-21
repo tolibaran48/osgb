@@ -1,0 +1,242 @@
+.teklif {
+  font-size: 11pt;
+
+  em {
+    font-style: italic;
+  }
+
+  p {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .range-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    cursor: e-resize;
+    outline: none;
+    border-radius: 15px;
+    height: 2px;
+    background: none;
+  }
+
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 5px;
+    background-color: #f50;
+    border: none;
+    transition: .2s ease-in-out;
+  }
+
+  .range-input::-moz-range-thumb {
+    height: 15px;
+    width: 5px;
+    background-color: #f50;
+    border: none;
+    transition: .2s ease-in-out;
+  }
+
+  .range-input::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 3 rgba(255, 85, 0, .1)
+  }
+
+  .range-input:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, .2)
+  }
+
+  .range-input:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, .2)
+  }
+
+  .range-input::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, .1)
+  }
+
+  .range-input:active::-moz-range-thumb {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, .2)
+  }
+
+  .range-input:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, .2)
+  }
+
+  .value2,
+  .value3,
+  .value4 {
+    font-size: 26px;
+    width: 50px;
+    text-align: center;
+  }
+
+  .slider {
+    --webkit-appearance: none;
+    width: 100%;
+    height: 2px;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 5px;
+      height: 25px;
+      background: coral;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 5px;
+      height: 25px;
+      cursor: pointer;
+    }
+  }
+
+
+  thead {
+    border-radius: 0;
+
+    tr {
+      border-bottom: 2px solid #ff7f5085;
+
+      th {
+        letter-spacing: 0.03rem;
+        border: 0.1px solid rgba(255, 127, 80, 0.5215686275);
+        background-color: #f9e8d9 !important;
+        padding: 0.5rem 0.3rem;
+      }
+    }
+  }
+
+  tbody {
+
+    tr {
+
+
+      td {
+        padding: 1pt;
+        border: .1px solid #ff7f5085;
+        vertical-align: middle;
+
+        ol {
+          margin: 0;
+          padding-left: 0;
+
+          li {
+            list-style: decimal;
+            list-style-position: inside;
+
+            &::before {
+              // content: "";
+              // width: .4rem;
+              // display: inline-block;
+              width: 0;
+            }
+
+          }
+        }
+
+        ul {
+          margin: 0px !important;
+          padding-left: 0;
+
+          li {
+            list-style: disc;
+            list-style-position: inside;
+
+            &::before {
+              // content: "";
+              // width: .4rem;
+              // display: inline-block;
+              width: 0;
+            }
+
+          }
+        }
+
+        ul ul,
+        ol ul {
+          list-style: disc;
+          list-style-position: inside;
+          padding: 0px 20px
+        }
+
+        ol ol,
+        ul ol {
+          list-style: decimal;
+          list-style-position: inside;
+          padding: 0px 20px;
+        }
+
+        ol ol li {
+          list-style-position: inside;
+          counter-increment: count;
+
+          &::marker {
+            content:
+              counter(count, lower-alpha) ") ";
+          }
+        }
+        ul ul li {
+          list-style: disc;
+          list-style-position: inside;
+        }
+
+        
+
+        &:last-child {
+          width: 1%;
+          white-space: nowrap;
+
+          div {
+            display: flex;
+            background: none;
+            border: none;
+            gap: 5px
+          }
+        }
+
+        .cellManangmentButton {
+          height: 3px;
+
+          &:hover {
+            background: white;
+            height: 15px;
+          }
+
+          svg {
+            visibility: hidden;
+            cursor: pointer;
+
+            &:hover {
+              color: aqua;
+            }
+          }
+
+          &:hover {
+            svg {
+              visibility: visible;
+            }
+          }
+        }
+      }
+
+
+      &.hover {
+        background-color: #f9fbfac9 !important;
+
+        td {}
+      }
+
+      &.active {
+        background-color: #b6b9bbcf !important;
+
+        td {}
+      }
+    }
+  }
+
+
+}

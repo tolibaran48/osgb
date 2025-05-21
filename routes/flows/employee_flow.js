@@ -168,23 +168,26 @@ const getNext = async (decryptedBody) => {
                         getResponse = await getEmployees(data.company, token)
                         allEmployees = getResponse.allEmployees
 
-                        formEmployees.forEach(async (identity) => {
-                            let _employee = allEmployees.find((element) => element.id === identity)
+                        if (formEmployees.length > 0) {
+                            formEmployees.forEach(async (identity) => {
+                                let _employee = allEmployees.find((element) => element.id === identity)
 
-                            const es = await axios({
-                                url: `${process.env.LOCALHOST}/graphql`,
-                                method: 'post',
-                                headers: {
-                                    "authorization": token
-                                },
-                                data: {
-                                    query: `mutation{
+                                const es = await axios({
+                                    url: `${process.env.LOCALHOST}/graphql`,
+                                    method: 'post',
+                                    headers: {
+                                        "authorization": token
+                                    },
+                                    data: {
+                                        query: `mutation{
                                        sendEmployeeDocument(data:{to: "90${data.phoneNumber}", identityId: "${_employee.id}",namesurname: "${_employee.title}",companyName:"${getResponse.companyName}",type: "employeeFiles/${company}",fileName: "${_employee.id}-${_employee.title}"}){
                                         status
                                        }}`
-                                }
+                                    }
+                                })
                             })
-                        })
+                        }
+
 
                         return {
                             screen: "SUCCESS",

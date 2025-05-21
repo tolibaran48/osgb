@@ -117,7 +117,7 @@ async function startServer() {
     app.use(graphqlUploadExpress());
 
     app.use('/graphql', express.json({ limit: '50mb' }),
-        cors({ origin: ['https://newosgb-d1ffc736beaa.herokuapp.com', 'http://localhost', 'http://localhost', 'localhost'] }),
+        cors({ origin: ['https://newosgb-d1ffc736beaa.herokuapp.com', 'http://localhost', 'https://localhost', 'localhost'] }),
         expressMiddleware(server, {
             context: async ({ req }) => ({
                 Kullanici,
@@ -139,6 +139,6 @@ async function startServer() {
 
 startServer();
 
-app.listen(3000, () => {
+app.listen(4000, () => {
     console.log('Server 4000 portunda dinlemede...')
 })

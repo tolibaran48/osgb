@@ -1,0 +1,970 @@
+.menu-item {
+    text-decoration: none;
+    width: 100%;
+    font-size: 14px;
+    color: #fff;
+}
+
+body {
+    line-height: 1.6;
+    margin: 20px;
+}
+
+select:focus,
+.page-link:focus,
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+button.form-control:focus,
+button.btn-sm:focus,
+button.btn:focus,
+button.btn-close:focus,
+input.is-invalid:focus,
+input.is-valid:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+label.form-control.btn:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
+[contenteditable].form-control:focus {
+    box-shadow: inset 0 0px 0 #ddd !important;
+    border-color: coral;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media only screen and (max-width: 599px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            gap: 2rem;
+
+            #first-content {
+                width: 100%;
+                text-align: center;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: center;
+                }
+            }
+
+            #second-content {
+                width: 45;
+                ;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 45%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 100%;
+                text-align: center;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            gap: 5rem;
+
+            #first-content {
+                width: 100%;
+                padding: 0 10vw;
+                text-align: center;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: center;
+                }
+            }
+
+            #second-content {
+                width: 30%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 30%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 100%;
+                text-align: center;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            gap: 5rem;
+
+            #first-content {
+                width: 100%;
+                padding: 0 19vw;
+                text-align: center;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: center;
+                }
+            }
+
+            #second-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 100%;
+                text-align: center;
+                padding: 0 15vw;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            gap: 5rem;
+
+            #first-content {
+                width: 100%;
+                padding: 0 19vw;
+                text-align: center;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: center;
+                }
+            }
+
+            #second-content {
+                width: 15%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 15%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 100%;
+                text-align: center;
+                padding: 0 19vw;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) and (max-width: 1376px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            padding-bottom: 20px;
+            gap: 5rem;
+
+            #first-content {
+                width: 30%;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: flex-start;
+                }
+            }
+
+            #second-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 30%;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}
+
+@media only screen and (min-width: 1377px) {
+    #bottom-navbar {
+        position: relative;
+        padding: 40px 7vw 10px 7vw;
+
+        #bottom-navbar-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            padding-bottom: 50px;
+            gap: 5rem;
+
+            #first-content {
+                width: 30%;
+
+                .header {
+                    font-size: 25px;
+                    line-height: 1.5;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+
+                        span {
+                            color: whitesmoke;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+                }
+
+                .content {
+                    font-weight: 300;
+                    color: whitesmoke;
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+
+                .bottom-content {
+                    color: coral;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    margin-top: 10px;
+                    align-content: flex-end;
+                    justify-content: flex-start;
+                }
+            }
+
+            #second-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #third-content {
+                width: 20%;
+
+                .header {
+                    font-size: 17px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            a {
+                                text-decoration: none;
+                                color: #f5f5f5;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #fourth-content {
+                width: 30%;
+
+                .header {
+                    font-size: 15px;
+                    line-height: 1.5;
+                    padding: 0.3rem 0 0 0;
+
+                    .color-logo {
+                        letter-spacing: 0.5px;
+                        line-height: 2rem;
+                        font-weight: 400 !important;
+                        font-size: 17px !important;
+                    }
+
+                    ul {
+                        font-size: 15px;
+
+                        li {
+                            padding: .5rem 0 .5rem 0;
+                            letter-spacing: .06rem;
+
+                            span {
+                                color: whitesmoke;
+                                font-weight: 300;
+                                line-height: 2rem;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+        #footer {
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}

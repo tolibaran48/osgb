@@ -6,10 +6,13 @@ const contractSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Firma'
     },
-    contractDate: {
+    contractStartDate: {
         type: Date,
     },
-    contractType: {
+    contractEndDate: {
+        type: Date,
+    },
+    contractPaymentType: {
         type: String,
         enum: ["Yillik", "Aylik"]
     },
@@ -19,7 +22,7 @@ const contractSchema = new Schema({
     },
     monthlyContractType: {
         type: String,
-        enum: ["Fix", "Kişi başi", "Opsiyonlu"]
+        enum: ["Fix", "Kisi basi", "Opsiyonlu"]
     },
     KDV: {
         type: String,
@@ -50,10 +53,7 @@ const contractSchema = new Schema({
             }
         }
     ],
-    annuityPaymentDueDate: {
-        type: Date,
-    },
-    annuityPaymentAmount: {
+    PaymentAmount: {
         type: String,
     }
 });

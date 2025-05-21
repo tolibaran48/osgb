@@ -46,18 +46,24 @@ module.exports = {
         session.startTransaction();
 
         try {
-            const person = await new Person({
-                name,
-                surname,
-                identityId
-            }).save({ session })
+            let person = await Person.findOne({ "identityId": identityId });
 
-            await new Employee({
-                person: person._id,
-                processTime: processTime,
-                company
-            }).save({ session })
+            if (!person || person == null) {
+                person = await new Person({
+                    name,
+                    surname,
+                    identityId
+                }).save({ session })
+            }
 
+            let employee = await Employee.findOne({ "person": person._id });
+            if (!employee || employee == null) {
+                employee = await new Employee({
+                    person: person._id,
+                    processTime: processTime,
+                    company
+                }).save({ session })
+            }
 
 
             if (!existsSync(underPath)) {

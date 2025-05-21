@@ -39,6 +39,7 @@ type Cari{
 
 type Query{   
     companyConcubines:[Dokum!]
+    concubines:[Cari]
     concubine(processNumber:String!):Cari!
 }
 

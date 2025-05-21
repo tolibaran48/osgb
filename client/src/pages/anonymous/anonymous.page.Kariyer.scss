@@ -1,0 +1,70 @@
+#kariyer-wrapper {
+    min-height: 55vh;
+    background: aliceblue;
+
+    .header {
+        height: 16vh;
+        background: linear-gradient(117deg, rgba(8, 51, 64, 1) 0%, rgba(11, 70, 88, 1) 22%, rgba(21, 108, 134, 1) 35%, rgba(47, 150, 184, 1) 53%, rgba(82, 191, 226, 1) 71%, rgba(128, 221, 252, 1) 100%);
+        display: flex;
+        padding: 0 5vw;
+        align-items: end;
+        justify-content: center;
+
+        h2 {
+            padding-bottom: .7rem;
+            color: white;
+            font-weight: 300;
+            font-size: 2.7rem;
+        }
+    }
+
+    #content {
+        height: 100%;
+        padding: 5vh 10vw;
+
+        #content-wrapper {
+            width: 100%;
+
+            table {
+                border-collapse: collapse;
+                border-top: 1px solid coral;
+                width: 50%;
+
+                caption{
+                    caption-side: top;
+                    margin-bottom: 2px;
+                    font-size: 20px;
+                    color: #ff591c;
+                }
+
+                th,
+                td {
+                   // border: 1px solid coral;
+                    min-width: 100px;
+                    padding: 6px 3px;
+                    font-size: 17px;
+                    color:rgb(78, 74, 103)
+
+                }
+
+                thead {
+                    tr {
+                        th {
+                            font-weight: 500;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+
+                    tr {
+                        td {}
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+.down{
+  list-style-type: none;
+  max-height: 130px !important;
+  overflow: auto;
+  width: 100%;
+  margin:0;
+}
+.downs{
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    margin:0;
+    background-color: white;
+    border-left:1px solid #ced4da;
+    border-right:1px solid #ced4da;
+    border-bottom:1px solid #ced4da;
+}
+.down>li:nth-child(even) {
+  background-color: #f9fbfa;
+  } 
+
+  .down>li{
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px !important;
+    color:#212529 !important;
+    height: calc(1.5em + .5rem) !important;
+  }
+
+
+  .selectInput{
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px !important;
+    color:#212529 !important;
+    line-height: 1.4 !important;
+    /*height: calc(1.5em + .5rem) !important;*/
+  }
+
+  .selectInput:disabled{
+    background: #e9ecef;
+    }
+    
+  

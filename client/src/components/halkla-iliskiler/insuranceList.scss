@@ -1,0 +1,313 @@
+@media (min-width: 817px) {
+    .body-container{
+        .table-container{
+                box-shadow: rgb(6 22 33 / 30%) 0px 4px 10px -4px;
+                border-radius: 11px;
+                background-color: rgb(255, 255, 255);
+                padding: 0px;
+                width: 100%;
+
+                .header{
+                    height: 86px;
+                    .selectInput{
+                        border-radius: 0px !important;
+                    }
+                    input{
+                        border-radius: 0px !important;
+                    }
+                    .header-container{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        border-bottom: 2px solid #e7eeec;
+                        margin: 0;
+                        height: calc(100% - 41px);
+                        
+
+                        .selectInput{
+                            padding: 0px 4px !important;
+                            height: 21.5px !important;
+                            
+                        }
+                            .header-btn{
+                                padding:0px !important;
+                                border:none !important;
+                                background: none;
+                                display: flex;
+                            }
+                        #pass{
+                            width:3%;
+                            min-width: 20px;
+                            max-width:30px;
+                            padding-left: 5px;
+                           
+                        }
+                        #selection{
+                            display: flex;
+                            align-items: center;
+                           margin: 0px !important;
+                           height: 16px;
+                           padding-left: 5px;
+                        }
+                        #companyName{
+                            width:40%;
+                            min-width: 185px;
+                            max-width:450px;
+                            padding-left: 5px;
+                        }
+                        #Location{
+                            width:15%;
+                            min-width: 60px;
+                            display: flex;
+                            justify-content:center;
+                        }
+                        #insurance{
+                            width:239px;
+                            min-width:239px;
+                        }
+                        #dangerClass{
+                            width:8%;
+                            min-width: 20px;
+                            display: flex;
+                            justify-content:center;
+                        }
+                        #prs{
+                            width:12%;
+                            min-width:40px;
+                            display: flex;
+                            justify-content:center;
+                        }
+                        #assignmentStatus{
+                            width:22%;
+                            min-width:140px;
+                            padding-left:0px;
+                            display: flex;
+                            justify-content:center;
+                            div{
+                                div{
+                                    
+                                    button{
+                                        width: 100%;
+                                    }
+                                }
+                                
+                            }
+                        }
+                        #workingStatus{
+                            width:15%;
+                            min-width:50px;
+                            display: flex;
+                            justify-content:center;
+                        }
+                        #head8{
+                            width:50px;
+                            min-width:50px;
+                            max-width:50px;
+                            padding:0px;                        }
+                    }
+
+                }
+                
+                .list{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100% !important;
+                    height: calc(100% - 86px)  !important;
+                    overflow: auto;
+                    .ul-container{                        
+                        &:nth-child(odd){
+                            .g-content{
+                                background: #f9fbfa;
+                            }
+                        }
+                        background: #f3f5f4;
+                        &:hover{
+                            .g-content{
+                                background: aliceblue;
+                            }
+                        }
+                        &:last-child{
+                            margin-bottom: 0px !important;
+                        }
+                    }
+
+                    .ul-container{
+                        margin-bottom: 5px;
+                        .g-content{
+                            #top-ust{
+                                display:flex;
+                                position: relative;
+                                align-items: center;
+                                padding:1px 0px 1px 0px;
+                                margin:0;
+                                border-bottom: 1px solid #eff0ef;
+        
+                                .top-alt{
+                                    padding-left: 5px;
+                                    .double{
+                                        p{
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            margin: 0px;
+        
+                                            &:nth-child(odd){
+                                                font-weight: 700 ;
+                                                color: #495057 ;
+                                            }    
+                                        }
+                                    }
+                                    .ust{
+                                        display: flex;
+                                        flex-direction: row;
+                                        &:nth-child(odd){
+                                            background: #e9ebea;
+                                        }
+                                        .alt{                                    
+                                            &:first-child{
+                                                font-weight: 700 ;
+                                                color: #495057 ;
+                                                width: 50%;
+                                                min-width: 53px;
+                                            }    
+                                            &:nth-last-child(2){
+                                                width:35%;
+                                                min-width: 36px;
+                                            }
+                                            &:last-child{
+                                                width:15%;
+                                                min-width: 36px;
+                                                max-width: 36px;
+                                            }   
+                                            padding:1px 3px;
+                                        }
+                                    }
+        
+                                    button{
+                                        &:nth-child(odd){
+                                            color: #13aa52;
+                                            &:hover{
+                                                background-color: #13aa52;
+                                                color: white;
+                                            }
+                                            &:active {
+                                                background-color: #13aa52;
+                                                color: white;
+                                            }
+                                        }
+                                        &:nth-child(even){
+                                            color: #007bff;
+                                            &:hover{
+                                                background-color: #007bff;
+                                                color: white;
+                                            }
+                                            &:active {
+                                                background-color: #007bff;
+                                                color: white;
+                                            }
+                                        }
+                                        background: none;
+                                        border-radius: 3px;
+                                        display: flex;
+                                        align-content: center;
+                                        justify-content: center;
+                                        width: 100%;
+                                    }
+        
+                                    &:first-child{
+                                        width:3%;
+                                        min-width: 20px;
+                                        max-width:30px;
+                                    }
+                                    &:nth-last-child(8){
+                                        width:40%;
+                                        min-width: 185px;
+                                        max-width:450px;
+                                    }
+                                    &:nth-last-child(7){
+                                        width:15%;
+                                        min-width: 60px;
+                                        text-align:center;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                    }
+                                    &:nth-last-child(6){
+                                        width:239px;
+                                        min-width:239px;
+                                    }
+                                    &:nth-last-child(5){
+                                        width:8%;
+                                        min-width: 20px;
+                                        text-align:center;
+                                    }
+                                    &:nth-last-child(4){
+                                        width:12%;
+                                        min-width:40px;
+                                        text-align:center;
+                                    }
+                                    &:nth-last-child(3){
+                                        width:22%;
+                                        min-width:140px;
+                                        padding-left:0px;
+                                    }
+                                    &:nth-last-child(2){
+                                        width:15%;
+                                        min-width:50px;
+                                        font-size:11px;
+                                        text-align:center;
+                                        padding-left:0px;
+                                    }
+                                    &:last-child{
+                                        width:50px;
+                                        min-width:50px;
+                                        max-width:50px;
+                                        padding-left:0px;
+                                        padding-right:5px;
+                                        height:inherit;
+                                    }
+                                }
+        
+                               
+                            }
+                           
+                        }
+                       
+                    }
+
+                  
+                }
+                
+        }
+    }
+}
+
+@media (max-width: 816px) {
+    .body-container{
+        .table-container{
+                box-shadow: rgb(6 22 33 / 30%) 0px 4px 10px -4px;
+                border-radius: 11px;
+                background-color: rgb(255, 255, 255);
+                padding: 0px;
+                width: 100%;
+
+                .header{
+                    height: 40px;
+                    text-align: center;
+                    border-bottom: 1px solid #e7eeec;
+                }
+                
+                .list{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100% !important;
+                    height: calc(100% - 40px)  !important;
+                    overflow: auto;    
+                }
+                
+        }
+    }
+}
+    

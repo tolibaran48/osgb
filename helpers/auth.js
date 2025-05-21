@@ -16,7 +16,12 @@ const auth = async (token) => {
         return jwt.verify(token, process.env.jwtSecret);
     }
     catch (error) {
-        throw new GraphQLError(error)
+        throw new GraphQLError(error.message, {
+            extensions: {
+                code: 'Yetkisiz Giriş',
+                status: 401,
+            },
+        })
     }
 
 }

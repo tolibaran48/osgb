@@ -1,12 +1,25 @@
+const { isNull } = require("lodash");
 const auth = require("../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 
-const Concubine = {
+const Cari = {
     concubine: async (parent, args, { token, Cari }) => {
         await auth(token);
 
         try {
             return await Cari.findOne({ "processNumber": args.processNumber });
+
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
+    },
+    concubines: async (parent, args, { token, Cari }) => {
+        await auth(token);
+
+        try {
+            const carilers = await Cari.find({ process: "Fatura" })
+            console.log(token)
+            return carilers;
 
         } catch (error) {
             throw new GraphQLError(error)
@@ -62,4 +75,4 @@ const Concubine = {
     }
 };
 
-module.exports = Concubine;
+module.exports = Cari;
