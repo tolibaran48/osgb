@@ -44,18 +44,18 @@ const WhatsAppPersonPage = () => {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
     const { signOut } = useContext(AuthContext);
-    const { getEmployees, employeeLoading, employeeState, employeeState: { employees, isLoading } } = useContext(EmployeesContext);
+    const { getEmployees, employeeLoading, addEmployee, employeeState: { employees, isLoading } } = useContext(EmployeesContext);
     const { getCompanies, companyLoading, resetSelectCompany, selectCompany, companyState: { companies, selectedCompany } } = useContext(CompaniesContext);
 
     const company = useRef()
 
     const [uploadWhatsAppDocument, { loading }] = useMutation(UPLOAD_WHATSAPP_EMPLOYEE_DOCUMENT, {
-        onCompleted: () => {
+        onCompleted: (data) => {
             toastr.success('Kayıt başarıyla gerçekleştirilmiştir.', 'BAŞARILI')
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
-
+            addEmployee(data.uploadWhatsAppDocument)
             resetSelectCompany()
             setEmployee(initial);
         },
@@ -115,6 +115,7 @@ const WhatsAppPersonPage = () => {
         !companies.length > 0 && _getCompanies()
         return () => {
             resetSelectCompany();
+            getEmployees([])
         }
     }, [])
 
@@ -130,7 +131,7 @@ const WhatsAppPersonPage = () => {
         try {
 
             await uploadWhatsAppDocument({
-                variables: { data: { identityId: employee.identityId, name: employee.name, surname: employee.surname, company: employee.company._id, companyVergi: employee.company.vergi.vergiNumarasi, file: employee.file, processTime: dayjs(employee.processDate) } },
+                variables: { data: { identityId: employee.identityId, name: employee.name, surname: employee.surname, company: selectedCompany._id, companyVergi: selectedCompany.vergi.vergiNumarasi, file: employee.file, processTime: dayjs(employee.processDate) } },
                 context: {
                     headers: {
                         "Apollo-Require-Preflight": "true"

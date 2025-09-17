@@ -83,7 +83,7 @@ module.exports = {
             });
 
             await session.commitTransaction();
-            return true
+            return employee
         }
         catch (error) {
             await session.abortTransaction()

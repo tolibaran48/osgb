@@ -22,7 +22,7 @@ type Query{
 type Mutation{
     createEmployee(data:createEmployeeInput!):Employee
     updateEmployee(data:updateEmployeeInput!):Employee
-    uploadWhatsAppDocument(data:uploadWhatsAppDocumentInput!):Boolean
+    uploadWhatsAppDocument(data:uploadWhatsAppDocumentInput!):Employee
 }
 
 input uploadWhatsAppDocumentInput{
