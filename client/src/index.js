@@ -10,6 +10,7 @@ import { CompaniesProvider } from './context/companiesContext';
 import { InsurancesProvider } from './context/insurancesContext';
 import { ConcubinesProvider } from './context/concubinesContext';
 import { UsersProvider } from './context/usersContext';
+import { EmployeesProvider } from './context/employeesContext';
 
 
 
@@ -21,11 +22,13 @@ root.render(
       <ConcubinesProvider>
         <InsurancesProvider>
           <UsersProvider>
-            <ApolloProvider client={client}>
-              <Router>
-                <App />
-              </Router>
-            </ApolloProvider>
+            <EmployeesProvider>
+              <ApolloProvider client={client}>
+                <Router>
+                  <App />
+                </Router>
+              </ApolloProvider>
+            </EmployeesProvider>
           </UsersProvider>
         </InsurancesProvider>
       </ConcubinesProvider>
@@ -33,7 +36,7 @@ root.render(
   </AuthProvider>
 
 );
- // <React.StrictMode>
+// <React.StrictMode>
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

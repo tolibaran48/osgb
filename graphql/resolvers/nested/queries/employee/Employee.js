@@ -19,6 +19,15 @@ const Employee = {
         } catch (error) {
             throw new GraphQLError(error)
         }
+    },
+    company: async (parent, args, { token, Firma }) => {
+        await auth(token);
+
+        try {
+            return await Firma.findById(parent.company);
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
     }
 };
 

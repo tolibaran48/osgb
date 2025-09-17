@@ -54,13 +54,14 @@ const InvoiceUploadPage = () => {
         let invoices = []
 
         for (let invoice of invoiceList) {
-
+            let fileName;
             let filePromise = new Promise(resolve => {
                 let reader = new FileReader()
+                fileName = invoice.name.split(".xml")[0]
                 reader.readAsText(invoice)
                 reader.onload = () => {
                     var result = new XMLParser().parseFromString(reader.result);
-                    resolve(result);
+                    resolve({ result, fileName });
                 }
             });
 
@@ -68,13 +69,14 @@ const InvoiceUploadPage = () => {
         }
 
         Promise.all(faturalar).then(fileContents => {
+
             for (let invoice of fileContents) {
                 let getInvoices = new Promise(resolve => {
                     resolve({
-                        'vergiNumarasi': invoice.getElementsByTagName('cac:AccountingCustomerParty')[0].getElementsByTagName('cac:Party')[0].getElementsByTagName('cac:PartyIdentification')[0].getElementsByTagName('cbc:ID')[0].value,
-                        'debt': invoice.getElementsByTagName('cac:LegalMonetaryTotal')[0].getElementsByTagName('cbc:PayableAmount')[0].value,
-                        'processDate': dayjs(invoice.getElementsByTagName('cbc:IssueDate')[0].value).format(),
-                        'processNumber': invoice.getElementsByTagName('cbc:ID')[0].value,
+                        'vergiNumarasi': invoice.result.getElementsByTagName('cac:AccountingCustomerParty')[0].getElementsByTagName('cac:Party')[0].getElementsByTagName('cac:PartyIdentification')[0].getElementsByTagName('cbc:ID')[0].value,
+                        'debt': invoice.result.getElementsByTagName('cac:LegalMonetaryTotal')[0].getElementsByTagName('cbc:PayableAmount')[0].value,
+                        'processDate': dayjs(invoice.result.getElementsByTagName('cbc:IssueDate')[0].value).format(),
+                        'processNumber': invoice.fileName,
                         'process': 'Fatura'
                     })
                 })

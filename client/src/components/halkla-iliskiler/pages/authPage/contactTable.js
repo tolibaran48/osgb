@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState, useContext,memo } from 'react';
-import {Spinner} from 'reactstrap';
-import {UsersContext } from '../../../../context/usersContext';
+import React, { Fragment, useEffect, useState, useContext, memo } from 'react';
+import { Spinner } from 'reactstrap';
+import { UsersContext } from '../../../../context/usersContext';
 import Contact from './contact';
 import '../companyPage/companyTable.scss'
 import { ImNext2 } from "react-icons/im";
@@ -11,10 +11,10 @@ import { ImFirst } from "react-icons/im";
 import { useTable, useSortBy, useFilters, useGlobalFilter, usePagination, useAsyncDebounce, useRowSelect } from "react-table";
 
 
-function Table({ data, columns}) {
-  const { resetSelectUser, selectUser, userState,getcompaniesLoading } = useContext(UsersContext);
+function Table({ data, columns }) {
+  const { resetSelectUser, selectUser, userState, getcompaniesLoading } = useContext(UsersContext);
 
-  
+
   // Use the state and functions returned from useTable to build your UI
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, state, preGlobalFilteredRows, setGlobalFilter,
     canPreviousPage,
@@ -60,7 +60,7 @@ function Table({ data, columns}) {
         )}
       </div>
       <div style={{ flexGrow: '1' }}>
-        {getcompaniesLoading && <Spinner/>}
+        {getcompaniesLoading && <Spinner />}
         <table {...getTableProps()} border="1" style={{ display: 'flex', flexDirection: 'column' }}>
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -87,9 +87,9 @@ function Table({ data, columns}) {
             {
               page.map((row, i) => {
                 prepareRow(row);
-                return(
+                return (
                   <Contact row={row} key={i} />
-                )                
+                )
               })
             }
           </tbody>
@@ -104,16 +104,16 @@ function Table({ data, columns}) {
         <div>
           <nav >
             <button type='button' onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            <ImFirst/>
+              <ImFirst />
             </button>{' '}
             <button type='button' onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <ImPrevious2/>
+              <ImPrevious2 />
             </button>{' '}
             <button type='button' onClick={() => nextPage()} disabled={!canNextPage}>
-            <ImNext2 />
+              <ImNext2 />
             </button>{' '}
             <button type='button' onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            <ImLast/>
+              <ImLast />
             </button>{' '}
 
           </nav>

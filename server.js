@@ -70,11 +70,11 @@ app.use(async (req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-
+/*
 app.use(express.static("build"))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
+});*/
 
 
 async function startServer() {
@@ -139,6 +139,6 @@ async function startServer() {
 
 startServer();
 
-app.listen(3000, () => {
+app.listen(4000, () => {
     console.log('Server 4000 portunda dinlemede...')
 })

@@ -13,17 +13,22 @@ const OldSystem = ({ rows }) => {
         try {
             const _rows = [];
 
+
             const Ekle = (insurance, atama) => {
+                let company = companies.find((company) => company._id === insurance.original.company);
                 _rows.push({
                     'Firma Ünvanı': insurance.original.companyName,
                     'Hizmet Alan Kurum': insurance.original.isgKatipName,
                     'SGK Sicil No': insurance.original.insuranceNumber,
-                    'Vergi Numarası': companies.find((company) => company._id === insurance.original.company).vergi.vergiNumarasi,
+                    'Adres': `${insurance.original.adress.detail}  ${insurance.original.adress.ilce.name} ${insurance.original.adress.il.name}`,
+                    'İlçe': `${insurance.original.adress.ilce.name}`,
+                    'Vergi Numarası': company.vergi.vergiNumarasi,
                     'Tehlike Sınıfı': insurance.original.tehlikeSinifi,
                     'Atama ID': atama.assignmentId,
                     'Personel Kategori': atama.category,
                     'Adı Soyadı': atama.nameSurname,
                     'Çalışma Durumu': atama.approvalStatus === 'Sözleşme İptal' ? 'Ayrıldı' : atama.approvalStatus === 'Onaylandı' ? 'Onaylandı' : 'Onay Bekliyor',
+                    'Durum': `${company.workingStatus}`,
                     'Grv. Başlama Trh.': atama.startDate ?? '',
                     'Grv. Ayrılış Trh.': atama.endDate ?? '',
                     'Ayl. Çlş. Süresi (Dk.)': atama.assignmentTime,
@@ -33,16 +38,20 @@ const OldSystem = ({ rows }) => {
             }
 
             const bosEkle = (insurance) => {
+                let company = companies.find((company) => company._id === insurance.original.company);
                 _rows.push({
                     'Firma Ünvanı': insurance.original.companyName,
                     'Hizmet Alan Kurum': insurance.original.isgKatipName,
                     'SGK Sicil No': insurance.original.insuranceNumber,
                     'Vergi Numarası': companies.find((company) => company._id === insurance.original.company).vergi.vergiNumarasi,
+                    'Adres': `${insurance.original.adress.detail} ${insurance.original.adress.ilce.name} ${insurance.original.adress.il.name}`,
+                    'İlçe': `${insurance.original.adress.ilce.name}`,
                     'Tehlike Sınıfı': '',
                     'Atama ID': '',
                     'Personel Kategori': '',
                     'Adı Soyadı': '',
                     'Çalışma Durumu': '',
+                    'Durum': `${company.workingStatus}`,
                     'Grv. Başlama Trh.': '',
                     'Grv. Ayrılış Trh.': '',
                     'Ayl. Çlş. Süresi (Dk.)': '',

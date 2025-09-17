@@ -1,17 +1,17 @@
 import React, { useState, useContext, memo } from 'react';
-import { UsersContext } from '../../../../context/usersContext';
+import { CompaniesContext } from '../../../../../context/companiesContext';
 
 
 
-function Contact({ row }) {
-    const { selectUser, userState } = useContext(UsersContext);
+function Person({ row }) {
     const [hoverId, setHover] = useState(null);
     return (
-        <tr {...row.getRowProps()}
-            className={`${hoverId === row.original._id ? 'hover' : ''} ${userState.selectedId === row.original._id ? 'active' : ''}`}
+        <tr key={row.id} {...row.getRowProps()}
+            className={`${hoverId === row.original._id ? 'hover' : ''}`}
             onMouseLeave={(e) => setHover(null)}
             onMouseEnter={(e) => setHover(row.original._id)}
-            onClick={(e) => selectUser(row.original._id)}>
+        // onClick={(e) => selectCompany(row.original._id)}
+        >
             {row.cells.map((cell, j) => {
                 return <td {...cell.getCellProps()} className={cell.column.id}>{cell.render("Cell")}</td>;
             })}
@@ -21,4 +21,4 @@ function Contact({ row }) {
 }
 
 
-export default memo(Contact);
+export default memo(Person);
