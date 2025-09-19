@@ -1,6 +1,6 @@
 const assignmentControl = async (insurances) => {
     const sicillers = [];
-    
+
     for (const insurance of insurances) {
         const employeeCount = parseInt(insurance.assignments[0].employeeCount);
         const isgKatipName = insurance.assignments[0].isgKatipName;
@@ -52,86 +52,60 @@ const assignmentControl = async (insurances) => {
                                                 startDate: _assignment.startDate,
                                             }
                                             ]
-    
+
                                         }
                                     }
                                 }
                             }
                             else if (_assignment.workingStatus === 'Sözleşme Teklif Durumunda') {
-                                if (_assignment.profApprovalStatus === 'Sözleşme Onay Bekliyor') {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            uzmanStatus: {
-                                                ...sn.atamalar.uzmanStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.uzmanStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.uzmanStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: "Profosyonel Onay Bekliyor",
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-                                else {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            uzmanStatus: {
-                                                ...sn.atamalar.uzmanStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.uzmanStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.uzmanStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: "Firma Onay Bekliyor",
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                if(_assignment.workingApproveStatus=='Sözleşme Onaylandı'){
                                 sn = {
                                     ...sn,
                                     atamalar: {
                                         ...sn.atamalar,
                                         uzmanStatus: {
                                             ...sn.atamalar.uzmanStatus,
+                                            assignmentTotal: parseInt(sn.atamalar.uzmanStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
                                             approvalAssignments: [...sn.atamalar.uzmanStatus.approvalAssignments,
                                             {
-                                                approvalStatus: 'Sözleşme İptal',
+                                                approvalStatus: "Onay Bekliyor",
                                                 assignmentId: _assignment.assignmentId,
                                                 identityId: _assignment.identityId.toString(),
                                                 nameSurname: _assignment.nameSurname,
                                                 category: _assignment.category,
                                                 assignmentTime: _assignment.assignmentTime,
-                                                startDate: _assignment.startDate,
-                                                endDate: _assignment.endDate,
+                                                startDate: _assignment.identificationDate,
                                             }
                                             ]
-    
+
                                         }
                                     }
                                 }
                             }
+                            else {
+                                if (_assignment.workingApproveStatus == 'Sözleşme Onaylandı') {
+                                    sn = {
+                                        ...sn,
+                                        atamalar: {
+                                            ...sn.atamalar,
+                                            uzmanStatus: {
+                                                ...sn.atamalar.uzmanStatus,
+                                                approvalAssignments: [...sn.atamalar.uzmanStatus.approvalAssignments,
+                                                {
+                                                    approvalStatus: 'Sözleşme İptal',
+                                                    assignmentId: _assignment.assignmentId,
+                                                    identityId: _assignment.identityId.toString(),
+                                                    nameSurname: _assignment.nameSurname,
+                                                    category: _assignment.category,
+                                                    assignmentTime: _assignment.assignmentTime,
+                                                    startDate: _assignment.startDate,
+                                                    endDate: _assignment.endDate,
+                                                }
+                                                ]
+
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -156,89 +130,64 @@ const assignmentControl = async (insurances) => {
                                                 startDate: _assignment.startDate,
                                             }
                                             ]
-    
+
                                         }
                                     }
                                 }
                             }
                             else if (_assignment.workingStatus === 'Sözleşme Teklif Durumunda') {
-                                if (_assignment.profApprovalStatus === 'Sözleşme Onay Bekliyor') {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            hekimStatus: {
-                                                ...sn.atamalar.hekimStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.hekimStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.hekimStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: 'Profosyonel Onay Bekliyor',
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-                                else {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            hekimStatus: {
-                                                ...sn.atamalar.hekimStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.hekimStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.hekimStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: 'Firma Onay Bekliyor',
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                if(_assignment.workingApproveStatus=='Sözleşme Onaylandı'){
                                 sn = {
                                     ...sn,
                                     atamalar: {
                                         ...sn.atamalar,
                                         hekimStatus: {
                                             ...sn.atamalar.hekimStatus,
+                                            assignmentTotal: parseInt(sn.atamalar.hekimStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
                                             approvalAssignments: [...sn.atamalar.hekimStatus.approvalAssignments,
                                             {
-                                                approvalStatus: 'Sözleşme İptal',
+                                                approvalStatus: 'Onay Bekliyor',
                                                 assignmentId: _assignment.assignmentId,
                                                 identityId: _assignment.identityId.toString(),
                                                 nameSurname: _assignment.nameSurname,
                                                 category: _assignment.category,
                                                 assignmentTime: _assignment.assignmentTime,
-                                                startDate: _assignment.startDate,
-                                                endDate: _assignment.endDate,
+                                                startDate: _assignment.identificationDate,
                                             }
                                             ]
-    
+
+                                        }
+                                    }
+                                }
+
+                            }
+                            else {
+                                if (_assignment.workingApproveStatus == 'Sözleşme Onaylandı') {
+                                    sn = {
+                                        ...sn,
+                                        atamalar: {
+                                            ...sn.atamalar,
+                                            hekimStatus: {
+                                                ...sn.atamalar.hekimStatus,
+                                                approvalAssignments: [...sn.atamalar.hekimStatus.approvalAssignments,
+                                                {
+                                                    approvalStatus: 'Sözleşme İptal',
+                                                    assignmentId: _assignment.assignmentId,
+                                                    identityId: _assignment.identityId.toString(),
+                                                    nameSurname: _assignment.nameSurname,
+                                                    category: _assignment.category,
+                                                    assignmentTime: _assignment.assignmentTime,
+                                                    startDate: _assignment.startDate,
+                                                    endDate: _assignment.endDate,
+                                                }
+                                                ]
+
+                                            }
                                         }
                                     }
                                 }
                             }
-                            }
                         }
-    
+
                     }
                     else if (_assignment.category.includes('Diğer Sağlık Personeli')) {
                         if (_assignment.workingStatus === 'Sözleşme Teklif Durumunda' || _assignment.workingStatus === 'Sözleşme Devam Ediyor' || _assignment.workingStatus === 'Sözleşme Sonlandırıldı') {
@@ -261,96 +210,71 @@ const assignmentControl = async (insurances) => {
                                                 startDate: _assignment.startDate,
                                             }
                                             ]
-    
+
                                         }
                                     }
                                 }
                             }
                             else if (_assignment.workingStatus === 'Sözleşme Teklif Durumunda') {
-                                if (_assignment.profApprovalStatus === 'Sözleşme Onay Bekliyor') {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            dspStatus: {
-                                                ...sn.atamalar.dspStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.dspStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.dspStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: 'Profosyonel Onay Bekliyor',
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-                                else {
-                                    sn = {
-                                        ...sn,
-                                        atamalar: {
-                                            ...sn.atamalar,
-                                            dspStatus: {
-                                                ...sn.atamalar.dspStatus,
-                                                assignmentTotal: parseInt(sn.atamalar.dspStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
-                                                approvalAssignments: [...sn.atamalar.dspStatus.approvalAssignments,
-                                                {
-                                                    approvalStatus: 'Firma Onay Bekliyor',
-                                                    assignmentId: _assignment.assignmentId,
-                                                    identityId: _assignment.identityId.toString(),
-                                                    nameSurname: _assignment.nameSurname,
-                                                    category: _assignment.category,
-                                                    assignmentTime: _assignment.assignmentTime,
-                                                    startDate: _assignment.identificationDate,
-                                                }
-                                                ]
-    
-                                            }
-                                        }
-                                    }
-                                }
-    
-                            }
-                            else {
-                                if(_assignment.workingApproveStatus=='Sözleşme Onaylandı'){
                                 sn = {
                                     ...sn,
                                     atamalar: {
                                         ...sn.atamalar,
                                         dspStatus: {
                                             ...sn.atamalar.dspStatus,
+                                            assignmentTotal: parseInt(sn.atamalar.dspStatus.assignmentTotal) + parseInt(_assignment.assignmentTime),
                                             approvalAssignments: [...sn.atamalar.dspStatus.approvalAssignments,
                                             {
-                                                approvalStatus: 'Sözleşme İptal',
+                                                approvalStatus: 'Onay Bekliyor',
                                                 assignmentId: _assignment.assignmentId,
                                                 identityId: _assignment.identityId.toString(),
                                                 nameSurname: _assignment.nameSurname,
                                                 category: _assignment.category,
                                                 assignmentTime: _assignment.assignmentTime,
-                                                startDate: _assignment.startDate,
-                                                endDate: _assignment.endDate,
+                                                startDate: _assignment.identificationDate,
                                             }
                                             ]
-    
+
                                         }
                                     }
                                 }
+
+
                             }
+                            else {
+                                if (_assignment.workingApproveStatus == 'Sözleşme Onaylandı') {
+                                    sn = {
+                                        ...sn,
+                                        atamalar: {
+                                            ...sn.atamalar,
+                                            dspStatus: {
+                                                ...sn.atamalar.dspStatus,
+                                                approvalAssignments: [...sn.atamalar.dspStatus.approvalAssignments,
+                                                {
+                                                    approvalStatus: 'Sözleşme İptal',
+                                                    assignmentId: _assignment.assignmentId,
+                                                    identityId: _assignment.identityId.toString(),
+                                                    nameSurname: _assignment.nameSurname,
+                                                    category: _assignment.category,
+                                                    assignmentTime: _assignment.assignmentTime,
+                                                    startDate: _assignment.startDate,
+                                                    endDate: _assignment.endDate,
+                                                }
+                                                ]
+
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             } catch (error) {
-                reject (error)
+                reject(error)
             }
-            
-            resolve ({ assignmentStatus: sn.atamalar, employeeCount, isgKatipName, tehlikeSinifi, insuranceControlNumber })
+
+            resolve({ assignmentStatus: sn.atamalar, employeeCount, isgKatipName, tehlikeSinifi, insuranceControlNumber })
 
         }))
     }

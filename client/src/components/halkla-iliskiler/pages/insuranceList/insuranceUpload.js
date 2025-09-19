@@ -98,12 +98,12 @@ const InsuranceUpload = () => {
                         'startDate': ExcelDate(item["Sözleşme Başlangıç Tarihi"]),
                         'identificationDate': ExcelDate(item["Sözleşme Tanımlanma Tarihi"]),
                         'endDate': ExcelDate(item["Sözleşme Bitiş Tarihi"]),
-                        'profApprovalStatus': item["Görevlendirilen Kişi Onay Statüsü"].toString(),
-                        'companyApprovalStatus': item["Hizmet Alan İşyeri Onay Statüsü"].toString(),
+                        //'profApprovalStatus': item["Görevlendirilen Kişi Onay Statüsü"].toString(),---
+                        //'companyApprovalStatus': item["Hizmet Alan İşyeri Onay Statüsü"].toString(),---
                         'identityId': item["Görevlendirilen Kişi TC Kimlik No"].toString(),
                         'nameSurname': item["Görevlendirilen Kişi Ad Soyad"].toString(),
                         'category': item["Görevlendirilen Kişi Sertifika Tipi"].toString(),
-                        'workingStatus': item["Sözleşme Statü"].toString(),
+                        'workingStatus': item["Sözleşme Statüsü"].toString(),
                         'workingApproveStatus': item["Sözleşme Onay Durumu"].toString(),
                         'assignmentTime': parseInt(item["Çalışma Süresi"]),
                         'certificateNumber': item["Görevlendirilen Kişi Sertifika No"].toString(),

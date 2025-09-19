@@ -43,7 +43,7 @@ const Insurance = ({ insurance }) => {
             </div>
             <div className='value' >{insurance.assignmentStatus.uzmanStatus.approvalAssignments.length > 0 ? insurance.assignmentStatus.uzmanStatus.approvalAssignments.map((status) => (
               status.approvalStatus === 'Onaylandı' ? <MdCheckCircle key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#13aa52' }} />
-                : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
+                : status.approvalStatus === 'Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
                   : null
             )) : <RiIndeterminateCircleFill key={0} style={{ height: '1.28em', width: '1.28em', color: 'red' }} />}
             </div>
@@ -55,7 +55,7 @@ const Insurance = ({ insurance }) => {
             </div>
             <div className='value'>{insurance.assignmentStatus.hekimStatus.approvalAssignments.length > 0 ? insurance.assignmentStatus.hekimStatus.approvalAssignments.map((status) => (
               status.approvalStatus === 'Onaylandı' ? <MdCheckCircle key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#13aa52' }} />
-                : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
+                : status.approvalStatus === 'Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
                   : null
             )) : <RiIndeterminateCircleFill key={0} style={{ height: '1.28em', width: '1.28em', color: 'red' }} />}
             </div>
@@ -67,7 +67,7 @@ const Insurance = ({ insurance }) => {
             </div>
             <div className='value'>{insurance.assignmentStatus.dspStatus.approvalAssignments.length > 0 ? insurance.assignmentStatus.dspStatus.approvalAssignments.map((status) => (
               status.approvalStatus === 'Onaylandı' ? <MdCheckCircle key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#13aa52' }} />
-                : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
+                : status.approvalStatus === 'Onay Bekliyor' ? <MdError key={status.assignmentId} style={{ height: '1.28em', width: '1.28em', color: '#ff8100' }} />
                   : null
             )) : <RiIndeterminateCircleFill key={0} style={{ height: '1.28em', width: '1.28em', color: 'red' }} />}
             </div>

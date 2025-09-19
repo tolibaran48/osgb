@@ -305,32 +305,16 @@ const InsuranceList = ({ select, checkBox, datas, getInsurancesLoading }) => {
               }
             });
           }
-          else if (filterValue === 'AtananOnaysiz') {
+          else if (filterValue === 'Onaysiz') {
             return rows.filter(row => {
               let assignment = row.values.assignmentStatus;
               let uzmanApproval = assignment.uzmanStatus.approvalAssignments;
               let hekimApproval = assignment.hekimStatus.approvalAssignments;
               let dspApproval = assignment.dspStatus.approvalAssignments;
               if (row.values.prs > 0 && row.values.workingStatus === 'Aktif') {
-                if (uzmanApproval.filter(x => x.approvalStatus === 'Profosyonel Onay Bekliyor').length > 0
-                  || hekimApproval.filter(x => x.approvalStatus === 'Profosyonel Onay Bekliyor').length > 0
-                  || dspApproval.filter(x => x.approvalStatus === 'Profosyonel Onay Bekliyor').length > 0
-                ) {
-                  return true
-                }
-              }
-            });
-          }
-          else if (filterValue === 'FirmaOnaysiz') {
-            return rows.filter(row => {
-              let assignment = row.values.assignmentStatus;
-              let uzmanApproval = assignment.uzmanStatus.approvalAssignments;
-              let hekimApproval = assignment.hekimStatus.approvalAssignments;
-              let dspApproval = assignment.dspStatus.approvalAssignments;
-              if (row.values.prs > 0 && row.values.workingStatus === 'Aktif') {
-                if (uzmanApproval.filter(x => x.approvalStatus === 'Firma Onay Bekliyor').length > 0
-                  || hekimApproval.filter(x => x.approvalStatus === 'Firma Onay Bekliyor').length > 0
-                  || dspApproval.filter(x => x.approvalStatus === 'Firma Onay Bekliyor').length > 0
+                if (uzmanApproval.filter(x => x.approvalStatus === 'Onay Bekliyor').length > 0
+                  || hekimApproval.filter(x => x.approvalStatus === 'Onay Bekliyor').length > 0
+                  || dspApproval.filter(x => x.approvalStatus === 'Onay Bekliyor').length > 0
                 ) {
                   return true
                 }
@@ -357,8 +341,7 @@ const InsuranceList = ({ select, checkBox, datas, getInsurancesLoading }) => {
                     { value: `Hepsi`, id: 'All' },
                     { value: `Atamasız`, count: null, id: "Atamasiz" },
                     { value: `Fazla Atamalı`, count: null, id: "Fazla" },
-                    { value: `Atanan Onaysız`, count: null, id: "AtananOnaysiz" },
-                    { value: `Firma Onaysız`, count: null, id: "FirmaOnaysiz" }
+                    { value: `Atanan Onaysız`, count: null, id: "Onaysiz" }
                   ]} />
               </div>
             </fieldset>
@@ -467,7 +450,7 @@ const Component = ({ insurance }) => {
                 {insurance.uzmanStatus.approvalAssignments.filter(x => x.approvalStatus !== 'Sözleşme İptal').length > 0 ?
                   insurance.uzmanStatus.approvalAssignments.map((status) => (status.approvalStatus === 'Onaylandı' ?
                     <MdCheckCircle key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#13aa52' }} />
-                    : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ?
+                    : status.approvalStatus === 'Onay Bekliyor' ?
                       <MdError key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#2e9fff' }} />
                       : null))
                   :
@@ -492,7 +475,7 @@ const Component = ({ insurance }) => {
                 {insurance.hekimStatus.approvalAssignments.filter(x => x.approvalStatus !== 'Sözleşme İptal').length > 0 ?
                   insurance.hekimStatus.approvalAssignments.map((status) => (status.approvalStatus === 'Onaylandı' ?
                     <MdCheckCircle key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#13aa52' }} />
-                    : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ?
+                    : status.approvalStatus === 'Onay Bekliyor' ?
                       <MdError key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#2e9fff' }} />
                       : null))
                   :
@@ -517,7 +500,7 @@ const Component = ({ insurance }) => {
                 {insurance.dspStatus.approvalAssignments.filter(x => x.approvalStatus !== 'Sözleşme İptal').length > 0 ?
                   insurance.dspStatus.approvalAssignments.map((status) => (status.approvalStatus === 'Onaylandı' ?
                     <MdCheckCircle key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#13aa52' }} />
-                    : status.approvalStatus === 'Profosyonel Onay Bekliyor' || status.approvalStatus === 'Firma Onay Bekliyor' ?
+                    : status.approvalStatus === 'Onay Bekliyor' ?
                       <MdError key={status.assignmentId} style={{ height: '1.15em', width: '1.15em', color: '#2e9fff' }} />
                       : null))
                   :
