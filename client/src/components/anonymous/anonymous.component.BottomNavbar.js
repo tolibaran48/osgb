@@ -14,7 +14,7 @@ const BottomNavbar = () => {
                 <div id='bottom-navbar-wrapper'>
                     <div id='first-content'>
                         <div className="header">
-                            <span className='color-logo'>bodrum</span><span style={{color:'white'}} >İSG</span>
+                            <span className='color-logo'>bodrum</span><span style={{ color: 'white' }} >İSG</span>
                         </div>
                         <div className="content">
                             <p className="title">İş Sağlığı ve Güvenliği bilincinin oluşması amacıyla, sunduğu hizmetten ödün vermeden, uzman kadro, bilgi, tecrübe ve teknolojiyi birleştirerek, işverenlere gerekli desteği sağlamak, hizmet kalitesiyle tercih edilen İş sağlığı ve Güvenliği özelliğini sürdürmek.</p>
@@ -84,7 +84,7 @@ const BottomNavbar = () => {
                                     <NavLink target="_blank" rel="noopener noreferrer" end to='https://www.csgb.gov.tr/isgum' className="menu-item-container" role="menuitem" aria-disabled="false" >
                                         İSGÜM
                                     </NavLink>
-                                </li>                               
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -96,7 +96,7 @@ const BottomNavbar = () => {
                                     <span><SlLocationPin style={{ width: '20px', height: '20px', color: 'coral', marginRight: '10px' }} />Yalıkavak Mahallesi 6221 Sokak 11/1 Bodrum/MUĞLA</span>
                                 </li>
                                 <li>
-                                    <span><FiPhone style={{ width: '20px', height: '20px', color: 'coral', marginRight: '10px' }} />(252) 385 48 52</span>
+                                    <span><FiPhone style={{ width: '20px', height: '20px', color: 'coral', marginRight: '10px' }} />(252) 385 26 48</span>
                                 </li>
                                 <li>
                                     <span><MdOutlineEmail style={{ width: '20px', height: '20px', color: 'coral', marginRight: '10px' }} />info@yalikavakosgb.com</span>

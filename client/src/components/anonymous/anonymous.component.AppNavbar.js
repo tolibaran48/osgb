@@ -96,7 +96,7 @@ const AppNavbar = (props) => {
                             <div style={{ color: 'coral', fontSize: 'small' }}>
                                 <FaPhoneAlt />
                             </div>
-                            <div style={{ fontSize: 'small' }}>(252) 385 48 52</div>
+                            <div style={{ fontSize: 'small' }}>(252) 385 26 48</div>
                         </div>
                     </div>
                 </nav>
