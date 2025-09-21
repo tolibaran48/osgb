@@ -4,19 +4,19 @@ scalar DateTime
 type Employee{
     _id:ID!
     person:Person
-    company:Firma!
-    insurance:Sicil!
+    company:Firma
+    insurance:Sicil
     workingStatus:String
     entryDate:DateTime
     relaseDate:DateTime  
     processTime:DateTime
+    fileLink:String
 }
 
 type Query{
     employee(_id:ID!):Employee
     employeeById(_id:ID!):Employee
     employees:[Employee]
-    getEmployeeFile(type:String!,fileName:String!):String!
 } 
 
 type Mutation{

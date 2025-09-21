@@ -7,10 +7,6 @@ import timezone from 'dayjs/plugin/timezone';
 import { BsFiletypePdf } from "react-icons/bs";
 import './personTable.scss'
 import PersonListTable from './PersonListTable';
-import { GET_EMPLOYEE_FILE } from '../../../../../GraphQL/Queries/employees/employees';
-import { useLazyQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../../../context/authContext';
 import turkishToEnglish from '../../../../../functions/turkishToEnglish';
 
 
@@ -19,27 +15,6 @@ const PersonListTableColumns = ({ employees }) => {
     dayjs.extend(timezone)
     dayjs.extend(customParseFormat)
     dayjs.locale('tr')
-
-    const navigate = useNavigate();
-    const { signOut } = useContext(AuthContext);
-
-    const [_getEmployeeFile] = useLazyQuery(GET_EMPLOYEE_FILE, {
-        fetchPolicy: 'network-only',
-        onCompleted: (data) => {
-            window.open(`https://www.yalikavakosgb.com/webhook/media/${data.getEmployeeFile}`, '_blank');
-        },
-        onError({ graphQLErrors }) {
-            const err = graphQLErrors[0].extensions;
-            if (err.status && err.status == 401) {
-                signOut()
-                navigate('/portal-giris')
-            }
-        }
-    });
-
-    const getPdf = (values) => {
-        _getEmployeeFile({ variables: values })
-    }
 
     const columns = React.useMemo(
         () => [
@@ -134,10 +109,7 @@ const PersonListTableColumns = ({ employees }) => {
                 accessor: "pdfButton",
                 Cell: props => {
                     return (
-                        <button type='button' className='btn ' style={{ padding: '3px' }}
-                            onClick={e => { getPdf({ type: `employeeFiles/${props.row.original.company.vergi.vergiNumarasi}`, fileName: `${props.row.original.person.identityId}-${props.row.original.person.name} ${props.row.original.person.surname}` }) }} >
-                            <BsFiletypePdf style={{ fontSize: '1.4rem', color: 'red' }} />
-                        </button>
+                        <a href={`/media/${props.row.original.fileLink}`} download="person.pdf" type="application/pdf"><BsFiletypePdf style={{ fontSize: '1.4rem', color: 'red' }} /></a>
                     )
                 },
                 disableFilters: true

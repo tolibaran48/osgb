@@ -32,18 +32,6 @@ const Employee = {
 
         }
 
-    },
-    getEmployeeFile: async (parent, args, { token, Employee }) => {
-        await auth(token);
-
-        try {
-            const mediaToken = await jwt.sign({ type: args.type, fileName: `${args.fileName}.pdf` }, process.env.jwtSecret, { "expiresIn": 5 * 60 });
-            return (mediaToken)
-        } catch (error) {
-            throw new GraphQLError(error)
-
-        }
-
     }
 };
 

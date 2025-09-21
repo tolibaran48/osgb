@@ -1,6 +1,8 @@
 const auth = require("../../../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 const dayjs = require('dayjs');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const Company = {
     insurances: async (parent, args, { token, Sicil }) => {
@@ -44,12 +46,43 @@ const Company = {
             throw new GraphQLError(error)
         }
     },
+    employees: async (parent, args, { token, Employee }) => {
+        await auth(token);
+
+        try {
+            return await Employee.find({ "company": parent._id }).sort({ "name": 1 })
+
+        } catch (error) {
+            throw new GraphQLError(error)
+        }
+    },
 
     employees: async (parent, args, { token, Employee }) => {
         await auth(token);
 
         try {
-            return await Employee.find({ "company": parent._id }).sort({ "name": 1 });
+            let employees = await Employee.find({ "company": parent._id }).sort({ "name": 1 }).populate('person')
+
+            function returnPromise() {
+                return new Promise(function (resolve, reject) {
+                    let arrays = employees.map(async (employee) => {
+                        return {
+                            '_id': employee._id,
+                            'person': employee.person._id,
+                            'company': employee.company,
+                            'processTime': employee.processTime,
+                            'fileLink': await jwt.sign({ type: `employeeFiles/${parent.vergi.vergiNumarasi}`, fileName: `${employee.person.identityId}-${employee.person.name} ${employee.person.surname}.pdf` }, process.env.jwtSecret, { "expiresIn": 5 * 60 })
+                        }
+                    })
+
+                    Promise.all(arrays).then(function (results) {
+                        resolve(results)
+                    }).catch(err => console.log(err))
+                });
+            }
+
+            return returnPromise()
+
         } catch (error) {
             throw new GraphQLError(error)
         }

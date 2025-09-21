@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export const GET_COMPANY_EMPLOYEES = gql`
- query CompanyById($id: ID!) {
-  companyById(_id: $id) {
+query Company($vergiNumarasi: String!) {
+  company(vergiNumarasi: $vergiNumarasi) {
     employees {
       company {
         vergi {
@@ -10,6 +10,7 @@ export const GET_COMPANY_EMPLOYEES = gql`
         }
       }
       processTime
+      fileLink
       person {
         name
         surname
@@ -17,10 +18,5 @@ export const GET_COMPANY_EMPLOYEES = gql`
       }
     }
   }
-}
-`
-export const GET_EMPLOYEE_FILE = gql`
-query Query($type: String!, $fileName: String!) {
-  getEmployeeFile(type: $type, fileName: $fileName)
 }
 `

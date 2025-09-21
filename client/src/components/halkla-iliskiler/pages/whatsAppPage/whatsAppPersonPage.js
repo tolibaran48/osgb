@@ -30,7 +30,7 @@ import {
     Spinner
 } from 'reactstrap';
 import { GET_COMPANIES } from '../../../../GraphQL/Queries/company/company';
-import { GET_COMPANY_EMPLOYEES, GET_EMPLOYEE_FILE } from '../../../../GraphQL/Queries/employees/employees';
+import { GET_COMPANY_EMPLOYEES } from '../../../../GraphQL/Queries/employees/employees';
 import { UPLOAD_WHATSAPP_EMPLOYEE_DOCUMENT } from '../../../../GraphQL/Mutations/employee/person';
 
 
@@ -98,7 +98,7 @@ const WhatsAppPersonPage = () => {
     const [_getEmployees, { loading: getContactsLoading }] = useLazyQuery(GET_COMPANY_EMPLOYEES, {
         fetchPolicy: 'network-only',
         onCompleted: (data) => {
-            getEmployees(data.companyById.employees)
+            getEmployees(data.company.employees)
             employeeLoading(false)
         },
         onError({ graphQLErrors }) {
@@ -122,7 +122,7 @@ const WhatsAppPersonPage = () => {
     useEffect(() => {
         if (selectedCompany) {
             employeeLoading(true)
-            _getEmployees({ variables: { "id": selectedCompany._id } })
+            _getEmployees({ variables: { "vergiNumarasi": selectedCompany.vergi.vergiNumarasi } })
         }
     }, [selectedCompany])
 
