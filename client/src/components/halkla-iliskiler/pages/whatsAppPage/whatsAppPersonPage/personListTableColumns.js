@@ -109,7 +109,7 @@ const PersonListTableColumns = ({ employees }) => {
                 accessor: "pdfButton",
                 Cell: props => {
                     return (
-                        <a href={`/media/${props.row.original.fileLink}`} download="person.pdf" type="application/pdf"><BsFiletypePdf style={{ fontSize: '1.4rem', color: 'red' }} /></a>
+                        <a href={`/media/${props.row.original.fileLink}`} download={`${props.row.original.person.identityId}-${props.row.original.person.name} ${props.row.original.person.surname}`} type="application/pdf"><BsFiletypePdf style={{ fontSize: '1.4rem', color: 'red' }} /></a>
                     )
                 },
                 disableFilters: true

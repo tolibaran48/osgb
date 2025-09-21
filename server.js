@@ -32,6 +32,7 @@ const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
+const media = require("./routes/media.js")
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -52,7 +53,7 @@ const app = express();
 
 app.use(express.json({ limit: '50mb' }));
 
-app.use('./media', require("./routes/media"));
+app.use('/media', require("./routes/waza"));
 app.use('/webhook', require("./routes/waba"));
 app.use('/flows/invoice_flow', require("./routes/flows/invoice_flow"));
 app.use('/flows/concubine_flow', require("./routes/flows/concubine_flow"));
