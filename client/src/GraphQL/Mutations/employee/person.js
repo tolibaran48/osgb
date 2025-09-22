@@ -8,6 +8,7 @@ mutation Mutation($data: uploadWhatsAppDocumentInput!) {
         vergiNumarasi
       }
     }
+    fileLink
     processTime
     person {
       name

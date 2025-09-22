@@ -3,6 +3,8 @@ const { GraphQLError } = require('graphql');
 const { createWriteStream, unlinkSync, existsSync, mkdirSync } = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     createEmployee: async (parent, args, { token, Employee }) => {
@@ -57,11 +59,13 @@ module.exports = {
             }
 
             let employee = await Employee.findOne({ "person": person._id });
+            let fileLink = await jwt.sign({ type: `employeeFiles/${companyVergi}`, fileName: `${identityId}-${name} ${surname}.${filetype}` }, process.env.jwtSecret, { "expiresIn": 20 * 60 })
             if (!employee || employee == null) {
                 employee = await new Employee({
                     person: person._id,
                     processTime: processTime,
-                    company
+                    company,
+                    fileLink
                 }).save({ session })
             }
 

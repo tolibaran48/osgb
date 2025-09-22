@@ -11,10 +11,10 @@ router.get("/:media_id", async (req, res) => {
         const values = await mediaAuth(media_id);
 
         const { type, fileName } = values;
-        res.sendFile(path.join(process.cwd(), `/${type}/${fileName}`));
+        res.download(path.join(process.cwd(), `/${type}/${fileName}`), `_${fileName}`);
     }
     catch (error) {
-        throw new Error(error)
+        console.error('File download failed:', err);
     }
 });
 

@@ -71,7 +71,7 @@ const Company = {
                             'person': employee.person._id,
                             'company': employee.company,
                             'processTime': employee.processTime,
-                            'fileLink': await jwt.sign({ type: `employeeFiles/${parent.vergi.vergiNumarasi}`, fileName: `${employee.person.identityId}-${employee.person.name} ${employee.person.surname}.pdf` }, process.env.jwtSecret, { "expiresIn": 5 * 60 })
+                            'fileLink': await jwt.sign({ type: `employeeFiles/${parent.vergi.vergiNumarasi}`, fileName: `${employee.person.identityId}-${employee.person.name} ${employee.person.surname}.pdf` }, process.env.jwtSecret, { "expiresIn": 20 * 60 })
                         }
                     })
 
