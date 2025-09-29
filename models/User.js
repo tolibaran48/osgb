@@ -31,8 +31,8 @@ const kullaniciSchema = new Schema({
     gender: { type: String, enum: ["Erkek", "Kadın"] },
     employment: { type: String },
     auth: {
-        type: { type: String, enum: ["Own", "Customer"] },
-        status: [{ type: String, enum: ["PublicRelations", "Finance", "Admin"] }],
+        type: { type: String, enum: ["Own", "Customer", "Anonymous"] },
+        status: [{ type: String, enum: ["PublicRelations", "Finance", "Admin", "Anonymous"] }],
         auths: {
             companyAuths: [{ company: { type: Schema.Types.ObjectId, ref: 'Firma' }, roles: [{ type: String, enum: ["Finance", "Personal", "Admin"] }], employment: { type: String } }],
             insuranceAuths: [{ insurance: { type: Schema.Types.ObjectId, ref: 'Sicil' }, roles: [{ type: String, enum: ["Personal", "Admin"] }] }],

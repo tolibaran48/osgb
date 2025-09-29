@@ -1,0 +1,38 @@
+scalar DateTime
+
+type Otp{
+    type:String
+    phone:String
+    hash:String
+    tryCount:Int
+    registerDate:DateTime
+    status:String
+}
+
+type Conversation{
+    type:String
+    name:String
+    phone:String
+    e_mail:String
+    message:String
+    otp:Otp
+}
+
+type Query{
+    getConversations:[Conversation]
+} 
+
+type Mutation{
+    createConversation(data:createConversationInput):Conversation
+}
+
+input createConversationInput{
+    type:String!
+    name:String!
+    phone:String!
+    e_mail:String!
+    message:String!
+    otpId:ID!
+}
+
+

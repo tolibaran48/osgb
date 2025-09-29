@@ -9,6 +9,7 @@ const Sicil = require('./nested/queries/insurance/Insurance');
 const Employee = require('./nested/queries/employee/Employee');
 const WabaYetkili = require('./nested/queries/waba/WabaUser');
 const Cari = require('./nested/queries/concubine/Concubine');
+const Conversation = require('./nested/queries/conversation/Conversation');
 
 //Scalar resolvers
 const { resolvers } = require("graphql-scalars");
@@ -28,6 +29,7 @@ module.exports = {
     Employee,
     Cari,
     WabaYetkili,
+    Conversation,
     Mutation,
     ...resolvers
 };

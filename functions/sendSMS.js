@@ -1,11 +1,10 @@
-//const config=require("config");
 require("dotenv").config()
 const xmlbuilder = require("xmlbuilder");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const turkishToEnglish = require('./turkishToEnglish');
 
 const sendSmsOnce = (phoneNumber, text) => {
-    console.log(phoneNumber, text)
+
     const convertText = turkishToEnglish(text);
 
     function createXML() {
@@ -24,8 +23,7 @@ const sendSmsOnce = (phoneNumber, text) => {
         xhttp.send(xml)
     }
 
-    let result = createXML()
-    console.log(result)
+    createXML()
 }
 
 module.exports = sendSmsOnce;

@@ -8,7 +8,6 @@ const sendSmsOnce = require("../functions/sendSMS");
 
 router.get("/:media_id", async (req, res) => {
     try {
-        sendSmsOnce('5494191961', 'Merhaba Tolunay')
         const { media_id } = req.params
         const values = await mediaAuth(media_id);
 

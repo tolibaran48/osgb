@@ -8,6 +8,8 @@ const waba = require('./waba.mutation');
 const sms = require('./sms.mutation');
 const wabaUser = require('./wabaUser.mutation');
 const invoice = require('./invoice.mutation');
+const otp = require('./otp.mutation');
+const conversation = require('./conversation.mutation');
 
 const Mutation = {
     ...user,
@@ -19,7 +21,9 @@ const Mutation = {
     ...waba,
     ...wabaUser,
     ...sms,
-    ...invoice
+    ...invoice,
+    ...otp,
+    ...conversation
 };
 
 module.exports = Mutation;

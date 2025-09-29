@@ -1,0 +1,39 @@
+scalar DateTime
+
+type Otp{
+    type:String
+    phone:String
+    hash:String
+    tryCount:Int
+    registerDate:DateTime
+    status:String
+}
+
+type OtpResult{
+    tryCount:Int
+    status:String
+    responseStatus:String
+    error:String
+    otpId:ID
+}
+
+type Query{
+    otpByPhone(data:createOtp!):[Otp]
+} 
+
+type Mutation{
+    createOtp(data:createOtp!):OtpResult
+    validOtp(data:validOtp!):OtpResult
+}
+
+input createOtp{
+    type:String!
+    phone:String!
+}
+
+input validOtp{
+    type:String!
+    phone:String!
+    otp:Int! 
+    otpId:ID! 
+}

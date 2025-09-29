@@ -2,22 +2,81 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { FaFacebookF, FaWhatsapp, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import './anonymous.page.Iletisim.scss'
 import Inputmask from 'inputmask';
+import { CREATE_OTP, VALID_OTP } from '../../GraphQL/Mutations/otp/otp';
+import { CREATE_CONVERSATION } from '../../GraphQL/Mutations/conversation/conversation';
+import { useMutation } from '@apollo/client';
+import toastr, { error } from 'toastr';
+import { Spinner } from 'reactstrap';
 
 const Iletisim = () => {
   const MaskPhone = new Inputmask("(999) 999 99 99");
-  const [companyNameValid, setCompanyNameValid] = useState({ status: null, message: null });
-  const [companyPhoneNumberValid, setCompanyPhoneNumberValid] = useState({ status: null, message: null });
-  const [companyMailValid, setCompanyMailValid] = useState({ status: null, message: null });
-  const [companyMessageValid, setCompanyMessageValid] = useState({ status: null, message: null });
+  const [otpValid, setOtpValid] = useState({ status: null, message: null });
+  const [NameValid, setNameValid] = useState({ status: null, message: null });
+  const [PhoneNumberValid, setPhoneNumberValid] = useState({ status: null, message: null });
+  const [MailValid, setMailValid] = useState({ status: null, message: null });
+  const [MessageValid, setMessageValid] = useState({ status: null, message: null });
 
   const initial = {
     message: '',
-    nameSurname: '',
+    name: '',
     EmailAdress: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    otpVisibility: false
   }
 
   const [createFormValues, setCreateFormValues] = useState(initial)
+
+  const [createConversation, { loading }] = useMutation(CREATE_CONVERSATION, {
+    onCompleted: (data) => {
+      toastr.success('Talebiniz başarıyla iletilmiştir', 'BAŞARILI')
+      setCreateFormValues(initial)
+      setOtpValid({ status: null, message: null })
+      setNameValid({ status: null, message: null })
+      setPhoneNumberValid({ status: null, message: null })
+      setMailValid({ status: null, message: null })
+      setMessageValid({ status: null, message: null })
+    },
+    onError({ graphQLErrors }) {
+      //console.log(graphQLErrors[0].extensions)
+      const err = graphQLErrors[0].extensions;
+    }
+  });
+
+  const [createOtp] = useMutation(CREATE_OTP, {
+    onCompleted: (data) => {
+      let otp = data.createOtp
+      setCreateFormValues({ ...createFormValues, otp: data.createOtp })
+      data.createOtp.responseStatus == null ?
+        setOtpValid({ status: 'is-valid', message: `Telefonunuza gelen SMS doğrulama kodunu girin` })
+        :
+        setOtpValid({ status: 'is-invalid', message: otp.error })
+    },
+    onError({ graphQLErrors }) {
+      const err = graphQLErrors[0].extensions;
+      toastr.success(err, 'BAŞARILI')
+    }
+  });
+
+  const [validOtp] = useMutation(VALID_OTP, {
+    onCompleted: (data) => {
+      setCreateFormValues({ ...createFormValues, otp: data.validOtp })
+      let otp = data.validOtp
+      if (otp.responseStatus == null) {
+        setOtpValid({ status: 'is-valid', message: `Lütfen SMS şifresini doğrulayın` })
+      }
+      else if (otp.responseStatus == 'error') {
+        setOtpValid({ status: 'is-invalid', message: otp.error })
+      }
+      else if (otp.responseStatus == 'success') {
+        setOtpValid({ status: 'is-valid', message: '' })
+        createConversation({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'İletisim', e_mail: createFormValues.EmailAdress, name: createFormValues.name, message: createFormValues.message, otpId: createFormValues.otp.otpId } } })
+      }
+    },
+    onError({ graphQLErrors }) {
+      const err = graphQLErrors[0].extensions;
+      toastr.error(err, 'HATA')
+    }
+  });
 
   function init() {
     var myMap = new ymaps.Map('map', {
@@ -50,67 +109,59 @@ const Iletisim = () => {
 
 
 
-  const onCreateCompanySubmit = async e => {
+  const onCreateConversationSubmit = async e => {
     e.preventDefault();
     let error = { status: false, message: [] };
 
-    const { nameSurname, message, EmailAdress, phoneNumber } = createFormValues;
+    const { name, message, EmailAdress, phoneNumber } = createFormValues;
     let newName = '';
-    let newAdress = '';
-    let newVergiDairesi = '';
     try {
       const validateForm = new Promise((resolve, reject) => {
-        if (!nameSurname) {
-          setCompanyNameValid({ status: 'is-invalid', message: 'İsim Soyisim girilmesi zorunludur' })
+        if (!name) {
+          setNameValid({ status: 'is-invalid', message: 'İsim Soyisim girilmesi zorunludur' })
           error = { ...error, status: true, message: [...error.message, 'İsim Soyisim girilmesi zorunludur'] }
         }
         else {
-          let nameReplace = nameSurname.trim().replace(/(\s)+/g, "$1");
+          let nameReplace = name.trim().replace(/(\s)+/g, "$1");
           const arr = nameReplace.split(" ");
           arr.forEach(
             (i, index) =>
               newName = newName + ' ' + (i[0].toLocaleUpperCase() + i.slice(1).toLocaleLowerCase())
           )
-          setCompanyNameValid({ status: 'is-valid', message: null })
+          setNameValid({ status: 'is-valid', message: null })
         }
         if (phoneNumber) {
           if (phoneNumber.includes("_")) {
-            setCompanyPhoneNumberValid({ status: 'is-invalid', message: 'Telefon numarasını kontrol edin' })
+            setPhoneNumberValid({ status: 'is-invalid', message: 'Telefon numarasını kontrol edin' })
             error = { ...error, status: true, message: [...error.message, 'Telefon numarasını kontrol edin'] }
           }
           else {
-            setCompanyPhoneNumberValid({ status: 'is-valid', message: null })
+            setPhoneNumberValid({ status: 'is-valid', message: null })
           }
         }
         else {
-          setCompanyPhoneNumberValid({ status: 'is-invalid', message: 'Telefon numarası girilmesi zorunludur' })
+          setPhoneNumberValid({ status: 'is-invalid', message: 'Telefon numarası girilmesi zorunludur' })
           error = { ...error, status: true, message: [...error.message, 'Telefon Numarası girilmesi zorunludur'] }
         }
         if (EmailAdress) {
           if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(EmailAdress)) {
-            setCompanyMailValid({ status: 'is-valid', message: null })
+            setMailValid({ status: 'is-valid', message: null })
           }
           else {
-            setCompanyMailValid({ status: 'is-invalid', message: 'Email adresini kontrol edin' })
+            setMailValid({ status: 'is-invalid', message: 'Email adresini kontrol edin' })
             error = { ...error, status: true, message: [...error.message, 'Email adresini kontrol edin'] }
           }
         }
         else {
-          setCompanyMailValid({ status: 'is-invalid', message: 'Email adresi girilmesi zorunludur' })
+          setMailValid({ status: 'is-invalid', message: 'Email adresi girilmesi zorunludur' })
           error = { ...error, status: true, message: [...error.message, 'Email adresi girilmesi zorunludur'] }
         }
         if (!message) {
-          setCompanyMessageValid({ status: 'is-invalid', message: 'İçerik girilmesi zorunludur' })
+          setMessageValid({ status: 'is-invalid', message: 'İçerik girilmesi zorunludur' })
           error = { ...error, status: true, message: [...error.message, 'İçerik girilmesi zorunludur'] }
         }
         else {
-          let daireReplace = message.trim().replace(/(\s)+/g, "$1");
-          const arr = daireReplace.split(" ");
-          arr.forEach(
-            (i, index) =>
-              newVergiDairesi = newVergiDairesi + ' ' + (i[0].toLocaleUpperCase() + i.slice(1).toLocaleLowerCase())
-          )
-          setCompanyMessageValid({ status: 'is-valid', message: null })
+          setMessageValid({ status: 'is-valid', message: null })
         }
         resolve(error);
       })
@@ -118,8 +169,8 @@ const Iletisim = () => {
 
       validateForm.then((error) => {
         if (error.status === false) {
-          //addCompany({ variables: { data: { name: newName.trim(), adress: newAdress.trim(), vergi: { vergiDairesi: newVergiDairesi.trim(), vergiNumarasi: vergi.vergiNumarasi } } } })
-
+          setCreateFormValues({ name: newName.trim(), message, EmailAdress, phoneNumber, otpVisibility: true })
+          createOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'Communication' } } })
         }
         else {
           for (let mes of error.message) {
@@ -132,6 +183,10 @@ const Iletisim = () => {
     }
   }
 
+  const validOtpSubmit = async e => {
+    e.preventDefault();
+    validOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'Communication', otp: parseInt(createFormValues.otpValue), otpId: createFormValues.otp.otpId } } })
+  }
   return (
 
     <Fragment>
@@ -142,26 +197,27 @@ const Iletisim = () => {
         <div id='content'>
           <div className='rows'>
             <div id='rows-form-content' x-lg="6" lg="6" md="6" sm="12">
-              <div  >
+              <div>
                 <div id='header'><h4>İLETİŞİM FORMU</h4></div>
-                <form id='Iletisim' onSubmit={onCreateCompanySubmit} style={{background:'aliceblue'}}>
+                <form id='Iletisim' onSubmit={onCreateConversationSubmit} style={{ background: 'aliceblue', position: 'relative' }}>
+                  {loading && <Spinner color='primary' />}
                   <fieldset>
                     <div className='input'>
-                      <input className={`form-control  ${companyNameValid.status}`}
+                      <input className={`form-control  ${NameValid.status}`}
                         id="nameSurname"
                         autoComplete="off"
                         placeholder="Ad Soyad"
-                        value={createFormValues.nameSurname}
-                        onChange={(e) => setCreateFormValues({ ...createFormValues, nameSurname: e.target.value })}
+                        value={createFormValues.name}
+                        onChange={(e) => setCreateFormValues({ ...createFormValues, name: e.target.value })}
                       />
-                      <div className="invalid-feedback mt-0">
-                        {companyNameValid.message}
+                      <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
+                        {NameValid.message}
                       </div>
                     </div>
                   </fieldset>
                   <fieldset >
                     <div className='input'>
-                      <input className={`form-control  ${companyPhoneNumberValid.status}`}
+                      <input className={`form-control  ${PhoneNumberValid.status}`}
                         id="phoneNumber"
                         autoComplete="off"
                         placeholder="Telefon Numarası"
@@ -169,22 +225,22 @@ const Iletisim = () => {
                         onChange={(e) => setCreateFormValues({ ...createFormValues, phoneNumber: e.target.value })}
                         onFocus={(e) => MaskPhone.mask(e.target)}
                       />
-                      <div className="invalid-feedback mt-0">
-                        {companyPhoneNumberValid.message}
+                      <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
+                        {PhoneNumberValid.message}
                       </div>
                     </div>
                   </fieldset>
                   <fieldset >
                     <div className='input'>
-                      <input className={`form-control   ${companyMailValid.status}`}
-                        id="EmailAddress"
+                      <input className={`form-control ${MailValid.status}`}
+                        id="EmailAdress"
                         autoComplete="off"
                         placeholder="E-mail"
-                        value={createFormValues.EmailAddress}
+                        value={createFormValues.EmailAdress}
                         onChange={(e) => setCreateFormValues({ ...createFormValues, EmailAdress: e.target.value })}
                       />
-                      <div className="invalid-feedback mt-0">
-                        {companyMailValid.message}
+                      <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
+                        {MailValid.message}
                       </div>
                     </div>
                   </fieldset>
@@ -192,7 +248,7 @@ const Iletisim = () => {
                     <div className='input'>
                       <textarea
                         rows='5'
-                        className={`form-control  ${companyMessageValid.status}`}
+                        className={`form-control  ${MessageValid.status}`}
                         type='textarea'
                         autoComplete="off"
                         placeholder="Mesajınız..."
@@ -200,15 +256,40 @@ const Iletisim = () => {
                         value={createFormValues.message}
                         onChange={(e) => setCreateFormValues({ ...createFormValues, message: e.target.value })}
                       />
-                      <div className="invalid-feedback mt-0">
-                        {companyMessageValid.message}
+                      <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
+                        {MessageValid.message}
                       </div>
                     </div>
                   </fieldset>
+                  <fieldset >
 
-                  <div className='form-footer' style={{ border: 'none' }}>
-                    <button type='submit' form='Iletisim' className='btn'  >Kaydet</button>
-                  </div>
+                    <div style={{ display: `${createFormValues.otpVisibility ? 'flex' : 'none'}`, flexDirection: 'row', gap: '5px' }} >
+                      <div className='input'>
+                        <input className={`form-control   ${otpValid.status}`}
+                          type='number'
+                          id="Otp"
+                          autoComplete="off"
+                          placeholder="SMS Şifresi"
+                          value={createFormValues.otpValue || ''}
+                          onChange={(e) => setCreateFormValues({ ...createFormValues, otpValue: e.target.value })}
+                        />
+                        <div className="valid-feedback mt-0" style={{ position: 'absolute' }}>
+                          {otpValid.message}
+                        </div>
+                        <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
+                          {otpValid.message}
+                        </div>
+                      </div>
+                      <div className='form-footer' style={{ border: 'none', width: '100%', marginTop: '0px', padding: '0px', justifyContent: 'left' }}>
+                        <button type='button' onClick={e => validOtpSubmit(e)} className='btn' style={{ justifyContent: 'left' }}  >Onayla</button>
+                      </div>
+                    </div>
+
+
+                    <div className='form-footer' style={{ border: 'none', width: '100%', marginTop: '0px', padding: '0px', justifyItems: 'right', display: `${createFormValues.otpVisibility ? 'none' : 'block'}` }}>
+                      <button type='submit' form='Iletisim' className='btn'  >Gönder</button>
+                    </div>
+                  </fieldset>
                 </form>
               </div>
             </div>
@@ -245,20 +326,18 @@ const Iletisim = () => {
                   </div>
                 </div>
               </div>
-            </div>            
-          </div>          
+            </div>
+          </div>
         </div>
-        <div style={{display:'flex',justifyContent:'center',paddingBottom:'4rem'}}>
-        <div className='rows' style={{width:'100%',display:'flex',justifyContent:'center'}}>
-    <div x-lg="7" lg="7" md="7" sm="11">
-         <div  id="map" style={{height: '25rem', position: 'relative',display:"inline-table",background:'white',padding:"5px",boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px" }} ></div>
-         </div>
-      </div>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '4rem' }}>
+          <div className='rows' style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <div x-lg="7" lg="7" md="7" sm="11">
+              <div id="map" style={{ height: '25rem', position: 'relative', display: "inline-table", background: 'white', padding: "5px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px" }} ></div>
+            </div>
+          </div>
         </div>
-        
-
       </div>
-    </Fragment>
+    </Fragment >
   );
 
 }

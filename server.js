@@ -4,7 +4,6 @@ require('dotenv').config();
 const http = require('http');
 const auth = require("./helpers/auth");
 const createToken = require('./helpers/token');
-const path = require('path');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
@@ -22,6 +21,8 @@ const Cari = require("./models/Concubine");
 const WabaConversation = require("./models/WabaConversation");
 const WabaYetkili = require("./models/WabaUser");
 const Contract = require("./models/CompanyContracts");
+const Otp = require("./models/Otp");
+const Conversation = require("./models/Conversation");
 const db = process.env.mongoURI;
 const { typeDefs } = require("graphql-scalars");
 const { graphqlUploadExpress } = require("graphql-upload-minimal");
@@ -131,6 +132,8 @@ async function startServer() {
                 WabaConversation,
                 WabaYetkili,
                 Contract,
+                Otp,
+                Conversation,
                 token: req.headers['authorization']
             }),
         }),
