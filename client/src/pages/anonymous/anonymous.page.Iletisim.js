@@ -4,17 +4,23 @@ import './anonymous.page.Iletisim.scss'
 import Inputmask from 'inputmask';
 import { CREATE_OTP, VALID_OTP } from '../../GraphQL/Mutations/otp/otp';
 import { CREATE_CONVERSATION } from '../../GraphQL/Mutations/conversation/conversation';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import toastr, { error } from 'toastr';
 import { Spinner } from 'reactstrap';
+//import { GET_LOCATIONS } from '../../GraphQL/Queries/insurances/insuranceLocation';
 
 const Iletisim = () => {
   const MaskPhone = new Inputmask("(999) 999 99 99");
+  const [myMap, setMyMap] = useState();
+  //const [locations, setLocations] = useState();
   const [otpValid, setOtpValid] = useState({ status: null, message: null });
   const [NameValid, setNameValid] = useState({ status: null, message: null });
   const [PhoneNumberValid, setPhoneNumberValid] = useState({ status: null, message: null });
   const [MailValid, setMailValid] = useState({ status: null, message: null });
   const [MessageValid, setMessageValid] = useState({ status: null, message: null });
+
+  const [createConversationLoading, setCreateConversationLoading] = useState(false);
+  const [validOtpLoading, setValidOtpLoading] = useState(false);
 
   const initial = {
     message: '',
@@ -24,17 +30,53 @@ const Iletisim = () => {
     otpVisibility: false
   }
 
+
+  const resetForm = () => {
+    setCreateFormValues(initial)
+    setOtpValid({ status: null, message: null })
+    setNameValid({ status: null, message: null })
+    setPhoneNumberValid({ status: null, message: null })
+    setMailValid({ status: null, message: null })
+    setMessageValid({ status: null, message: null })
+  }
   const [createFormValues, setCreateFormValues] = useState(initial)
 
-  const [createConversation, { loading }] = useMutation(CREATE_CONVERSATION, {
+  /*const [getLocations] = useLazyQuery(GET_LOCATIONS, {
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      setLocations(data.insuranceLocations)
+
+      data.insuranceLocations.forEach(
+        (point, index) => {
+          let placemark = new ymaps.Placemark(point.location.coordinates, {
+            iconContent: `${point.insurance.descriptiveName}`,
+            hintContent: "İş Sağlığı ve Güvenliği Hizmetleri"
+          }, {
+            // Disabling the replacement of the conventional balloon with the balloon panel.
+            balloonPanelMaxMapArea: 0,
+            draggable: false,
+            preset: "islands#orangeStretchyIcon",
+            // Making the balloon open even if there is no content.
+            openEmptyBalloon: false
+          });
+
+
+          myMap.geoObjects
+            .add(placemark)
+        }
+      )
+
+
+    },
+    onError({ graphQLErrors }) {
+      const err = graphQLErrors[0].extensions;
+    }
+  });*/
+
+  const [createConversation] = useMutation(CREATE_CONVERSATION, {
     onCompleted: (data) => {
       toastr.success('Talebiniz başarıyla iletilmiştir', 'BAŞARILI')
-      setCreateFormValues(initial)
-      setOtpValid({ status: null, message: null })
-      setNameValid({ status: null, message: null })
-      setPhoneNumberValid({ status: null, message: null })
-      setMailValid({ status: null, message: null })
-      setMessageValid({ status: null, message: null })
+      resetForm()
     },
     onError({ graphQLErrors }) {
       //console.log(graphQLErrors[0].extensions)
@@ -45,13 +87,18 @@ const Iletisim = () => {
   const [createOtp] = useMutation(CREATE_OTP, {
     onCompleted: (data) => {
       let otp = data.createOtp
-      setCreateFormValues({ ...createFormValues, otp: data.createOtp })
-      data.createOtp.responseStatus == null ?
-        setOtpValid({ status: 'is-valid', message: `Telefonunuza gelen SMS doğrulama kodunu girin` })
-        :
+      setCreateConversationLoading(false)
+      setCreateFormValues({ ...createFormValues, otp: data.createOtp, otpVisibility: true })
+      if (data.createOtp.responseStatus == null) {
+        setOtpValid({ status: 'not-valid', message: `Telefonunuza gelen SMS doğrulama kodunu girin` })
+      }
+      else {
         setOtpValid({ status: 'is-invalid', message: otp.error })
+      }
+
     },
     onError({ graphQLErrors }) {
+      setCreateConversationLoading(false)
       const err = graphQLErrors[0].extensions;
       toastr.success(err, 'BAŞARILI')
     }
@@ -59,6 +106,7 @@ const Iletisim = () => {
 
   const [validOtp] = useMutation(VALID_OTP, {
     onCompleted: (data) => {
+      setValidOtpLoading(false)
       setCreateFormValues({ ...createFormValues, otp: data.validOtp })
       let otp = data.validOtp
       if (otp.responseStatus == null) {
@@ -66,26 +114,43 @@ const Iletisim = () => {
       }
       else if (otp.responseStatus == 'error') {
         setOtpValid({ status: 'is-invalid', message: otp.error })
+        if (otp.status == 'Aborted') {
+          resetForm()
+          toastr.error('Doğrulama kodunuz iptal edilmiştir', 'HATA')
+        }
       }
       else if (otp.responseStatus == 'success') {
         setOtpValid({ status: 'is-valid', message: '' })
-        createConversation({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'İletisim', e_mail: createFormValues.EmailAdress, name: createFormValues.name, message: createFormValues.message, otpId: createFormValues.otp.otpId } } })
+        createConversation({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'iletisim', e_mail: createFormValues.EmailAdress, name: createFormValues.name, message: createFormValues.message, otpId: createFormValues.otp.otpId } } })
       }
     },
     onError({ graphQLErrors }) {
+      setValidOtpLoading(false)
       const err = graphQLErrors[0].extensions;
       toastr.error(err, 'HATA')
     }
   });
 
   function init() {
-    var myMap = new ymaps.Map('map', {
+    setMyMap(new ymaps.Map('map', {
       center: [37.102518, 27.294760],
       zoom: 17,
       controls: ['zoomControl']
-    }),
+    }))
 
-      placemark = new ymaps.Placemark([37.102518, 27.294760], {
+
+  }
+  const ymaps = window.ymaps;
+
+  useEffect(() => {
+    ymaps.ready(init);
+  }, [])
+
+  useEffect(() => {
+    if (myMap) {
+      // getLocations()
+
+      let placemark = new ymaps.Placemark([37.102518, 27.294760], {
         iconContent: "bodrumİSG",
         hintContent: "İş Sağlığı ve Güvenliği Hizmetleri"
       }, {
@@ -98,19 +163,16 @@ const Iletisim = () => {
       });
 
 
-    myMap.geoObjects
-      .add(placemark)
-  }
-  const ymaps = window.ymaps;
-
-  useEffect(() => {
-    ymaps.ready(init);
-  }, [])
+      myMap.geoObjects
+        .add(placemark)
+    }
+  }, [myMap])
 
 
 
   const onCreateConversationSubmit = async e => {
     e.preventDefault();
+    setCreateConversationLoading(true)
     let error = { status: false, message: [] };
 
     const { name, message, EmailAdress, phoneNumber } = createFormValues;
@@ -169,10 +231,11 @@ const Iletisim = () => {
 
       validateForm.then((error) => {
         if (error.status === false) {
-          setCreateFormValues({ name: newName.trim(), message, EmailAdress, phoneNumber, otpVisibility: true })
-          createOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'Communication' } } })
+          setCreateFormValues({ name: newName.trim(), message, EmailAdress, phoneNumber })
+          createOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'iletisim' } } })
         }
         else {
+          setCreateConversationLoading(false)
           for (let mes of error.message) {
           }
         }
@@ -185,7 +248,8 @@ const Iletisim = () => {
 
   const validOtpSubmit = async e => {
     e.preventDefault();
-    validOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'Communication', otp: parseInt(createFormValues.otpValue), otpId: createFormValues.otp.otpId } } })
+    setValidOtpLoading(true)
+    validOtp({ variables: { data: { phone: createFormValues.phoneNumber.replaceAll(/[^0-9]/gi, ""), type: 'iletisim', otp: parseInt(createFormValues.otpValue), otpId: createFormValues.otp.otpId } } })
   }
   return (
 
@@ -200,7 +264,7 @@ const Iletisim = () => {
               <div>
                 <div id='header'><h4>İLETİŞİM FORMU</h4></div>
                 <form id='Iletisim' onSubmit={onCreateConversationSubmit} style={{ background: 'aliceblue', position: 'relative' }}>
-                  {loading && <Spinner color='primary' />}
+                  {createConversationLoading && <Spinner color='primary' />}
                   <fieldset>
                     <div className='input'>
                       <input className={`form-control  ${NameValid.status}`}
@@ -265,7 +329,7 @@ const Iletisim = () => {
 
                     <div style={{ display: `${createFormValues.otpVisibility ? 'flex' : 'none'}`, flexDirection: 'row', gap: '5px' }} >
                       <div className='input'>
-                        <input className={`form-control   ${otpValid.status}`}
+                        <input className={`form-control ${otpValid.status}`}
                           type='number'
                           id="Otp"
                           autoComplete="off"
@@ -273,7 +337,7 @@ const Iletisim = () => {
                           value={createFormValues.otpValue || ''}
                           onChange={(e) => setCreateFormValues({ ...createFormValues, otpValue: e.target.value })}
                         />
-                        <div className="valid-feedback mt-0" style={{ position: 'absolute' }}>
+                        <div className="valid-feedback mt-0" style={{ position: 'absolute', display: `${otpValid.status == 'not-valid' && 'block'}` }}>
                           {otpValid.message}
                         </div>
                         <div className="invalid-feedback mt-0" style={{ position: 'absolute' }}>
@@ -281,7 +345,7 @@ const Iletisim = () => {
                         </div>
                       </div>
                       <div className='form-footer' style={{ border: 'none', width: '100%', marginTop: '0px', padding: '0px', justifyContent: 'left' }}>
-                        <button type='button' onClick={e => validOtpSubmit(e)} className='btn' style={{ justifyContent: 'left' }}  >Onayla</button>
+                        <button type='button' onClick={e => validOtpSubmit(e)} className='btn' style={{ position: 'relative' }}  >{validOtpLoading && <Spinner color='primary' style={{ top: '12%', left: '28%' }} />}Onayla</button>
                       </div>
                     </div>
 

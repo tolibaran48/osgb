@@ -33,9 +33,9 @@ const sicilSchema = new Schema({
         trim: true
     },
     adress: {
-        detail:{ type: String },
-        il: { id:{type: Number},name:{type:String} },
-        ilce: { id:{type: Number},name:{type:String}},
+        detail: { type: String },
+        il: { id: { type: Number }, name: { type: String } },
+        ilce: { id: { type: Number }, name: { type: String } },
     },
     tehlikeSinifi: { type: String }, //, enum: ["Az Tehlikeli", "Tehlikeli", "Çok Tehlikeli"]
     employeeCount: { type: Number, default: 0 },

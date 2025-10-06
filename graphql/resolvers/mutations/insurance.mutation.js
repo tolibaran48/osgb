@@ -79,7 +79,7 @@ module.exports = {
 
     },
 
-    updateInsurance: async (parent, args, { token, Sicil, Assignment, Firma }) => {
+    updateInsurance: async (parent, args, { token, Sicil, Assignment, Firma, InsuranceLocation }) => {
         await auth(token);
         let assignment;
         let companyKatip = null;
@@ -169,6 +169,25 @@ module.exports = {
         }
 
         try {
+            console.log(args.data.location)
+            if (args.data.location) {
+                const location = await InsuranceLocation.findOne({ insurance: _id })
+
+                if (location) {
+                    await InsuranceLocation.findOneAndUpdate({ insurance: _id }, { $set: { 'location.coordinates': [args.data.location.coordinates[0].longitude, args.data.location.coordinates[0].latitude] } }, { new: true })
+                }
+                else {
+                    await new InsuranceLocation({
+                        insurance: _id,
+                        location: {
+                            type: args.data.location.type,
+                            coordinates: [args.data.location.coordinates[0].longitude, args.data.location.coordinates[0].latitude]
+                        }
+                    }).save()
+                }
+            }
+
+
             return await Sicil.findOneAndUpdate({ _id: _id },
                 {
                     $set: _insurance

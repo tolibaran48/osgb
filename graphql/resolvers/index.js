@@ -6,6 +6,7 @@ const CompanyUpdate = require('./nested/queries/company/CompanyUpdate');
 const UserAuthCompany = require('./nested/queries/user/UserAuthCompany');
 const UserAuthInsurance = require('./nested/queries/user/UserAuthInsurance');
 const Sicil = require('./nested/queries/insurance/Insurance');
+const InsuranceLocation = require('./nested/queries/insuranceLocation/InsuranceLocation');
 const Employee = require('./nested/queries/employee/Employee');
 const WabaYetkili = require('./nested/queries/waba/WabaUser');
 const Cari = require('./nested/queries/concubine/Concubine');
@@ -26,6 +27,7 @@ module.exports = {
     UserAuthCompany,
     UserAuthInsurance,
     Sicil,
+    InsuranceLocation,
     Employee,
     Cari,
     WabaYetkili,

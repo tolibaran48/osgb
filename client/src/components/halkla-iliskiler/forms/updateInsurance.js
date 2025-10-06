@@ -50,6 +50,10 @@ const UpdateInsurance = ({ insurance }) => {
             il: { id: insurance.adress.il.id, name: insurance.adress.il.name },
             ilce: { id: insurance.adress.ilce.id, name: insurance.adress.ilce.name }
         },
+        location: {
+            latitude: insurance.location ? insurance.location.latitude || "" : "",
+            longitude: insurance.location ? insurance.location.longitude || "" : ""
+        },
         company: selectedCompany.name
     }
 
@@ -194,7 +198,13 @@ const UpdateInsurance = ({ insurance }) => {
 
             validateForm.then((error) => {
                 if (error.status === false) {
-                    UpdateInsurance({ variables: { data: { descriptiveName: newDescriptiveName.trim(), insuranceNumber: newInsuranceNumber, insuranceControlNumber: insurance.insuranceControlNumber, adress: { detail: newAdressDetail, il: adress.il, ilce: adress.ilce }, _id: insurance._id, workingStatus, company: selectedCompany._id } } })
+                    let location;
+                    if (createFormValues.location.longitude && createFormValues.location.latitude) {
+                        location = { type: 'Point', coordinates: [{ longitude: parseFloat(createFormValues.location.latitude), latitude: parseFloat(createFormValues.location.longitude) }] }
+                    }
+
+                    UpdateInsurance({ variables: { data: { descriptiveName: newDescriptiveName.trim(), insuranceNumber: newInsuranceNumber, insuranceControlNumber: insurance.insuranceControlNumber, adress: { detail: newAdressDetail, il: adress.il, ilce: adress.ilce }, _id: insurance._id, workingStatus, company: selectedCompany._id, location } } })
+
                 }
                 else {
                     for (let mes of error.message) {
@@ -224,7 +234,7 @@ const UpdateInsurance = ({ insurance }) => {
                 <ModalBody>
                     <form onSubmit={validForm} id='sicilEdit' >
                         <div className='rows row'>
-                            <div lg="8">
+                            <div x-lg="8" lg="8">
                                 <fieldset>
                                     <div className='label' >
                                         <label htmlFor="unvani" >Ünvanı : </label>
@@ -236,7 +246,7 @@ const UpdateInsurance = ({ insurance }) => {
                                     </div>
                                 </fieldset>
                             </div>
-                            <div lg="4">
+                            <div x-lg="4" lg="4">
                                 <fieldset>
                                     <div className='label'>
                                         <label htmlFor="dangerStatus" >Tehlike Sınıfı: </label>
@@ -251,7 +261,7 @@ const UpdateInsurance = ({ insurance }) => {
                         </div>
                         <div className='rows row'>
 
-                            <div lg="8">
+                            <div x-lg="8" lg="8">
                                 <fieldset >
                                     <div className='label'>
                                         <label htmlFor="descriptiveName" >Tanımlayıcı Ad : </label>
@@ -271,7 +281,7 @@ const UpdateInsurance = ({ insurance }) => {
                                     </div>
                                 </fieldset>
                             </div>
-                            <div lg="4">
+                            <div x-lg="4" lg="4">
                                 <fieldset>
                                     <div className='label'>
                                         <label htmlFor="employeeCount" >Personel Sayısı: </label>
@@ -285,7 +295,7 @@ const UpdateInsurance = ({ insurance }) => {
                             </div>
                         </div>
                         <div className='rows row'>
-                            <div lg="8">
+                            <div x-lg="8" lg="8">
                                 <fieldset>
                                     <div className='label' >
                                         <label htmlFor="insuranceNumber" >Sicil Numarası : </label>
@@ -306,7 +316,7 @@ const UpdateInsurance = ({ insurance }) => {
                                     </div>
                                 </fieldset>
                             </div>
-                            <div lg="4">
+                            <div x-lg="4" lg="4">
                                 <fieldset>
                                     <div className='label'>
                                         <label htmlFor="workingStatus" >Çalışma Durumu : </label>
@@ -324,7 +334,7 @@ const UpdateInsurance = ({ insurance }) => {
                             </div>
                         </div>
                         <div className='rows row'>
-                            <div lg="8">
+                            <div x-lg="8" lg="8">
                                 <fieldset className='label-top' >
                                     <div className='label'>
                                         <label htmlFor="address" >Adresi : </label>
@@ -347,7 +357,7 @@ const UpdateInsurance = ({ insurance }) => {
                             </div>
                         </div>
                         <div className='rows row'>
-                            <div lg="4">
+                            <div x-lg="4" lg="4">
                                 <fieldset>
                                     <div className='label'>
                                         <label htmlFor="il" >Bulunduğu İl : </label>
@@ -364,7 +374,7 @@ const UpdateInsurance = ({ insurance }) => {
                                     </div>
                                 </fieldset>
                             </div>
-                            <div lg="4">
+                            <div x-lg="4" lg="4">
                                 <fieldset>
                                     <div className='label'>
                                         <label htmlFor="ilce" >Bulunduğu İlçe : </label>
@@ -380,6 +390,40 @@ const UpdateInsurance = ({ insurance }) => {
                                             items={ilceItems.map(({ ilce, ilceId }) => { return { value: ilce, id: ilceId } })} />
                                     </div>
                                 </fieldset>
+                            </div>
+                        </div>
+                        <div className='rows row'>
+                            <div x-lg="4" lg="4"> <fieldset>
+                                <div className='label'>
+                                    <label htmlFor="latitude" >Latitude : </label>
+                                </div>
+                                <div className='input' style={{ position: 'relative' }}>
+                                    <input
+                                        className={`form-control`}
+                                        autoComplete='nope'
+                                        id='latitude'
+                                        value={createFormValues.location.latitude}
+                                        disabled={insuranceActive ? '' : 'disabled'}
+                                        onChange={(e) => setCreateFormValues({ ...createFormValues, location: { ...createFormValues.location, latitude: e.target.value } })}
+                                    />
+                                </div>
+                            </fieldset>
+                            </div>
+                            <div x-lg="4" lg="4"> <fieldset>
+                                <div className='label'>
+                                    <label htmlFor="longitude" >Longitude : </label>
+                                </div>
+                                <div className='input' style={{ position: 'relative' }}>
+                                    <input
+                                        className={`form-control`}
+                                        autoComplete='nope'
+                                        id='longitude'
+                                        value={createFormValues.location.longitude}
+                                        disabled={insuranceActive ? '' : 'disabled'}
+                                        onChange={(e) => setCreateFormValues({ ...createFormValues, location: { ...createFormValues.location, longitude: e.target.value } })}
+                                    />
+                                </div>
+                            </fieldset>
                             </div>
                         </div>
                         <div className='rows row'>

@@ -1,6 +1,7 @@
 const user = require('./userQuery');
 const company = require('./companyQuery');
 const insurance = require('./insuranceQuery');
+const insuranceLocation = require('./insuranceLocationQuery');
 const person = require('./personQuery');
 const employee = require('./employeeQuery');
 const assignment = require('./assignmentQuery');
@@ -11,6 +12,7 @@ const Query = {
     ...user,
     ...company,
     ...insurance,
+    ...insuranceLocation,
     ...person,
     ...employee,
     ...assignment,

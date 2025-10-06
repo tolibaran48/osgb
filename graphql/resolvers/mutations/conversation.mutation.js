@@ -1,4 +1,3 @@
-const auth = require("../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 
 module.exports = {

@@ -1,0 +1,10 @@
+scalar GeoJSON
+
+type InsuranceLocation{
+    insurance:Sicil
+    location:GeoJSON
+}
+
+type Query{
+    insuranceLocations:[InsuranceLocation]
+} 

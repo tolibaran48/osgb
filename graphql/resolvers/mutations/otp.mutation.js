@@ -1,3 +1,4 @@
+
 const auth = require("../../../helpers/auth");
 const { GraphQLError } = require('graphql');
 const crypto = require('crypto');
@@ -29,11 +30,14 @@ module.exports = {
                 registerDate
             }).save();
 
-            sendSmsOnce(phone, `Doğrulama kodunuz: ${otp}`)
+
+            console.log(otp)
+            // sendSmsOnce(phone, `Doğrulama kodunuz: ${otp}`)
 
             return { tryCount, status: 'Active', otpId: _otp._id }
 
         } catch (error) {
+            console.log(error)
             throw new GraphQLError({ msg: 'Onay kodu gönderilemedi' }, {
                 extensions: {
                     code: 'Kötü İstek',
@@ -100,3 +104,5 @@ module.exports = {
 
     }
 };
+//await Otp.findOneAndUpdate({ phone }, { $set: { 'request.$[elem].status': 'Aborted' } }, { arrayFilters: [{ "elem.status": 'Active' }] }, { new: true })
+//sendSmsOnce(phone, `${text} ${otp}`)

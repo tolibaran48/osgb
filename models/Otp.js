@@ -14,9 +14,9 @@ dayjs.locale('tr')
 const otpSchema = new Schema({
     type: {
         type: String,
-        enum: ['System', 'Communication'],
+        enum: ['System', 'iletisim'],
         required: true,
-        default: 'Communication',
+        default: 'iletisim'
     },
     phone: {
         type: String,

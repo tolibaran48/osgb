@@ -14,6 +14,7 @@ const resolvers = require('./graphql/resolvers/index.js');
 const Kullanici = require("./models/User");
 const Firma = require("./models/Company");
 const Sicil = require("./models/Insurance");
+const InsuranceLocation = require("./models/InsuranceLocation");
 const Person = require("./models/Person");
 const Employee = require("./models/Employee");
 const Assignment = require("./models/Assignment");
@@ -33,6 +34,7 @@ const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
+const path = require('path');
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -125,6 +127,7 @@ async function startServer() {
                 Kullanici,
                 Firma,
                 Sicil,
+                InsuranceLocation,
                 Person,
                 Employee,
                 Assignment,

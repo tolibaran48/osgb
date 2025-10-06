@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const conversationSchema = new Schema({
     type: {
         type: String,
-        enum: ['Teklif', 'Pazarlama', 'Kariyer', 'İletisim'],
+        enum: ['Teklif', 'Pazarlama', 'Kariyer', 'iletisim'],
         required: true,
-        default: 'Communication',
+        default: 'iletisim',
     },
     name: {
         type: String,
@@ -19,9 +19,7 @@ const conversationSchema = new Schema({
         type: String,
     },
     phone: {
-        type: String,
-        unique: true,
-        length: 15,
+        type: String
     },
     otp: {
         type: Schema.Types.ObjectId,
