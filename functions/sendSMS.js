@@ -3,7 +3,7 @@ const xmlbuilder = require("xmlbuilder");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const turkishToEnglish = require('./turkishToEnglish');
 
-const sendSmsOnce = (phoneNumber, text) => {
+const sendSmsOnce = async ({ phoneNumber, text }) => {
 
     const convertText = turkishToEnglish(text);
 
@@ -23,7 +23,7 @@ const sendSmsOnce = (phoneNumber, text) => {
         xhttp.send(xml)
     }
 
-    createXML()
+    await createXML()
 }
 
 module.exports = sendSmsOnce;

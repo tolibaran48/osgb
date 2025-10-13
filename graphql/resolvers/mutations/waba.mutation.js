@@ -5,6 +5,7 @@ require('dotenv').config();
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const sendSmsOnce = require("../../../functions/sendSMS");
 
 module.exports = {
     sendInvoice: async (parent, args, { token }) => {
@@ -77,6 +78,10 @@ module.exports = {
                     }
                 },
             });
+            let text = `Sayin ${company}; \n${invoiceDate} tarihinde duzenlenen ${invoiceAmount} TL tutarli faturanız whatsapp uzerinden tarafiniziza gonderilmistir.
+             Odemelerinizi Bodrum Yalikavak İsci Sagligi ve Guvenligi Hizmetleri Ltd. Sti. unvanli firmamizin TR40 0013 4000 0204 2508 5000 01 numarali hesabina yapabilirsiniz.`
+            await sendSmsOnce({ phoneNumber: to, text })
+
             return { "status": 200 }
 
         } catch (error) {
